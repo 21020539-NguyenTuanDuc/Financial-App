@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center_horizontal"
     android:orientation="vertical"
     android:paddingTop="20dp"
-    android:gravity="center_horizontal"
     tools:context=".LoginActivity">
 
     <ImageView
@@ -17,19 +16,19 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:textSize="40dp"
         android:fontFamily="@font/roboto_black_font"
-        android:textColor="@color/black"
         android:gravity="center"
-        android:text="Login" />
+        android:text="Login"
+        android:textColor="@color/black"
+        android:textSize="40dp" />
 
     <EditText
         android:id="@+id/email"
         android:layout_width="350dp"
         android:layout_height="50dp"
+        android:layout_marginTop="20dp"
         android:background="@drawable/edit_text_background"
         android:gravity="center"
-        android:layout_marginTop="20dp"
         android:hint="Email"
         android:inputType="textEmailAddress" />
 
@@ -37,9 +36,9 @@
         android:id="@+id/password"
         android:layout_width="350dp"
         android:layout_height="50dp"
+        android:layout_marginTop="20dp"
         android:background="@drawable/edit_text_background"
         android:gravity="center"
-        android:layout_marginTop="20dp"
         android:hint="Password"
         android:inputType="textPassword" />
 
@@ -48,27 +47,27 @@
         android:id="@+id/login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
         android:layout_gravity="center"
+        android:layout_marginTop="20dp"
         android:text="Login" />
 
     <TextView
         android:id="@+id/resetPassword"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
-        android:textColor="@color/main_green"
-        android:textSize="15sp"
         android:gravity="center"
-        android:text="Reset Password" />
+        android:text="Reset Password"
+        android:textColor="@color/main_green"
+        android:textSize="15sp" />
 
 
     <TextView
         android:id="@+id/toSignupActivity"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
-        android:textColor="@color/main_green"
-        android:textSize="15sp"
         android:gravity="center"
-        android:text="Signup" />
+        android:text="Signup"
+        android:textColor="@color/main_green"
+        android:textSize="15sp" />
 
 </LinearLayout>
