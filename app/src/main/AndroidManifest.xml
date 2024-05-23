@@ -12,6 +12,10 @@
         android:theme="@style/Theme.FinancialApp"
         tools:targetApi="31">
         <activity
+            android:name=".MainActivityFragments.CreateBudgetActivity"
+            android:parentActivityName=".MainActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivityFragments.DeleteAccountActivity"
             android:exported="false"
             android:parentActivityName=".MainActivity" />

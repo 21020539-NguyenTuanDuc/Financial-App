@@ -9,7 +9,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
-import com.example.financialapp.MainActivityFragments.MainViewPagerAdapter;
+import com.example.financialapp.Adapter.MainViewPagerAdapter;
+import com.example.financialapp.Model.UserModel;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.tabs.TabLayout;
@@ -46,7 +47,8 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setAdapter(viewPagerAdapter);
 
         tabLayout.setupWithViewPager(viewPager);
-
+        int position = getIntent().getIntExtra("fragment_position", 0);
+        viewPager.setCurrentItem(position);
     }
 
     @Override

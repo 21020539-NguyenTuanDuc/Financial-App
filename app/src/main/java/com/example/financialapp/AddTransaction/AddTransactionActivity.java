@@ -1,6 +1,5 @@
 package com.example.financialapp.AddTransaction;
 
-import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
@@ -18,19 +17,21 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.financialapp.Adapter.BudgetAdapter;
+import com.example.financialapp.Adapter.CustomSpinnerAdapter;
 import com.example.financialapp.MainActivity;
 import com.example.financialapp.MainActivityFragments.MainAccountFragment;
-import com.example.financialapp.MainActivityFragments.TransactionModel;
+import com.example.financialapp.Model.TransactionModel;
 import com.example.financialapp.R;
 import com.example.financialapp.databinding.ActivityAddTransactionBinding;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.text.ParseException;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
-
-import android.os.Handler;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
@@ -166,6 +167,24 @@ public class AddTransactionActivity extends AppCompatActivity {
         String category = categories[binding.categorySpinner.getSelectedItemPosition()];
         String date = binding.dateET.getText().toString();
         String time = binding.timeET.getText().toString();
+        long timestamp = Calendar.getInstance().getTimeInMillis() / 1000;
+        try {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+            Date dateDate = dateFormat.parse(date);
+
+            SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
+            Date dateTime = timeFormat.parse(time);
+
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(dateDate);
+            calendar.set(Calendar.HOUR_OF_DAY, dateTime.getHours());
+            calendar.set(Calendar.MINUTE, dateTime.getMinutes());
+            timestamp = calendar.getTimeInMillis() / 1000;
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
         if (transactionAmount.length() == 0) {
             binding.amountET.setError("Empty");
         }
@@ -179,7 +198,7 @@ public class AddTransactionActivity extends AppCompatActivity {
         } else {
             TransactionModel transaction =
                     new TransactionModel(id, Integer.parseInt(transactionAmount), type, transactionNote,
-                            category, date, time, MainAccountFragment.currentAccId);
+                            category, date, time, MainAccountFragment.currentAccId, timestamp);
 
             FirebaseFirestore
                     .getInstance()
@@ -233,9 +252,27 @@ public class AddTransactionActivity extends AppCompatActivity {
         String category = categories[binding.categorySpinner.getSelectedItemPosition()];
         String date = binding.dateET.getText().toString();
         String time = binding.timeET.getText().toString();
-        // TODO: continue save transaction data
+        long timestamp = Calendar.getInstance().getTimeInMillis() / 1000;
+        try {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+            Date dateDate = dateFormat.parse(date);
+
+            SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
+            Date dateTime = timeFormat.parse(time);
+
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(dateDate);
+            calendar.set(Calendar.HOUR_OF_DAY, dateTime.getHours());
+            calendar.set(Calendar.MINUTE, dateTime.getMinutes());
+            timestamp = calendar.getTimeInMillis() / 1000;
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         if (transactionAmount.length() == 0) {
             binding.amountET.setError("Empty");
+            sweetAlertDialog.dismissWithAnimation();
+            return;
         }
         if (incomeChecked) {
             type = "Income";
@@ -246,7 +283,8 @@ public class AddTransactionActivity extends AppCompatActivity {
             Toast.makeText(this, "Please choose or create an account for this transaction", Toast.LENGTH_SHORT).show();
         } else {
             TransactionModel transactionModel =
-                    new TransactionModel(id, Integer.parseInt(transactionAmount), type, transactionNote, category, date, time, MainAccountFragment.currentAccId);
+                    new TransactionModel(id, Integer.parseInt(transactionAmount), type, transactionNote,
+                            category, date, time, MainAccountFragment.currentAccId, timestamp);
 
             FirebaseFirestore
                     .getInstance()
@@ -283,6 +321,25 @@ public class AddTransactionActivity extends AppCompatActivity {
                             startActivity(new Intent(AddTransactionActivity.this, MainActivity.class));
                         }
                     });
+        }
+    }
+
+    public void pushBudgetData() {
+        for (int i = 0; i < BudgetAdapter.budgetModelList.size(); i++) {
+            if (i != BudgetAdapter.budgetModelList.size() - 1) {
+                FirebaseFirestore.getInstance().collection("Budget").document(BudgetAdapter.budgetModelList.get(i).getId())
+                        .set(BudgetAdapter.budgetModelList.get(i));
+            } else {
+                FirebaseFirestore.getInstance().collection("Budget").document(BudgetAdapter.budgetModelList.get(i).getId())
+                        .set(BudgetAdapter.budgetModelList.get(i))
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void unused) {
+                                sweetAlertDialog.dismissWithAnimation();
+                                startActivity(new Intent(AddTransactionActivity.this, MainActivity.class));
+                            }
+                        });
+            }
         }
     }
 

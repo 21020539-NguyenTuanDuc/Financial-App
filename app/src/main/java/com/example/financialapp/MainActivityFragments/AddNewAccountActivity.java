@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.financialapp.MainActivity;
+import com.example.financialapp.Model.AccountModel;
 import com.example.financialapp.databinding.ActivityAddNewAccountBinding;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
