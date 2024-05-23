@@ -1,7 +1,7 @@
 package com.example.financialapp;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
@@ -15,10 +15,12 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
+
 public class LoginActivity extends AppCompatActivity {
+    SweetAlertDialog sweetAlertDialog;
     ActivityLoginBinding binding;
     FirebaseAuth firebaseAuth;
-    ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +29,9 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         firebaseAuth = FirebaseAuth.getInstance();
-        progressDialog = new ProgressDialog(this);
+        sweetAlertDialog = new SweetAlertDialog(this, SweetAlertDialog.PROGRESS_TYPE);
+        sweetAlertDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
+        sweetAlertDialog.setCancelable(false);
 
         binding.login.setOnClickListener(new View.OnClickListener() {
 
@@ -35,13 +39,13 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String email = binding.email.getText().toString();
                 String password = binding.password.getText().toString().trim();
-                progressDialog.show();
+                sweetAlertDialog.show();
                 if (!password.equals("") && !email.equals("")) {
                     firebaseAuth.signInWithEmailAndPassword(email, password)
                             .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                                 @Override
                                 public void onSuccess(AuthResult authResult) {
-                                    progressDialog.cancel();
+                                    sweetAlertDialog.dismissWithAnimation();
                                     Toast.makeText(LoginActivity.this, "Login Successfully!", Toast.LENGTH_SHORT).show();
                                     startActivity(new Intent(LoginActivity.this, MainActivity.class));
                                 }
@@ -49,12 +53,12 @@ public class LoginActivity extends AppCompatActivity {
                             .addOnFailureListener(new OnFailureListener() {
                                 @Override
                                 public void onFailure(@NonNull Exception e) {
-                                    progressDialog.cancel();
+                                    sweetAlertDialog.dismissWithAnimation();
                                     Toast.makeText(LoginActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                                 }
                             });
                 } else {
-                    progressDialog.cancel();
+                    sweetAlertDialog.dismissWithAnimation();
                     Toast.makeText(LoginActivity.this, "Fill in email and password", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -64,29 +68,31 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String email = binding.email.getText().toString();
-                progressDialog.setTitle("Sending email");
-                progressDialog.show();
+                sweetAlertDialog.setTitle("Sending email");
+                sweetAlertDialog.show();
                 if (!email.equals("")) {
                     firebaseAuth.sendPasswordResetEmail(email)
                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void unused) {
-                                    progressDialog.cancel();
+                                    sweetAlertDialog.dismissWithAnimation();
                                     Toast.makeText(LoginActivity.this, "Password reset send to email", Toast.LENGTH_SHORT).show();
                                 }
                             })
                             .addOnFailureListener(new OnFailureListener() {
                                 @Override
                                 public void onFailure(@NonNull Exception e) {
-                                    progressDialog.cancel();
+                                    sweetAlertDialog.dismissWithAnimation();
                                     Toast.makeText(LoginActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                                 }
                             });
                 } else {
-                    progressDialog.cancel();
+                    sweetAlertDialog.dismissWithAnimation();
                     Toast.makeText(LoginActivity.this, "Fill in email to send verification", Toast.LENGTH_SHORT).show();
                 }
-                progressDialog = new ProgressDialog(LoginActivity.this);
+                sweetAlertDialog = new SweetAlertDialog(LoginActivity.this, SweetAlertDialog.PROGRESS_TYPE);
+                sweetAlertDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
+                sweetAlertDialog.setCancelable(false);
             }
         });
 

@@ -2,8 +2,8 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/checkButton"
-        android:icon="@drawable/baseline_check"
+        android:id="@+id/forwardButton"
+        android:icon="@drawable/baseline_arrow_forward"
         android:title="CheckButton"
         app:showAsAction="always" />
 </menu>

@@ -1,7 +1,7 @@
 package com.example.financialapp;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
@@ -16,10 +16,12 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.Objects;
+
+import cn.pedant.SweetAlert.SweetAlertDialog;
+
 public class SignupActivity extends AppCompatActivity {
-
-
-    ProgressDialog progressDialog;
+    SweetAlertDialog sweetAlertDialog;
     ActivitySignupBinding binding;
     FirebaseAuth firebaseAuth;
     FirebaseFirestore firebaseFirestore;
@@ -32,7 +34,9 @@ public class SignupActivity extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseFirestore = FirebaseFirestore.getInstance();
 
-        progressDialog = new ProgressDialog(this);
+        sweetAlertDialog = new SweetAlertDialog(this, SweetAlertDialog.PROGRESS_TYPE);
+        sweetAlertDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
+        sweetAlertDialog.setCancelable(false);
 
         binding.signup.setOnClickListener(new View.OnClickListener() {
 
@@ -44,7 +48,7 @@ public class SignupActivity extends AppCompatActivity {
                 String password = binding.password.getText().toString();
                 String confirmPassword = binding.confirmPassword.getText().toString();
 
-                progressDialog.show();
+                sweetAlertDialog.show();
                 if (!password.equals("") && !email.equals("") && !confirmPassword.equals("") && !fullName.equals("") && !number.equals("")) {
                     if (password.equals(confirmPassword)) {
                         firebaseAuth.createUserWithEmailAndPassword(email, password)
@@ -52,11 +56,12 @@ public class SignupActivity extends AppCompatActivity {
 
                                     @Override
                                     public void onSuccess(AuthResult authResult) {
-                                        startActivity(new Intent(SignupActivity.this, MainActivity.class));
-                                        progressDialog.cancel();
+                                        Toast.makeText(SignupActivity.this, "Sign up successfully", Toast.LENGTH_SHORT).show();
+                                        startActivity(new Intent(SignupActivity.this, LoginActivity.class));
+                                        sweetAlertDialog.dismissWithAnimation();
 
                                         firebaseFirestore.collection("User")
-                                                .document(FirebaseAuth.getInstance().getUid())
+                                                .document(Objects.requireNonNull(FirebaseAuth.getInstance().getUid()))
                                                 .set(new UserModel(fullName, number, email));
                                     }
                                 })
@@ -65,15 +70,15 @@ public class SignupActivity extends AppCompatActivity {
                                     @Override
                                     public void onFailure(@NonNull Exception e) {
                                         Toast.makeText(SignupActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                                        progressDialog.cancel();
+                                        sweetAlertDialog.dismissWithAnimation();
                                     }
                                 });
                     } else {
-                        progressDialog.cancel();
+                        sweetAlertDialog.dismissWithAnimation();
                         Toast.makeText(SignupActivity.this, "Reconfirm your password", Toast.LENGTH_SHORT).show();
                     }
                 } else {
-                    progressDialog.cancel();
+                    sweetAlertDialog.dismissWithAnimation();
                     Toast.makeText(SignupActivity.this, "Please fill in all the information", Toast.LENGTH_SHORT).show();
                 }
             }

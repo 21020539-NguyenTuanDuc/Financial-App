@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".TransactionCalculatorActivity">
+    tools:context=".AddTransaction.TransactionCalculatorActivity">
 
     <TextView
         android:id="@+id/solution_tv"

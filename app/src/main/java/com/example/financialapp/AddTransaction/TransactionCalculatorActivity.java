@@ -1,4 +1,4 @@
-package com.example.financialapp;
+package com.example.financialapp.AddTransaction;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.financialapp.R;
 import com.google.android.material.button.MaterialButton;
 
 import org.mozilla.javascript.Context;
@@ -31,8 +32,11 @@ public class TransactionCalculatorActivity extends AppCompatActivity implements 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.checkButton) {
-            startActivity(new Intent(this, AddTransactionActivity.class));
+        if (id == R.id.forwardButton) {
+            Intent intent = new Intent(this, AddTransactionActivity.class);
+            intent.putExtra("transactionAmount", resultTv.getText().toString());
+            startActivity(intent);
+
             return true;
         }
 
@@ -42,7 +46,7 @@ public class TransactionCalculatorActivity extends AppCompatActivity implements 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_transaction_calculator);
+        setContentView(R.layout.activity_transaction_caculator);
 
         resultTv = findViewById(R.id.result_tv);
         solutionTv = findViewById(R.id.solution_tv);

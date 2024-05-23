@@ -1,16 +1,30 @@
 package com.example.financialapp;
 
 public class UserModel {
-    private String name, number, email;
+    private String id;
+    private String name;
+    private String number;
+    private String email;
 
-    public UserModel() {
-
+    public UserModel(String id, String name, String number, String email) {
+        this.id = id;
+        this.name = name;
+        this.number = number;
+        this.email = email;
     }
 
     public UserModel(String name, String number, String email) {
         this.name = name;
         this.number = number;
         this.email = email;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getName() {
