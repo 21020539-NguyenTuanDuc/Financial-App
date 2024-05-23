@@ -17,16 +17,22 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.financialapp.R;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 public class AccountDeleteAdapter extends RecyclerView.Adapter<AccountDeleteAdapter.AccountDeleteViewHolder> {
 
     private Context context;
-    private List<AccountModel> accountModelDList;
+    public List<AccountModel> accountModelDList;
 
     public AccountDeleteAdapter(Context context) {
         this.context = context;
@@ -72,14 +78,34 @@ public class AccountDeleteAdapter extends RecyclerView.Adapter<AccountDeleteAdap
 
         holder.account_name.setText(accountModel.getName());
         holder.account_type.setText(accountModel.getType());
-        holder.account_balance.setText(String.valueOf(accountModel.getBalance()));
+        NumberFormat nf = NumberFormat.getInstance();
+        String accountBalance = nf.format(accountModel.getBalance()) + "đ";
+        holder.account_balance.setText(accountBalance);
         holder.delete_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
-                db.collection("account")
+                db.collection("Account")
                         .document(id)
                         .delete()
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void unused) {
+                                db.collection("Transaction")
+                                        .whereEqualTo("accountId", id)
+                                        .get()
+                                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                                if (task.isSuccessful()) {
+                                                    for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
+                                                        db.collection("Transaction").document(documentSnapshot.getId()).delete();
+                                                    }
+                                                }
+                                            }
+                                        });
+                            }
+                        })
                         .addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
@@ -92,7 +118,7 @@ public class AccountDeleteAdapter extends RecyclerView.Adapter<AccountDeleteAdap
                         Activity activity = (Activity) context;
                         activity.recreate();
                     }
-                }, 100);
+                }, 1);
             }
         });
     }

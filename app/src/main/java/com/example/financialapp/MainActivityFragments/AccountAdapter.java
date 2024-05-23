@@ -1,5 +1,6 @@
 package com.example.financialapp.MainActivityFragments;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,16 +8,20 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.financialapp.MainActivity;
 import com.example.financialapp.R;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 public class AccountAdapter extends RecyclerView.Adapter<AccountAdapter.AccountViewHolder> {
     private Context context;
-    private List<AccountModel> accountModelList;
+    public List<AccountModel> accountModelList;
 
     public AccountAdapter(Context context) {
         this.context = context;
@@ -42,6 +47,14 @@ public class AccountAdapter extends RecyclerView.Adapter<AccountAdapter.AccountV
         notifyDataSetChanged();
     }
 
+    public boolean IdInAccountModelList(String id) {
+        boolean result = false;
+        for (int i = 0; i < accountModelList.size(); i++) {
+            if (accountModelList.get(i).getId().equals(id)) result = true;
+        }
+        return result;
+    }
+
     @NonNull
     @Override
     public AccountViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -53,9 +66,27 @@ public class AccountAdapter extends RecyclerView.Adapter<AccountAdapter.AccountV
     public void onBindViewHolder(@NonNull AccountViewHolder holder, int position) {
         AccountModel accountModel = accountModelList.get(position);
         if (accountModel == null) return;
-
         holder.accountName.setText(accountModel.getName());
-        holder.accountBalance.setText(String.valueOf(accountModel.getBalance()));
+//        holder.accountBalance.setText(String.valueOf(accountModel.getBalance()));
+        NumberFormat nf = NumberFormat.getInstance();
+        String accountBalance = nf.format(accountModel.getBalance()) + "đ";
+        holder.accountBalance.setText(accountBalance);
+
+        CardView cardView = (CardView) holder.itemView;
+        cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MainAccountFragment.currentAccId = accountModel.getId();
+                MainAccountFragment.currentAccount = accountModel;
+                Activity activity = (Activity) context;
+                activity.recreate();
+            }
+        });
+        if (accountModel.getId().equals(MainAccountFragment.currentAccId)) {
+            cardView.setCardBackgroundColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.main_green));
+        } else {
+            cardView.setCardBackgroundColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.grey));
+        }
 
     }
 
@@ -76,6 +107,4 @@ public class AccountAdapter extends RecyclerView.Adapter<AccountAdapter.AccountV
             accountBalance = (TextView) itemView.findViewById(R.id.accountBalance);
         }
     }
-
-
 }

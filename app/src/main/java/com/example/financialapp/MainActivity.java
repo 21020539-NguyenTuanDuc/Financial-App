@@ -1,17 +1,26 @@
 package com.example.financialapp;
 
+import android.graphics.Color;
 import android.os.Bundle;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.financialapp.MainActivityFragments.MainViewPagerAdapter;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
+
 public class MainActivity extends AppCompatActivity {
+    SweetAlertDialog sweetAlertDialog;
     public static UserModel currentUser;
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     private TabLayout tabLayout;
@@ -28,7 +37,6 @@ public class MainActivity extends AppCompatActivity {
             String number = user.getPhoneNumber();
             String email = user.getEmail();
             currentUser = new UserModel(Uid, name, number, email);
-//            System.out.println(MainAccountFragment.accountList);
         }
 
         tabLayout = (TabLayout) findViewById(R.id.tabLayout);
@@ -39,5 +47,31 @@ public class MainActivity extends AppCompatActivity {
 
         tabLayout.setupWithViewPager(viewPager);
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        sweetAlertDialog = new SweetAlertDialog(MainActivity.this, SweetAlertDialog.PROGRESS_TYPE);
+        sweetAlertDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
+        sweetAlertDialog.setCancelable(false);
+        sweetAlertDialog.show();
+        if (FirebaseAuth.getInstance().getCurrentUser() == null) {
+            FirebaseAuth.getInstance()
+                    .signInAnonymously()
+                    .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+                        @Override
+                        public void onSuccess(AuthResult authResult) {
+
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(MainActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+        }
+        sweetAlertDialog.dismissWithAnimation();
     }
 }

@@ -34,7 +34,7 @@ public class AddNewAccountActivity extends AppCompatActivity {
     }
 
     private void createAccount() {
-        String id = FirebaseFirestore.getInstance().collection("account").document().getId();
+        String id = FirebaseFirestore.getInstance().collection("Account").document().getId();
         String name = binding.accountNameET.getText().toString().trim();
         if (name.length() == 0) {
             binding.accountNameET.setError("Empty");
@@ -55,7 +55,7 @@ public class AddNewAccountActivity extends AppCompatActivity {
 
         FirebaseFirestore
                 .getInstance()
-                .collection("account")
+                .collection("Account")
                 .document(id)
                 .set(accountModel)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {

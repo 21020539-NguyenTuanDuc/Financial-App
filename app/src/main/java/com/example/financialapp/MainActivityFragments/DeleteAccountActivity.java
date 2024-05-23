@@ -13,6 +13,8 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
@@ -46,7 +48,7 @@ public class DeleteAccountActivity extends AppCompatActivity {
 
     public void getAccountModelData() {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("account")
+        db.collection("Account")
                 .whereEqualTo("userId", MainActivity.currentUser.getId())
                 .get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
@@ -58,6 +60,13 @@ public class DeleteAccountActivity extends AppCompatActivity {
                             AccountModel accountModel = ds.toObject(AccountModel.class);
                             accountDeleteAdapter.addData(accountModel);
                         }
+                        Collections.sort(accountDeleteAdapter.accountModelDList, new Comparator<AccountModel>() {
+
+                            @Override
+                            public int compare(AccountModel accountModel, AccountModel t1) {
+                                return accountModel.getName().compareTo(t1.getName());
+                            }
+                        });
                         sweetAlertDialog.dismissWithAnimation();
                     }
                 });
