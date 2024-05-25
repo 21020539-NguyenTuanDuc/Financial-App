@@ -1,4 +1,4 @@
-package com.example.financialapp.MainActivityFragments;
+package com.example.financialapp.Model;
 
 import com.example.financialapp.MainActivity;
 

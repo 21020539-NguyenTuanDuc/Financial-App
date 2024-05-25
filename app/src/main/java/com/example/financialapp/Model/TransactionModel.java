@@ -1,6 +1,7 @@
-package com.example.financialapp.MainActivityFragments;
+package com.example.financialapp.Model;
 
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -17,12 +18,13 @@ public class TransactionModel implements Serializable {
     private String date;
     private String time;
     private String accountId;
+    private long timestamp;
 
     public TransactionModel() {
 
     }
 
-    public TransactionModel(String id, int amount, String type, String note, String category, String date, String time, String accountId) {
+    public TransactionModel(String id, int amount, String type, String note, String category, String date, String time, String accountId, long timestamp) {
         this.id = id;
         this.amount = amount;
         this.type = type;
@@ -31,6 +33,7 @@ public class TransactionModel implements Serializable {
         this.date = date;
         this.time = time;
         this.accountId = accountId;
+        this.timestamp = timestamp;
     }
 
     public String getId() {
@@ -111,4 +114,11 @@ public class TransactionModel implements Serializable {
 //        return "0";
 //    }
 
+    public long getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(long timestamp) {
+        this.timestamp = timestamp;
+    }
 }

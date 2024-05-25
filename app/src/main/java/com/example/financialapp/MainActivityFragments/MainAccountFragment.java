@@ -11,8 +11,12 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.example.financialapp.Adapter.AccountAdapter;
+import com.example.financialapp.Adapter.TransactionAdapter;
 import com.example.financialapp.AddTransaction.TransactionCalculatorActivity;
 import com.example.financialapp.MainActivity;
+import com.example.financialapp.Model.AccountModel;
+import com.example.financialapp.Model.TransactionModel;
 import com.example.financialapp.R;
 import com.example.financialapp.databinding.FragmentMainAccountBinding;
 import com.github.mikephil.charting.components.Description;
@@ -22,7 +26,6 @@ import com.github.mikephil.charting.data.PieEntry;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
@@ -159,12 +162,7 @@ public class MainAccountFragment extends Fragment {
 
                             @Override
                             public int compare(TransactionModel transactionModel, TransactionModel t1) {
-                                int dateCompare = t1.getDate().compareTo(transactionModel.getDate());
-                                if (dateCompare != 0) {
-                                    return dateCompare;
-                                } else {
-                                    return t1.getTime().compareTo(transactionModel.getTime());
-                                }
+                                return Long.compare(t1.getTimestamp(), transactionModel.getTimestamp());
                             }
                         });
                         setUpGraph();
@@ -183,11 +181,15 @@ public class MainAccountFragment extends Fragment {
         if (expense != 0) {
             pieEntryList.add(new PieEntry(expense, "Expense"));
             colorList.add(getResources().getColor(R.color.red));
+        } else if (income != 0) {
+            pieEntryList.add(new PieEntry(expense, "Expense"));
+            colorList.add(getResources().getColor(R.color.red));
         }
-        PieDataSet pieDataSet = new PieDataSet(pieEntryList, String.valueOf(income = expense));
+        PieDataSet pieDataSet = new PieDataSet(pieEntryList, "Income/Expense");
         pieDataSet.setColors(colorList);
         pieDataSet.setValueTextColor(getResources().getColor(R.color.white));
         PieData pieData = new PieData(pieDataSet);
+        pieData.setValueTextSize(10);
 
         binding.pieChart.setData(pieData);
         binding.pieChart.invalidate();
@@ -196,6 +198,7 @@ public class MainAccountFragment extends Fragment {
         description.setTextSize(12f);
         binding.pieChart.setDescription(description);
     }
+
 
     @Override
     public void onDestroyView() {

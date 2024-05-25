@@ -1,10 +1,13 @@
-package com.example.financialapp.MainActivityFragments;
+package com.example.financialapp.Adapter;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
+
+import com.example.financialapp.MainActivityFragments.MainAccountFragment;
+import com.example.financialapp.MainActivityFragments.MainBudgetsFragment;
 
 public class MainViewPagerAdapter extends FragmentStatePagerAdapter {
     public MainViewPagerAdapter(@NonNull FragmentManager fm, int behavior) {

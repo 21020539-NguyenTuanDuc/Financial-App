@@ -1,4 +1,4 @@
-package com.example.financialapp.AddTransaction;
+package com.example.financialapp.Adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -23,7 +23,7 @@ public class CustomSpinnerAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return icons.length;
+        return categories.length;
     }
 
     @Override

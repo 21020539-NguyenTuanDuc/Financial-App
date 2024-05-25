@@ -1,4 +1,4 @@
-package com.example.financialapp;
+package com.example.financialapp.Model;
 
 public class UserModel {
     private String id;

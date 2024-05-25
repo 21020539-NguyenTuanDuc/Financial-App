@@ -1,11 +1,18 @@
 package com.example.financialapp.AddTransaction;
 
-import android.app.Activity;
+import static com.example.financialapp.Adapter.BudgetAdapter.budgetModelList;
+
+import android.Manifest;
 import android.app.DatePickerDialog;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.icu.text.SimpleDateFormat;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -17,20 +24,25 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
+import com.example.financialapp.Adapter.BudgetAdapter;
+import com.example.financialapp.Adapter.CustomSpinnerAdapter;
 import com.example.financialapp.MainActivity;
 import com.example.financialapp.MainActivityFragments.MainAccountFragment;
-import com.example.financialapp.MainActivityFragments.TransactionModel;
+import com.example.financialapp.Model.TransactionModel;
 import com.example.financialapp.R;
 import com.example.financialapp.databinding.ActivityAddTransactionBinding;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.text.ParseException;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
-
-import android.os.Handler;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
@@ -46,6 +58,7 @@ public class AddTransactionActivity extends AppCompatActivity {
     SweetAlertDialog sweetAlertDialog;
     private long currentAmount;
     private String currentType;
+    NotificationCompat.Builder notificationCompatBuilder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,6 +114,40 @@ public class AddTransactionActivity extends AppCompatActivity {
                 }
             }
         });
+
+        createNotificationChannel();
+
+//        notificationCompatBuilder = new NotificationCompat.Builder(this, "Budget");
+    }
+
+    private void createNotificationChannel() {
+        // Create the NotificationChannel, but only on API 26+ because
+        // the NotificationChannel class is new and not in the support library
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel("My Notification", "My Notification", NotificationManager.IMPORTANCE_HIGH);
+            NotificationManager manager = getSystemService(NotificationManager.class);
+            manager.createNotificationChannel(channel);
+        }
+    }
+
+    private void notifyUser(String accountName, String message) {
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(AddTransactionActivity.this, "My Notification");
+        builder.setContentTitle(accountName);
+        builder.setSmallIcon(R.drawable.wallet_icon);
+        builder.setContentText(message);
+        builder.setAutoCancel(true);
+
+        NotificationManagerCompat managerCompat = NotificationManagerCompat.from(AddTransactionActivity.this);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.POST_NOTIFICATIONS}, 1);
+            return;
+        }
+        managerCompat.notify(1, builder.build());
     }
 
     @Override
@@ -127,6 +174,7 @@ public class AddTransactionActivity extends AppCompatActivity {
     }
 
     private void deleteTransaction() {
+        long currentTimestamp = transactionModel.getTimestamp();
         FirebaseFirestore
                 .getInstance()
                 .collection("Transaction")
@@ -141,6 +189,11 @@ public class AddTransactionActivity extends AppCompatActivity {
                             newBalance -= currentAmount;
                         } else {
                             newBalance += currentAmount;
+                            for (int i = 0; i < budgetModelList.size(); i++) {
+                                if (currentTimestamp >= budgetModelList.get(i).getTimeStampStart() && currentTimestamp < budgetModelList.get(i).getTimeStampEnd()) {
+                                    budgetModelList.get(i).setSpending(budgetModelList.get(i).getSpending() - currentAmount);
+                                }
+                            }
                         }
                         MainAccountFragment.currentAccount.setBalance(newBalance);
                         FirebaseFirestore.getInstance().collection("Account")
@@ -148,8 +201,7 @@ public class AddTransactionActivity extends AppCompatActivity {
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void unused) {
-                                        sweetAlertDialog.dismissWithAnimation();
-                                        startActivity(new Intent(AddTransactionActivity.this, MainActivity.class));
+                                        pushBudgetData();
                                     }
                                 });
                     }
@@ -166,6 +218,25 @@ public class AddTransactionActivity extends AppCompatActivity {
         String category = categories[binding.categorySpinner.getSelectedItemPosition()];
         String date = binding.dateET.getText().toString();
         String time = binding.timeET.getText().toString();
+        long oldTimestamp = transactionModel.getTimestamp();
+        long timestamp = Calendar.getInstance().getTimeInMillis() / 1000;
+        try {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+            Date dateDate = dateFormat.parse(date);
+
+            SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
+            Date dateTime = timeFormat.parse(time);
+
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(dateDate);
+            calendar.set(Calendar.HOUR_OF_DAY, dateTime.getHours());
+            calendar.set(Calendar.MINUTE, dateTime.getMinutes());
+            timestamp = calendar.getTimeInMillis() / 1000;
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        long finalTimestamp = timestamp;
+
         if (transactionAmount.length() == 0) {
             binding.amountET.setError("Empty");
         }
@@ -179,7 +250,7 @@ public class AddTransactionActivity extends AppCompatActivity {
         } else {
             TransactionModel transaction =
                     new TransactionModel(id, Integer.parseInt(transactionAmount), type, transactionNote,
-                            category, date, time, MainAccountFragment.currentAccId);
+                            category, date, time, MainAccountFragment.currentAccId, timestamp);
 
             FirebaseFirestore
                     .getInstance()
@@ -195,11 +266,21 @@ public class AddTransactionActivity extends AppCompatActivity {
                                 newBalance -= currentAmount;
                             } else {
                                 newBalance += currentAmount;
+                                for (int i = 0; i < budgetModelList.size(); i++) {
+                                    if (oldTimestamp >= budgetModelList.get(i).getTimeStampStart() && oldTimestamp <= budgetModelList.get(i).getTimeStampEnd()) {
+                                        budgetModelList.get(i).setSpending(budgetModelList.get(i).getSpending() - currentAmount);
+                                    }
+                                }
                             }
                             if (type.equals("Income")) {
                                 newBalance += Integer.parseInt(transactionAmount);
                             } else {
                                 newBalance -= Integer.parseInt(transactionAmount);
+                                for (int i = 0; i < budgetModelList.size(); i++) {
+                                    if (oldTimestamp >= budgetModelList.get(i).getTimeStampStart() && oldTimestamp <= budgetModelList.get(i).getTimeStampEnd()) {
+                                        budgetModelList.get(i).setSpending(budgetModelList.get(i).getSpending() + Integer.parseInt(transactionAmount));
+                                    }
+                                }
                             }
                             MainAccountFragment.currentAccount.setBalance(newBalance);
                             FirebaseFirestore.getInstance().collection("Account")
@@ -207,8 +288,7 @@ public class AddTransactionActivity extends AppCompatActivity {
                                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
                                         public void onSuccess(Void unused) {
-                                            sweetAlertDialog.dismissWithAnimation();
-                                            startActivity(new Intent(AddTransactionActivity.this, MainActivity.class));
+                                            pushBudgetData();
                                         }
                                     });
                         }
@@ -233,9 +313,27 @@ public class AddTransactionActivity extends AppCompatActivity {
         String category = categories[binding.categorySpinner.getSelectedItemPosition()];
         String date = binding.dateET.getText().toString();
         String time = binding.timeET.getText().toString();
-        // TODO: continue save transaction data
+        long timestamp = Calendar.getInstance().getTimeInMillis() / 1000;
+        try {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+            Date dateDate = dateFormat.parse(date);
+
+            SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
+            Date dateTime = timeFormat.parse(time);
+
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(dateDate);
+            calendar.set(Calendar.HOUR_OF_DAY, dateTime.getHours());
+            calendar.set(Calendar.MINUTE, dateTime.getMinutes());
+            timestamp = calendar.getTimeInMillis() / 1000;
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        long finalTimestamp = timestamp;
         if (transactionAmount.length() == 0) {
             binding.amountET.setError("Empty");
+            sweetAlertDialog.dismissWithAnimation();
+            return;
         }
         if (incomeChecked) {
             type = "Income";
@@ -246,7 +344,8 @@ public class AddTransactionActivity extends AppCompatActivity {
             Toast.makeText(this, "Please choose or create an account for this transaction", Toast.LENGTH_SHORT).show();
         } else {
             TransactionModel transactionModel =
-                    new TransactionModel(id, Integer.parseInt(transactionAmount), type, transactionNote, category, date, time, MainAccountFragment.currentAccId);
+                    new TransactionModel(id, Integer.parseInt(transactionAmount), type, transactionNote,
+                            category, date, time, MainAccountFragment.currentAccId, timestamp);
 
             FirebaseFirestore
                     .getInstance()
@@ -269,8 +368,23 @@ public class AddTransactionActivity extends AppCompatActivity {
                                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
                                         public void onSuccess(Void unused) {
-                                            sweetAlertDialog.dismissWithAnimation();
-                                            startActivity(new Intent(AddTransactionActivity.this, MainActivity.class));
+                                            if (type.equals("Expense")) {
+                                                for (int i = 0; i < budgetModelList.size(); i++) {
+                                                    if (budgetModelList.get(i).isRiskOverspending()
+                                                            && budgetModelList.get(i).getSpending() < budgetModelList.get(i).getBudget() * 4 / 5
+                                                            && budgetModelList.get(i).getSpending() + Integer.parseInt(transactionAmount) >= budgetModelList.get(i).getBudget() * 4 / 5) {
+                                                        notifyUser(budgetModelList.get(i).getName(), "You might overspent your budget!");
+                                                    }
+                                                    if (finalTimestamp >= budgetModelList.get(i).getTimeStampStart() && finalTimestamp <= budgetModelList.get(i).getTimeStampEnd()) {
+                                                        budgetModelList.get(i)
+                                                                .setSpending(budgetModelList.get(i).getSpending() + Integer.parseInt(transactionAmount));
+                                                    }
+                                                }
+                                                pushBudgetData();
+                                            } else {
+                                                sweetAlertDialog.dismissWithAnimation();
+                                                startActivity(new Intent(AddTransactionActivity.this, MainActivity.class));
+                                            }
                                         }
                                     });
                         }
@@ -283,6 +397,38 @@ public class AddTransactionActivity extends AppCompatActivity {
                             startActivity(new Intent(AddTransactionActivity.this, MainActivity.class));
                         }
                     });
+        }
+    }
+
+    public void pushBudgetData() {
+        if (budgetModelList.size() != 0) {
+            for (int i = 0; i < budgetModelList.size(); i++) {
+                if (i != budgetModelList.size() - 1) {
+                    FirebaseFirestore.getInstance().collection("Budget").document(budgetModelList.get(i).getId())
+                            .set(budgetModelList.get(i));
+                } else {
+                    FirebaseFirestore.getInstance().collection("Budget").document(budgetModelList.get(i).getId())
+                            .set(budgetModelList.get(i))
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void unused) {
+                                    sweetAlertDialog.dismissWithAnimation();
+                                    startActivity(new Intent(AddTransactionActivity.this, MainActivity.class));
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Toast.makeText(AddTransactionActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                                    sweetAlertDialog.dismissWithAnimation();
+                                    startActivity(new Intent(AddTransactionActivity.this, MainActivity.class));
+                                }
+                            });
+                }
+            }
+        } else {
+            sweetAlertDialog.dismissWithAnimation();
+            startActivity(new Intent(AddTransactionActivity.this, MainActivity.class));
         }
     }
 

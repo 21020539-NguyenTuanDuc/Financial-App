@@ -1,11 +1,8 @@
-package com.example.financialapp.MainActivityFragments;
-
-import static android.content.ContentValues.TAG;
+package com.example.financialapp.Adapter;
 
 import android.app.Activity;
 import android.content.Context;
 import android.os.Handler;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +13,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.financialapp.Model.AccountModel;
 import com.example.financialapp.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;

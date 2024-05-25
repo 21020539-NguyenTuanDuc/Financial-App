@@ -1,6 +1,5 @@
-package com.example.financialapp.MainActivityFragments;
+package com.example.financialapp.Adapter;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -13,8 +12,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.financialapp.AddTransaction.AddTransactionActivity;
+import com.example.financialapp.Model.TransactionModel;
 import com.example.financialapp.R;
-import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -60,12 +59,6 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
         }
         holder.transaction_category_icon.setImageResource(AddTransactionActivity.icons[cnt]);
         holder.transaction_category.setText(transactionModel.getCategory());
-//        transactionModel.getAccountName(transactionModel.getAccountId(), new AccountNameCallback() {
-//            @Override
-//            public void onCallback(String accountName) {
-//                holder.transaction_account.setText(accountName);
-//            }
-//        });
         holder.transaction_type.setText(transactionModel.getType());
         NumberFormat nf = NumberFormat.getInstance();
         String transactionAmount = nf.format(transactionModel.getAmount()) + "đ";
@@ -95,7 +88,6 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
         public TransactionViewHolder(@NonNull View itemView) {
             super(itemView);
             transaction_category_icon = itemView.findViewById(R.id.transaction_category_icon);
-            ;
             transaction_amount = itemView.findViewById(R.id.transaction_amount);
             transaction_date = itemView.findViewById(R.id.transaction_date);
             transaction_category = itemView.findViewById(R.id.transaction_category);

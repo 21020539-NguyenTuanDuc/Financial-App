@@ -1,4 +1,4 @@
-package com.example.financialapp.MainActivityFragments;
+package com.example.financialapp.Adapter;
 
 import android.app.Activity;
 import android.content.Context;
@@ -12,7 +12,8 @@ import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.financialapp.MainActivity;
+import com.example.financialapp.Model.AccountModel;
+import com.example.financialapp.MainActivityFragments.MainAccountFragment;
 import com.example.financialapp.R;
 
 import java.text.NumberFormat;
