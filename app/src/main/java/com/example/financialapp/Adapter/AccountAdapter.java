@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.financialapp.MainActivityFragments.MainAccountFragment;
 import com.example.financialapp.Model.AccountModel;
+import com.example.financialapp.NavigationFragments.CurrencyFragment;
 import com.example.financialapp.R;
 
 import java.text.NumberFormat;
@@ -70,7 +71,7 @@ public class AccountAdapter extends RecyclerView.Adapter<AccountAdapter.AccountV
         holder.accountName.setText(accountModel.getName());
 //        holder.accountBalance.setText(String.valueOf(accountModel.getBalance()));
         NumberFormat nf = NumberFormat.getInstance();
-        String accountBalance = nf.format(accountModel.getBalance()) + "đ";
+        String accountBalance = nf.format(accountModel.getBalance()) + CurrencyFragment.current_symbol;
         holder.accountBalance.setText(accountBalance);
 
         CardView cardView = (CardView) holder.itemView;

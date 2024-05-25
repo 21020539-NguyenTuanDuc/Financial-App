@@ -13,4 +13,5 @@
     <color name="blue">#FF52c1fb</color>
     <color name="bluer">#FF237ed0</color>
     <color name="grey">#FF808080</color>
+    <color name="bg_grey">#FFf1f1f1</color>
 </resources>

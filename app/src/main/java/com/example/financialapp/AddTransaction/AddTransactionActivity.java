@@ -69,7 +69,9 @@ public class AddTransactionActivity extends AppCompatActivity {
         binding.categorySpinner.setAdapter(customSpinnerAdapter);
 
         String transactionAmount = getIntent().getStringExtra("transactionAmount");
-        binding.amountET.setText(transactionAmount);
+        if(transactionAmount.matches("^[0-9]*$")){
+            binding.amountET.setText(transactionAmount);
+        }
 
         getTimeAndDateInput();
 

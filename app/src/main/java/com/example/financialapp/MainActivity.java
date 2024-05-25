@@ -161,6 +161,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                             assert currentUser != null;
                             currentUser.setId(Uid);
                             getProfilePicture();
+                            if(currentUser.getCurrency_symbol() != null) CurrencyFragment.current_symbol = currentUser.getCurrency_symbol();
+                            if(currentUser.getLanguage() != null) LanguagesFragment.current_language = currentUser.getLanguage();
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
@@ -168,6 +170,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         public void onFailure(@NonNull Exception e) {
                             Toast.makeText(MainActivity.this, "User Failed!", Toast.LENGTH_SHORT).show();
 //                            sweetAlertDialog.dismissWithAnimation();
+                            if(currentUser.getCurrency_symbol() != null) CurrencyFragment.current_symbol = currentUser.getCurrency_symbol();
+                            if(currentUser.getLanguage() != null) LanguagesFragment.current_language = currentUser.getLanguage();
                         }
                     });
         }

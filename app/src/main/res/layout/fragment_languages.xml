@@ -3,13 +3,75 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/blue"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="30dp"
+    android:orientation="vertical"
+    android:background="@color/bg_grey"
     tools:context=".NavigationFragments.LanguagesFragment">
 
-    <TextView
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="Language Fragment" />
+        android:padding="10dp"
+        app:cardCornerRadius="10dp"
+        android:layout_height="wrap_content" >
+
+        <LinearLayout
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="10dp"
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_height="match_parent" >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:text="Choose your language"
+                android:textSize="30sp"
+                android:layout_height="wrap_content" />
+
+            <RadioGroup
+                android:id="@+id/languageRadioGroup"
+                android:layout_marginTop="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <RadioButton
+                    android:id="@+id/VNRadio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Vietnamese" />
+
+                <RadioButton
+                    android:id="@+id/ENRadio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="English" />
+
+                <RadioButton
+                    android:id="@+id/JPRadio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Japanese" />
+
+                <RadioButton
+                    android:id="@+id/CNRadio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Chinese" />
+
+            </RadioGroup>
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:id="@+id/set_language_button"
+        android:layout_marginTop="100dp"
+        android:text="Set your language"
+        android:layout_gravity="center_horizontal"
+        android:layout_height="wrap_content"/>
 
 </LinearLayout>

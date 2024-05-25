@@ -5,6 +5,8 @@ public class UserModel {
     private String name;
     private String number;
     private String email;
+    private String currency_symbol = null;
+    private String language = null;
 
     public UserModel() {
 
@@ -53,5 +55,21 @@ public class UserModel {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getCurrency_symbol() {
+        return currency_symbol;
+    }
+
+    public void setCurrency_symbol(String currency_symbol) {
+        this.currency_symbol = currency_symbol;
+    }
+
+    public String getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(String language) {
+        this.language = language;
     }
 }

@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.financialapp.Model.AccountModel;
+import com.example.financialapp.NavigationFragments.CurrencyFragment;
 import com.example.financialapp.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -77,7 +78,7 @@ public class AccountDeleteAdapter extends RecyclerView.Adapter<AccountDeleteAdap
         holder.account_name.setText(accountModel.getName());
         holder.account_type.setText(accountModel.getType());
         NumberFormat nf = NumberFormat.getInstance();
-        String accountBalance = nf.format(accountModel.getBalance()) + "đ";
+        String accountBalance = nf.format(accountModel.getBalance()) + CurrencyFragment.current_symbol;
         holder.account_balance.setText(accountBalance);
         holder.delete_button.setOnClickListener(new View.OnClickListener() {
             @Override

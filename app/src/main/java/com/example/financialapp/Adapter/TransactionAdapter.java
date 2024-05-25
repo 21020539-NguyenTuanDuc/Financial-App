@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.financialapp.AddTransaction.AddTransactionActivity;
 import com.example.financialapp.Model.TransactionModel;
+import com.example.financialapp.NavigationFragments.CurrencyFragment;
 import com.example.financialapp.R;
 
 import java.text.NumberFormat;
@@ -61,7 +62,7 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
         holder.transaction_category.setText(transactionModel.getCategory());
         holder.transaction_type.setText(transactionModel.getType());
         NumberFormat nf = NumberFormat.getInstance();
-        String transactionAmount = nf.format(transactionModel.getAmount()) + "đ";
+        String transactionAmount = nf.format(transactionModel.getAmount()) + CurrencyFragment.current_symbol;
         holder.transaction_amount.setText(transactionAmount);
         holder.transaction_date.setText(transactionModel.getDate());
         holder.itemView.setOnClickListener(new View.OnClickListener() {

@@ -3,13 +3,87 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/red"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="30dp"
+    android:orientation="vertical"
+    android:background="@color/bg_grey"
     tools:context=".NavigationFragments.CurrencyFragment">
 
-    <TextView
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="Currency Fragment" />
+        android:padding="10dp"
+        app:cardCornerRadius="10dp"
+        android:layout_height="wrap_content" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_marginStart="10dp"
+            android:orientation="vertical"
+            android:layout_height="match_parent" >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_marginTop="5dp"
+                android:text="Choose your currency"
+                android:textSize="30sp"
+                android:layout_height="wrap_content" />
+
+            <RadioGroup
+                android:id="@+id/currencyRadioGroup"
+                android:layout_width="match_parent"
+                 android:layout_marginTop="20dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <RadioButton
+                    android:id="@+id/vndRadio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="đ: Vietnam Dong" />
+
+                <RadioButton
+                    android:id="@+id/usdRadio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="$: United States Dollar" />
+
+                <RadioButton
+                    android:id="@+id/poundRadio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="£: British Pound Sterling" />
+
+                <RadioButton
+                    android:id="@+id/euroRadio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="€: Euro" />
+
+                <RadioButton
+                    android:id="@+id/yenRadio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="¥: Japanese Yen" />
+
+                <RadioButton
+                    android:id="@+id/wonRadio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="₩: South Korean Won" />
+
+            </RadioGroup>
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:id="@+id/set_currency_button"
+        android:layout_marginTop="100dp"
+        android:text="Set your currency symbol"
+        android:layout_gravity="center_horizontal"
+        android:layout_height="wrap_content"/>
 
 </LinearLayout>
