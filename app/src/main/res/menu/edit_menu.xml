@@ -2,8 +2,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/forwardButton"
-        android:icon="@drawable/baseline_arrow_forward"
-        android:title="ForwardButton"
+        android:id="@+id/editButton"
+        android:icon="@drawable/edit_icon"
+        android:iconTint="@color/white"
+        android:title="EditButton"
         app:showAsAction="always" />
 </menu>

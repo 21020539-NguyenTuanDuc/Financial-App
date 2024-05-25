@@ -2,6 +2,8 @@ package com.example.financialapp.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -68,6 +70,12 @@ public class BudgetAdapter extends RecyclerView.Adapter<BudgetAdapter.BudgetView
             holder.progressBar.setProgress(spending.intValue());
         } else {
             holder.progressBar.setProgress(budget.intValue());
+        }
+
+        if (spending >= 1.00 * budget * 1 / 2 && spending < 1.00 * budget * 4 / 5) {
+            holder.progressBar.setProgressTintList(ColorStateList.valueOf(Color.YELLOW));
+        } else if (spending >= 1.00 * budget * 4 / 5) {
+            holder.progressBar.setProgressTintList(ColorStateList.valueOf(Color.RED));
         }
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {

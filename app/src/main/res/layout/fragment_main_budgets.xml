@@ -11,19 +11,20 @@
     tools:context=".MainActivityFragments.MainBudgetsFragment">
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:cardCornerRadius="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:cardCornerRadius="8dp"
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
             android:paddingTop="5dp"
-            android:paddingBottom="5dp"
-            android:layout_height="wrap_content">
+            android:paddingBottom="5dp">
 
             <RelativeLayout
                 android:layout_width="wrap_content"
@@ -32,37 +33,37 @@
                 <ImageView
                     android:id="@+id/budgets_icon"
                     android:layout_width="100dp"
-                    android:background="@drawable/budgets_icon"
-                    android:layout_height="100dp" />
+                    android:layout_height="100dp"
+                    android:background="@drawable/budgets_icon" />
 
                 <TextView
                     android:id="@+id/budgets_text"
                     android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_toEndOf="@id/budgets_icon"
                     android:text="Budgets"
-                    android:textSize="30sp"
                     android:textColor="@color/black"
-                    android:layout_height="wrap_content" />
+                    android:textSize="30sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toEndOf="@id/budgets_icon"
-                    android:layout_marginTop="10dp"
                     android:layout_below="@id/budgets_text"
-                    android:textSize="16sp"
-                    android:text="Start with Budgets to have an efficient overview of your spending limits." />
+                    android:layout_marginTop="10dp"
+                    android:layout_toEndOf="@id/budgets_icon"
+                    android:text="Start with Budgets to have an efficient overview of your spending limits."
+                    android:textSize="16sp" />
 
             </RelativeLayout>
 
             <TextView
                 android:id="@+id/create_budget"
                 android:layout_width="wrap_content"
-                android:text="CREATE BUDGET"
-                android:textSize="20sp"
-                android:textColor="@color/bluer"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:layout_height="wrap_content" />
+                android:text="CREATE BUDGET"
+                android:textColor="@color/bluer"
+                android:textSize="20sp" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rcv_budgets"
@@ -70,5 +71,67 @@
                 android:layout_height="wrap_content" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        app:cardCornerRadius="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/cardView"
+        tools:layout_editor_absoluteX="10dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/goals_icon"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:background="@drawable/goals_icon" />
+
+                <TextView
+                    android:id="@+id/goals_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@id/goals_icon"
+                    android:text="Budgets"
+                    android:textColor="@color/black"
+                    android:textSize="30sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/goals_text"
+                    android:layout_marginTop="10dp"
+                    android:layout_toEndOf="@id/goals_icon"
+                    android:text="Set your goal and have a quick overview of your progress."
+                    android:textSize="16sp" />
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/create_goal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="CREATE GOAL"
+                android:textColor="@color/bluer"
+                android:textSize="20sp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rcv_goals"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

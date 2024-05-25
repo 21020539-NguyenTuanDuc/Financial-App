@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setCurrentItem(position);
 
         budgetAdapter = new BudgetAdapter(this);
-        getBudgetModelData();
+//        getBudgetModelData();
     }
 
     @Override
@@ -93,28 +93,28 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void getBudgetModelData() {
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("Budget").whereEqualTo("userId", MainActivity.currentUser.getId())
-                .whereEqualTo("ongoing", true)
-                .get()
-                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                    @Override
-                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                        budgetAdapter.clearData();
-                        List<DocumentSnapshot> dsList = queryDocumentSnapshots.getDocuments();
-                        for (DocumentSnapshot ds : dsList) {
-                            BudgetModel budgetModel = ds.toObject(BudgetModel.class);
-                            assert budgetModel != null;
-                            if (budgetModel.getTimeStampEnd() < Calendar.getInstance().getTimeInMillis() / 1000) {
-                                budgetModel.setOngoing(false);
-                                db.collection("Budget")
-                                        .document(budgetModel.getId()).set(budgetModel);
-                                continue;
-                            }
-                            budgetAdapter.addData(budgetModel);
-                        }
-                        sweetAlertDialog.dismissWithAnimation();
-                    }
-                });
+//        FirebaseFirestore db = FirebaseFirestore.getInstance();
+//        db.collection("Budget").whereEqualTo("userId", MainActivity.currentUser.getId())
+//                .whereEqualTo("ongoing", true)
+//                .get()
+//                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+//                    @Override
+//                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+//                        budgetAdapter.clearData();
+//                        List<DocumentSnapshot> dsList = queryDocumentSnapshots.getDocuments();
+//                        for (DocumentSnapshot ds : dsList) {
+//                            BudgetModel budgetModel = ds.toObject(BudgetModel.class);
+//                            assert budgetModel != null;
+//                            if (budgetModel.getTimeStampEnd() < Calendar.getInstance().getTimeInMillis() / 1000) {
+//                                budgetModel.setOngoing(false);
+//                                db.collection("Budget")
+//                                        .document(budgetModel.getId()).set(budgetModel);
+//                                continue;
+//                            }
+//                            budgetAdapter.addData(budgetModel);
+//                        }
+//                        sweetAlertDialog.dismissWithAnimation();
+//                    }
+//                });
     }
 }

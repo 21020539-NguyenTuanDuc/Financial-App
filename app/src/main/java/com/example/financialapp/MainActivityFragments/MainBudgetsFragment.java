@@ -11,8 +11,10 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.financialapp.Adapter.BudgetAdapter;
+import com.example.financialapp.Adapter.GoalAdapter;
 import com.example.financialapp.MainActivity;
 import com.example.financialapp.Model.BudgetModel;
+import com.example.financialapp.Model.GoalModel;
 import com.example.financialapp.Model.TransactionModel;
 import com.example.financialapp.R;
 import com.example.financialapp.databinding.FragmentMainBudgetsBinding;
@@ -30,6 +32,7 @@ public class MainBudgetsFragment extends Fragment {
     SweetAlertDialog sweetAlertDialog;
     FragmentMainBudgetsBinding binding;
     BudgetAdapter budgetAdapter;
+    GoalAdapter goalAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -47,6 +50,17 @@ public class MainBudgetsFragment extends Fragment {
         budgetAdapter = new BudgetAdapter(getContext());
         binding.rcvBudgets.setAdapter(budgetAdapter);
         binding.rcvBudgets.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        binding.createGoal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getContext(), CreateGoalActivity.class));
+            }
+        });
+
+        goalAdapter = new GoalAdapter(getContext());
+        binding.rcvGoals.setAdapter(goalAdapter);
+        binding.rcvGoals.setLayoutManager(new LinearLayoutManager(getContext()));
 
         return binding.getRoot();
     }
@@ -81,6 +95,25 @@ public class MainBudgetsFragment extends Fragment {
                                 continue;
                             }
                             budgetAdapter.addData(budgetModel);
+                        }
+                        getSavingModelData();
+                    }
+                });
+    }
+
+    private void getSavingModelData() {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("Goal").whereEqualTo("userId", MainActivity.currentUser.getId())
+                .whereEqualTo("reached", false).get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        goalAdapter.clearData();
+                        List<DocumentSnapshot> dsList = queryDocumentSnapshots.getDocuments();
+                        System.out.println(dsList.size());
+                        for (DocumentSnapshot ds : dsList) {
+                            GoalModel goalModel = ds.toObject(GoalModel.class);
+                            goalAdapter.addData(goalModel);
                         }
                         sweetAlertDialog.dismissWithAnimation();
                     }

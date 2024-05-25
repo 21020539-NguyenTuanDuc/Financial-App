@@ -7,7 +7,7 @@
     android:background="@color/browser_actions_bg_grey"
     android:orientation="vertical"
     android:padding="10dp"
-    tools:context=".MainActivityFragments.CreateBudgetActivity">
+    tools:context=".MainActivityFragments.CreateGoalActivity">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -35,7 +35,7 @@
                 <EditText
                     android:id="@+id/nameET"
                     android:layout_width="match_parent"
-                    android:hint="Budget Name"
+                    android:hint="Goal Name"
                     android:inputType="text"
                     android:layout_height="70dp" />
 
@@ -49,13 +49,13 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Amount"
+                    android:text="Target Amount"
                     android:textColor="@color/grey" />
 
                 <EditText
-                    android:id="@+id/budgetET"
+                    android:id="@+id/targetET"
                     android:layout_width="match_parent"
-                    android:hint="Budget Amount"
+                    android:hint="Target Amount"
                     android:layout_height="70dp"
                     android:inputType="numberSigned" />
             </LinearLayout>
@@ -68,13 +68,15 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Period"
+                    android:text="Saved already"
                     android:textColor="@color/grey" />
 
-                <Spinner
-                    android:id="@+id/periodSpinner"
+                <EditText
+                    android:id="@+id/savedET"
                     android:layout_width="match_parent"
-                    android:layout_height="70dp" />
+                    android:hint="0"
+                    android:layout_height="70dp"
+                    android:inputType="numberSigned" />
             </LinearLayout>
 
         </LinearLayout>
@@ -107,32 +109,12 @@
                     android:layout_width="wrap_content"
                     android:layout_marginTop="10dp"
                     android:layout_height="wrap_content"
-                    android:text="Budget Overspent"
+                    android:text="Goal Achieved"
                     android:textSize="20sp"
                     android:textColor="@color/black" />
 
                 <com.google.android.material.switchmaterial.SwitchMaterial
-                    android:id="@+id/budget_overspent_notify"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_height="wrap_content"
-                    android:text="Risk of overspending"
-                    android:textSize="20sp"
-                    android:textColor="@color/black" />
-
-                <com.google.android.material.switchmaterial.SwitchMaterial
-                    android:id="@+id/risk_overspending_notify"
+                    android:id="@+id/goal_achieved_notify"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true" />
@@ -141,11 +123,11 @@
     </androidx.cardview.widget.CardView>
 
     <Button
-        android:id="@+id/addBudgetButton"
+        android:id="@+id/addGoalButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="70dp"
-        android:text="Add Budget" />
+        android:text="Add Goal" />
 
 </LinearLayout>

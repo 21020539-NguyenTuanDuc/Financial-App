@@ -7,6 +7,7 @@ import android.app.DatePickerDialog;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -116,8 +117,6 @@ public class AddTransactionActivity extends AppCompatActivity {
         });
 
         createNotificationChannel();
-
-//        notificationCompatBuilder = new NotificationCompat.Builder(this, "Budget");
     }
 
     private void createNotificationChannel() {
@@ -131,19 +130,19 @@ public class AddTransactionActivity extends AppCompatActivity {
     }
 
     private void notifyUser(String accountName, String message) {
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
+
         NotificationCompat.Builder builder = new NotificationCompat.Builder(AddTransactionActivity.this, "My Notification");
         builder.setContentTitle(accountName);
         builder.setSmallIcon(R.drawable.wallet_icon);
         builder.setContentText(message);
         builder.setAutoCancel(true);
+        builder.setContentIntent(pendingIntent);
 
         NotificationManagerCompat managerCompat = NotificationManagerCompat.from(AddTransactionActivity.this);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.POST_NOTIFICATIONS}, 1);
             return;
         }
@@ -169,6 +168,9 @@ public class AddTransactionActivity extends AppCompatActivity {
             sweetAlertDialog.show();
             deleteTransaction();
             return true;
+        }
+        if (transactionModel != null && android.R.id.home == id) {
+            startActivity(new Intent(AddTransactionActivity.this, MainActivity.class));
         }
         return super.onOptionsItemSelected(item);
     }
@@ -277,6 +279,16 @@ public class AddTransactionActivity extends AppCompatActivity {
                             } else {
                                 newBalance -= Integer.parseInt(transactionAmount);
                                 for (int i = 0; i < budgetModelList.size(); i++) {
+                                    if (budgetModelList.get(i).isRiskOverspending()
+                                            && budgetModelList.get(i).getSpending() < budgetModelList.get(i).getBudget() * 4 / 5
+                                            && budgetModelList.get(i).getSpending() + Integer.parseInt(transactionAmount) >= budgetModelList.get(i).getBudget() * 4 / 5
+                                            && budgetModelList.get(i).getSpending() + Integer.parseInt(transactionAmount) < budgetModelList.get(i).getBudget()) {
+                                        notifyUser(budgetModelList.get(i).getName(), "You might overspent your budget!");
+                                    }
+                                    if (budgetModelList.get(i).isBudgetOverspent()
+                                            && budgetModelList.get(i).getSpending() + Integer.parseInt(transactionAmount) >= budgetModelList.get(i).getBudget()) {
+                                        notifyUser(budgetModelList.get(i).getName(), "You have spent more than your budget!");
+                                    }
                                     if (oldTimestamp >= budgetModelList.get(i).getTimeStampStart() && oldTimestamp <= budgetModelList.get(i).getTimeStampEnd()) {
                                         budgetModelList.get(i).setSpending(budgetModelList.get(i).getSpending() + Integer.parseInt(transactionAmount));
                                     }
@@ -372,8 +384,13 @@ public class AddTransactionActivity extends AppCompatActivity {
                                                 for (int i = 0; i < budgetModelList.size(); i++) {
                                                     if (budgetModelList.get(i).isRiskOverspending()
                                                             && budgetModelList.get(i).getSpending() < budgetModelList.get(i).getBudget() * 4 / 5
-                                                            && budgetModelList.get(i).getSpending() + Integer.parseInt(transactionAmount) >= budgetModelList.get(i).getBudget() * 4 / 5) {
+                                                            && budgetModelList.get(i).getSpending() + Integer.parseInt(transactionAmount) >= budgetModelList.get(i).getBudget() * 4 / 5
+                                                            && budgetModelList.get(i).getSpending() + Integer.parseInt(transactionAmount) < budgetModelList.get(i).getBudget()) {
                                                         notifyUser(budgetModelList.get(i).getName(), "You might overspent your budget!");
+                                                    }
+                                                    if (budgetModelList.get(i).isBudgetOverspent()
+                                                            && budgetModelList.get(i).getSpending() + Integer.parseInt(transactionAmount) >= budgetModelList.get(i).getBudget()) {
+                                                        notifyUser(budgetModelList.get(i).getName(), "You have spent more than your budget!");
                                                     }
                                                     if (finalTimestamp >= budgetModelList.get(i).getTimeStampStart() && finalTimestamp <= budgetModelList.get(i).getTimeStampEnd()) {
                                                         budgetModelList.get(i)

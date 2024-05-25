@@ -37,7 +37,7 @@
                     android:layout_width="match_parent"
                     android:hint="Transaction amount"
                     android:layout_height="70dp"
-                    android:inputType="number" />
+                    android:inputType="numberSigned" />
 
                 <RadioGroup
                     android:id="@+id/typeRadioGroup"
