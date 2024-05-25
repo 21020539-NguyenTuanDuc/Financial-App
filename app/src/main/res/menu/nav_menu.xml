@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:title="Main">
+        <menu>
+            <item
+                android:id="@+id/home"
+                android:icon="@drawable/home_icon"
+                android:title="Currency" />
+        </menu>
+    </item>
+
+    <item android:title="Others">
+        <menu>
+            <item
+                android:id="@+id/currency"
+                android:icon="@drawable/currency_icon"
+                android:title="Currency" />
+
+            <item
+                android:id="@+id/languages"
+                android:icon="@drawable/languages_icon"
+                android:title="Languages" />
+            <item
+                android:id="@+id/follow_us"
+                android:icon="@drawable/follow_icon"
+                android:title="Follow us" />
+            <item
+                android:id="@+id/help"
+                android:icon="@drawable/help_icon"
+                android:title="Help" />
+            <item
+                android:id="@+id/about"
+                android:icon="@drawable/about_icon"
+                android:title="About" />
+        </menu>
+    </item>
+</menu>

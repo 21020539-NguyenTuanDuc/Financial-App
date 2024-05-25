@@ -133,7 +133,6 @@ public class AddSavingActivity extends AppCompatActivity {
         builder.setContentTitle(name);
         builder.setSmallIcon(R.drawable.wallet_icon);
         builder.setContentText(message);
-        builder.setColor(ContextCompat.getColor(AddSavingActivity.this, R.color.main_green));
         builder.setAutoCancel(true);
         builder.setContentIntent(pendingIntent);
 
