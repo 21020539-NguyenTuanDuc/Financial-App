@@ -1,8 +1,6 @@
 package com.example.financialapp.Model;
 
-import java.io.Serializable;
-
-public class BudgetModel implements Serializable {
+public class BudgetModel {
     private String id;
     private String name;
     private long timeStampStart;

@@ -1,7 +1,6 @@
 package com.example.financialapp.Adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,8 +11,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.financialapp.AddTransaction.AddTransactionActivity;
-import com.example.financialapp.MainActivityFragments.CreateBudgetActivity;
 import com.example.financialapp.Model.BudgetModel;
 import com.example.financialapp.Model.TransactionModel;
 import com.example.financialapp.R;
@@ -69,15 +66,6 @@ public class BudgetAdapter extends RecyclerView.Adapter<BudgetAdapter.BudgetView
         } else {
             holder.progressBar.setProgress(budget.intValue());
         }
-
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(context, CreateBudgetActivity.class);
-                intent.putExtra("budget", budgetModel);
-                context.startActivity(intent);
-            }
-        });
     }
 
     @Override
