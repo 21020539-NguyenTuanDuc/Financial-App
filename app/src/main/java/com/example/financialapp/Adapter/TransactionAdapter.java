@@ -59,12 +59,6 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
         }
         holder.transaction_category_icon.setImageResource(AddTransactionActivity.icons[cnt]);
         holder.transaction_category.setText(transactionModel.getCategory());
-//        transactionModel.getAccountName(transactionModel.getAccountId(), new AccountNameCallback() {
-//            @Override
-//            public void onCallback(String accountName) {
-//                holder.transaction_account.setText(accountName);
-//            }
-//        });
         holder.transaction_type.setText(transactionModel.getType());
         NumberFormat nf = NumberFormat.getInstance();
         String transactionAmount = nf.format(transactionModel.getAmount()) + "đ";
