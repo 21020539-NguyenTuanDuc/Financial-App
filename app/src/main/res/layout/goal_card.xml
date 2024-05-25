@@ -1,63 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:orientation="horizontal"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
 
     <RelativeLayout
-        android:layout_marginStart="5dp"
-        android:layout_marginEnd="5dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp">
 
         <TextView
             android:id="@+id/goal_name"
             android:layout_width="wrap_content"
-            android:textSize="20sp"
-            android:textColor="@color/black"
+            android:layout_height="wrap_content"
             android:text="Monthly"
-            android:layout_height="wrap_content" />
+            android:textColor="@color/black"
+            android:textSize="20sp" />
 
         <ProgressBar
             android:id="@+id/goal_progressBar"
             style="?android:attr/progressBarStyleHorizontal"
-            android:layout_below="@id/goal_name"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_below="@id/goal_name" />
 
         <TextView
             android:id="@+id/target"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_above="@id/goal_progressBar"
             android:layout_alignEnd="@id/goal_progressBar"
-            android:paddingEnd="5dp"
             android:paddingStart="5dp"
-            android:textColor="@color/black"
+            android:paddingEnd="5dp"
             android:text="90"
-            android:textStyle="bold"
+            android:textColor="@color/black"
             android:textSize="20sp"
-            android:layout_height="wrap_content" />
+            android:textStyle="bold" />
 
         <TextView
-            android:layout_width="wrap_content"
             android:id="@+id/separator"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_toLeftOf="@id/target"
             android:paddingStart="5dp"
-            android:textColor="@color/black"
             android:text="/"
-            android:textStyle="bold"
+            android:textColor="@color/black"
             android:textSize="20sp"
-            android:layout_toLeftOf="@id/target" />
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/saved"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_toLeftOf="@id/separator"
             android:paddingStart="5dp"
-            android:textColor="@color/black"
             android:text="90"
-            android:textStyle="bold"
+            android:textColor="@color/black"
             android:textSize="20sp"
-            android:layout_toLeftOf="@id/separator" />
+            android:textStyle="bold" />
     </RelativeLayout>
 </androidx.cardview.widget.CardView>

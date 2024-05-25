@@ -39,6 +39,9 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String email = binding.email.getText().toString();
                 String password = binding.password.getText().toString().trim();
+                sweetAlertDialog = new SweetAlertDialog(LoginActivity.this, SweetAlertDialog.PROGRESS_TYPE);
+                sweetAlertDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
+                sweetAlertDialog.setCancelable(false);
                 sweetAlertDialog.show();
                 if (!password.equals("") && !email.equals("")) {
                     firebaseAuth.signInWithEmailAndPassword(email, password)
@@ -68,6 +71,11 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String email = binding.email.getText().toString();
+
+
+                sweetAlertDialog = new SweetAlertDialog(LoginActivity.this, SweetAlertDialog.PROGRESS_TYPE);
+                sweetAlertDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
+                sweetAlertDialog.setCancelable(false);
                 sweetAlertDialog.setTitle("Sending email");
                 sweetAlertDialog.show();
                 if (!email.equals("")) {
@@ -90,9 +98,6 @@ public class LoginActivity extends AppCompatActivity {
                     sweetAlertDialog.dismissWithAnimation();
                     Toast.makeText(LoginActivity.this, "Fill in email to send verification", Toast.LENGTH_SHORT).show();
                 }
-                sweetAlertDialog = new SweetAlertDialog(LoginActivity.this, SweetAlertDialog.PROGRESS_TYPE);
-                sweetAlertDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
-                sweetAlertDialog.setCancelable(false);
             }
         });
 
@@ -100,6 +105,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(LoginActivity.this, SignupActivity.class));
+                finishAffinity();
             }
         });
     }

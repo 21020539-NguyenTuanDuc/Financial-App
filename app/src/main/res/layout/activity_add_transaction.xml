@@ -35,8 +35,8 @@
                 <EditText
                     android:id="@+id/amountET"
                     android:layout_width="match_parent"
-                    android:hint="Transaction amount"
                     android:layout_height="70dp"
+                    android:hint="Transaction amount"
                     android:inputType="numberSigned" />
 
                 <RadioGroup
@@ -74,8 +74,8 @@
                 <EditText
                     android:id="@+id/noteET"
                     android:layout_width="match_parent"
-                    android:hint="Transaction description"
                     android:layout_height="70dp"
+                    android:hint="Transaction description"
                     android:inputType="text" />
             </LinearLayout>
 

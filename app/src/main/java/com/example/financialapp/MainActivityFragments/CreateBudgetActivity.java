@@ -1,8 +1,5 @@
 package com.example.financialapp.MainActivityFragments;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -12,8 +9,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.financialapp.Adapter.PeriodSpinnerAdapter;
-import com.example.financialapp.AddTransaction.AddTransactionActivity;
 import com.example.financialapp.MainActivity;
 import com.example.financialapp.Model.BudgetModel;
 import com.example.financialapp.R;
@@ -30,10 +29,10 @@ public class CreateBudgetActivity extends AppCompatActivity {
     public String[] periods = {"7 days", "30 days", "180 days", "365 days"};
     public long[] periodDay = {7, 30, 180, 365};
     ActivityCreateBudgetBinding binding;
-    private BudgetModel currentBudget;
     Calendar calendar;
     SweetAlertDialog sweetAlertDialog;
     PeriodSpinnerAdapter periodSpinnerAdapter;
+    private BudgetModel currentBudget;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,6 +91,7 @@ public class CreateBudgetActivity extends AppCompatActivity {
             Intent intent = new Intent(this, MainActivity.class);
             intent.putExtra("fragment_position", 1);
             startActivity(intent);
+            finish();
             return true;
         }
         int id = item.getItemId();
@@ -117,6 +117,7 @@ public class CreateBudgetActivity extends AppCompatActivity {
                         intent.putExtra("fragment_position", 1);
                         sweetAlertDialog.dismissWithAnimation();
                         startActivity(intent);
+                        finish();
                     }
                 });
     }
@@ -156,6 +157,7 @@ public class CreateBudgetActivity extends AppCompatActivity {
                         Toast.makeText(CreateBudgetActivity.this, "Update Budget!", Toast.LENGTH_SHORT).show();
                         sweetAlertDialog.dismissWithAnimation();
                         startActivity(intent);
+                        finish();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -164,6 +166,7 @@ public class CreateBudgetActivity extends AppCompatActivity {
                         Toast.makeText(CreateBudgetActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                         sweetAlertDialog.dismissWithAnimation();
                         startActivity(intent);
+                        finish();
                     }
                 });
     }
@@ -203,6 +206,7 @@ public class CreateBudgetActivity extends AppCompatActivity {
                         Toast.makeText(CreateBudgetActivity.this, "Create Budget!", Toast.LENGTH_SHORT).show();
                         sweetAlertDialog.dismissWithAnimation();
                         startActivity(intent);
+                        finish();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -211,6 +215,7 @@ public class CreateBudgetActivity extends AppCompatActivity {
                         Toast.makeText(CreateBudgetActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                         sweetAlertDialog.dismissWithAnimation();
                         startActivity(intent);
+                        finish();
                     }
                 });
     }

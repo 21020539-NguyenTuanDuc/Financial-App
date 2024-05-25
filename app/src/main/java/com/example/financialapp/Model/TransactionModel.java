@@ -1,13 +1,6 @@
 package com.example.financialapp.Model;
 
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.Timestamp;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
-
 import java.io.Serializable;
-
-import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class TransactionModel implements Serializable {
     private String id;

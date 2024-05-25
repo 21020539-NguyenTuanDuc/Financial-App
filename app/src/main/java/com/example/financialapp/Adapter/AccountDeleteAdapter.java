@@ -29,8 +29,8 @@ import java.util.List;
 
 public class AccountDeleteAdapter extends RecyclerView.Adapter<AccountDeleteAdapter.AccountDeleteViewHolder> {
 
-    private Context context;
     public List<AccountModel> accountModelDList;
+    private Context context;
 
     public AccountDeleteAdapter(Context context) {
         this.context = context;

@@ -12,8 +12,8 @@ import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.financialapp.Model.AccountModel;
 import com.example.financialapp.MainActivityFragments.MainAccountFragment;
+import com.example.financialapp.Model.AccountModel;
 import com.example.financialapp.R;
 
 import java.text.NumberFormat;
@@ -21,8 +21,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AccountAdapter extends RecyclerView.Adapter<AccountAdapter.AccountViewHolder> {
-    private Context context;
     public List<AccountModel> accountModelList;
+    private Context context;
 
     public AccountAdapter(Context context) {
         this.context = context;

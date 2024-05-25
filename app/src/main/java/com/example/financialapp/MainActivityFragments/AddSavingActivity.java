@@ -1,14 +1,6 @@
 package com.example.financialapp.MainActivityFragments;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
-import androidx.core.content.ContextCompat;
-
 import android.Manifest;
-import android.app.Activity;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -23,7 +15,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-import com.example.financialapp.AddTransaction.AddTransactionActivity;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
+
 import com.example.financialapp.MainActivity;
 import com.example.financialapp.Model.GoalModel;
 import com.example.financialapp.R;
@@ -107,6 +104,7 @@ public class AddSavingActivity extends AppCompatActivity {
                                 Intent intent = new Intent(AddSavingActivity.this, MainActivity.class);
                                 intent.putExtra("fragment_position", 1);
                                 startActivity(intent);
+                                finish();
                             }
                         });
             }
@@ -156,6 +154,7 @@ public class AddSavingActivity extends AppCompatActivity {
             Intent intent = new Intent(this, MainActivity.class);
             intent.putExtra("fragment_position", 1);
             startActivity(intent);
+            finish();
             return true;
         } else if (item.getItemId() == R.id.editButton) {
             Intent intent = new Intent(this, CreateGoalActivity.class);

@@ -35,9 +35,9 @@
                 <EditText
                     android:id="@+id/nameET"
                     android:layout_width="match_parent"
+                    android:layout_height="70dp"
                     android:hint="Budget Name"
-                    android:inputType="text"
-                    android:layout_height="70dp" />
+                    android:inputType="text" />
 
             </LinearLayout>
 
@@ -55,8 +55,8 @@
                 <EditText
                     android:id="@+id/budgetET"
                     android:layout_width="match_parent"
-                    android:hint="Budget Amount"
                     android:layout_height="70dp"
+                    android:hint="Budget Amount"
                     android:inputType="numberSigned" />
             </LinearLayout>
 
@@ -90,13 +90,13 @@
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:orientation="vertical"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
             <TextView
                 android:layout_width="wrap_content"
-                android:text="Notification"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:text="Notification" />
 
             <RelativeLayout
                 android:layout_width="wrap_content"
@@ -105,11 +105,11 @@
 
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_marginTop="10dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
                     android:text="Budget Overspent"
-                    android:textSize="20sp"
-                    android:textColor="@color/black" />
+                    android:textColor="@color/black"
+                    android:textSize="20sp" />
 
                 <com.google.android.material.switchmaterial.SwitchMaterial
                     android:id="@+id/budget_overspent_notify"
@@ -125,11 +125,11 @@
 
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_marginTop="10dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
                     android:text="Risk of overspending"
-                    android:textSize="20sp"
-                    android:textColor="@color/black" />
+                    android:textColor="@color/black"
+                    android:textSize="20sp" />
 
                 <com.google.android.material.switchmaterial.SwitchMaterial
                     android:id="@+id/risk_overspending_notify"

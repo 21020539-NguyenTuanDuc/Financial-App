@@ -6,6 +6,10 @@ public class UserModel {
     private String number;
     private String email;
 
+    public UserModel() {
+
+    }
+
     public UserModel(String id, String name, String number, String email) {
         this.id = id;
         this.name = name;

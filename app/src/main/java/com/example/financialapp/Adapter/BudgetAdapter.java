@@ -7,17 +7,14 @@ import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.financialapp.AddTransaction.AddTransactionActivity;
 import com.example.financialapp.MainActivityFragments.CreateBudgetActivity;
 import com.example.financialapp.Model.BudgetModel;
-import com.example.financialapp.Model.TransactionModel;
 import com.example.financialapp.R;
 
 import java.text.NumberFormat;
@@ -25,8 +22,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BudgetAdapter extends RecyclerView.Adapter<BudgetAdapter.BudgetViewHolder> {
-    private Context context;
     public static List<BudgetModel> budgetModelList;
+    private Context context;
 
     public BudgetAdapter(Context context) {
         this.context = context;

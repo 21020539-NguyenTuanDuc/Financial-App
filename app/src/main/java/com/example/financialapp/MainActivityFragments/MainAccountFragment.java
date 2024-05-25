@@ -36,12 +36,11 @@ import java.util.List;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class MainAccountFragment extends Fragment {
-    private long income = 0, expense = 0;
     public static String currentAccId = "";
     public static AccountModel currentAccount;
     SweetAlertDialog sweetAlertDialog;
-
     FragmentMainAccountBinding binding;
+    private long income = 0, expense = 0;
     private AccountAdapter accountAdapter;
     private TransactionAdapter transactionAdapter;
 

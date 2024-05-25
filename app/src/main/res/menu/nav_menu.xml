@@ -3,33 +3,33 @@
     <item android:title="Main">
         <menu>
             <item
-                android:id="@+id/home"
+                android:id="@+id/nav_home"
                 android:icon="@drawable/home_icon"
-                android:title="Currency" />
+                android:title="Home" />
         </menu>
     </item>
 
     <item android:title="Others">
         <menu>
             <item
-                android:id="@+id/currency"
+                android:id="@+id/nav_currency"
                 android:icon="@drawable/currency_icon"
                 android:title="Currency" />
 
             <item
-                android:id="@+id/languages"
+                android:id="@+id/nav_languages"
                 android:icon="@drawable/languages_icon"
                 android:title="Languages" />
             <item
-                android:id="@+id/follow_us"
+                android:id="@+id/nav_follow_us"
                 android:icon="@drawable/follow_icon"
                 android:title="Follow us" />
             <item
-                android:id="@+id/help"
+                android:id="@+id/nav_help"
                 android:icon="@drawable/help_icon"
                 android:title="Help" />
             <item
-                android:id="@+id/about"
+                android:id="@+id/nav_about"
                 android:icon="@drawable/about_icon"
                 android:title="About" />
         </menu>

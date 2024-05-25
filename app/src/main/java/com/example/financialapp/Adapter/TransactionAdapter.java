@@ -20,8 +20,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.TransactionViewHolder> {
-    private Context context;
     public List<TransactionModel> transactionModelList;
+    private Context context;
 
     public TransactionAdapter(Context context) {
         this.context = context;

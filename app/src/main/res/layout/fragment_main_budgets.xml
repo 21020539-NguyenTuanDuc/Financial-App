@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingRight="10dp"
+    android:background="@color/browser_actions_bg_grey"
     android:paddingLeft="10dp"
     android:paddingTop="20dp"
-    android:background="@color/browser_actions_bg_grey"
+    android:paddingRight="10dp"
     tools:context=".MainActivityFragments.MainBudgetsFragment">
 
     <androidx.cardview.widget.CardView

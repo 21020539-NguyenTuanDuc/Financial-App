@@ -1,11 +1,5 @@
 package com.example.financialapp.MainActivityFragments;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
-
 import android.Manifest;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -20,6 +14,12 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
 import com.example.financialapp.MainActivity;
 import com.example.financialapp.Model.GoalModel;
@@ -79,6 +79,7 @@ public class CreateGoalActivity extends AppCompatActivity {
             Intent intent = new Intent(this, MainActivity.class);
             intent.putExtra("fragment_position", 1);
             startActivity(intent);
+            finish();
             return true;
         }
         int id = item.getItemId();
@@ -135,6 +136,7 @@ public class CreateGoalActivity extends AppCompatActivity {
                         Toast.makeText(CreateGoalActivity.this, "Delete Goal!", Toast.LENGTH_SHORT).show();
                         sweetAlertDialog.dismissWithAnimation();
                         startActivity(intent);
+                        finish();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -143,6 +145,7 @@ public class CreateGoalActivity extends AppCompatActivity {
                         Toast.makeText(CreateGoalActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                         sweetAlertDialog.dismissWithAnimation();
                         startActivity(intent);
+                        finish();
                     }
                 });
     }
@@ -191,6 +194,7 @@ public class CreateGoalActivity extends AppCompatActivity {
                         }
                         sweetAlertDialog.dismissWithAnimation();
                         startActivity(intent);
+                        finish();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -199,6 +203,7 @@ public class CreateGoalActivity extends AppCompatActivity {
                         Toast.makeText(CreateGoalActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                         sweetAlertDialog.dismissWithAnimation();
                         startActivity(intent);
+                        finish();
                     }
                 });
     }

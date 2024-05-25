@@ -4,7 +4,6 @@ import static com.example.financialapp.Adapter.BudgetAdapter.budgetModelList;
 
 import android.Manifest;
 import android.app.DatePickerDialog;
-import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -29,7 +28,6 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
-import com.example.financialapp.Adapter.BudgetAdapter;
 import com.example.financialapp.Adapter.CustomSpinnerAdapter;
 import com.example.financialapp.MainActivity;
 import com.example.financialapp.MainActivityFragments.MainAccountFragment;
@@ -55,11 +53,11 @@ public class AddTransactionActivity extends AppCompatActivity {
     ActivityAddTransactionBinding binding;
     Calendar calendar;
     CustomSpinnerAdapter customSpinnerAdapter;
-    private TransactionModel transactionModel;
     SweetAlertDialog sweetAlertDialog;
+    NotificationCompat.Builder notificationCompatBuilder;
+    private TransactionModel transactionModel;
     private long currentAmount;
     private String currentType;
-    NotificationCompat.Builder notificationCompatBuilder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -171,6 +169,7 @@ public class AddTransactionActivity extends AppCompatActivity {
         }
         if (transactionModel != null && android.R.id.home == id) {
             startActivity(new Intent(AddTransactionActivity.this, MainActivity.class));
+            finish();
         }
         return super.onOptionsItemSelected(item);
     }
@@ -311,6 +310,7 @@ public class AddTransactionActivity extends AppCompatActivity {
                             Toast.makeText(AddTransactionActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                             sweetAlertDialog.dismissWithAnimation();
                             startActivity(new Intent(AddTransactionActivity.this, MainActivity.class));
+                            finish();
                         }
                     });
         }
@@ -401,6 +401,7 @@ public class AddTransactionActivity extends AppCompatActivity {
                                             } else {
                                                 sweetAlertDialog.dismissWithAnimation();
                                                 startActivity(new Intent(AddTransactionActivity.this, MainActivity.class));
+                                                finish();
                                             }
                                         }
                                     });
@@ -431,6 +432,7 @@ public class AddTransactionActivity extends AppCompatActivity {
                                 public void onSuccess(Void unused) {
                                     sweetAlertDialog.dismissWithAnimation();
                                     startActivity(new Intent(AddTransactionActivity.this, MainActivity.class));
+                                    finish();
                                 }
                             })
                             .addOnFailureListener(new OnFailureListener() {
@@ -439,6 +441,7 @@ public class AddTransactionActivity extends AppCompatActivity {
                                     Toast.makeText(AddTransactionActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                                     sweetAlertDialog.dismissWithAnimation();
                                     startActivity(new Intent(AddTransactionActivity.this, MainActivity.class));
+                                    finish();
                                 }
                             });
                 }
@@ -446,6 +449,7 @@ public class AddTransactionActivity extends AppCompatActivity {
         } else {
             sweetAlertDialog.dismissWithAnimation();
             startActivity(new Intent(AddTransactionActivity.this, MainActivity.class));
+            finish();
         }
     }
 

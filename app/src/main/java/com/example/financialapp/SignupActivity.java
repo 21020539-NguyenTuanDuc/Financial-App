@@ -49,6 +49,9 @@ public class SignupActivity extends AppCompatActivity {
                 String password = binding.password.getText().toString();
                 String confirmPassword = binding.confirmPassword.getText().toString();
 
+                sweetAlertDialog = new SweetAlertDialog(SignupActivity.this, SweetAlertDialog.PROGRESS_TYPE);
+                sweetAlertDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
+                sweetAlertDialog.setCancelable(false);
                 sweetAlertDialog.show();
                 if (!password.equals("") && !email.equals("") && !confirmPassword.equals("") && !fullName.equals("") && !number.equals("")) {
                     if (password.equals(confirmPassword)) {
@@ -63,7 +66,7 @@ public class SignupActivity extends AppCompatActivity {
 
                                         firebaseFirestore.collection("User")
                                                 .document(Objects.requireNonNull(FirebaseAuth.getInstance().getUid()))
-                                                .set(new UserModel(fullName, number, email));
+                                                .set(new UserModel(Objects.requireNonNull(FirebaseAuth.getInstance().getUid()), fullName, number, email));
                                     }
                                 })
                                 .addOnFailureListener(new OnFailureListener() {
@@ -89,6 +92,7 @@ public class SignupActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(SignupActivity.this, LoginActivity.class));
+                finishAffinity();
             }
         });
     }

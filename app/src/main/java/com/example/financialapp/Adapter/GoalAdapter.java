@@ -12,8 +12,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.financialapp.MainActivityFragments.AddSavingActivity;
-import com.example.financialapp.MainActivityFragments.CreateBudgetActivity;
-import com.example.financialapp.Model.BudgetModel;
 import com.example.financialapp.Model.GoalModel;
 import com.example.financialapp.R;
 
@@ -23,8 +21,8 @@ import java.util.List;
 
 public class GoalAdapter extends RecyclerView.Adapter<GoalAdapter.GoalViewHolder> {
 
-    private Context context;
     public static List<GoalModel> goalModelList;
+    private Context context;
 
     public GoalAdapter(Context context) {
         this.context = context;

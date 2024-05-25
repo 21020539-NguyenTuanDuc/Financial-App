@@ -2,9 +2,8 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/deleteTransactionButton"
-        android:icon="@drawable/baseline_delete"
-        android:iconTint="@color/white"
-        android:title="DeleteButton"
+        android:id="@+id/saveChanges_button"
+        android:icon="@drawable/baseline_check"
+        android:title="SaveButton"
         app:showAsAction="always" />
 </menu>
