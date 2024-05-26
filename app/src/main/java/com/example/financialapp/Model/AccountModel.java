@@ -1,6 +1,5 @@
 package com.example.financialapp.Model;
 
-
 import com.example.financialapp.MainActivity;
 
 import java.io.Serializable;

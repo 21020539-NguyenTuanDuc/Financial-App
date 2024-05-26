@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/browser_actions_bg_grey"
+    android:background="@color/bg_grey"
     android:paddingLeft="10dp"
     android:paddingTop="20dp"
     android:paddingRight="10dp"
@@ -41,7 +41,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toEndOf="@id/budgets_icon"
-                    android:text="Budgets"
+                    android:text="@string/budgetsTV"
                     android:textColor="@color/black"
                     android:textSize="30sp" />
 
@@ -51,7 +51,7 @@
                     android:layout_below="@id/budgets_text"
                     android:layout_marginTop="10dp"
                     android:layout_toEndOf="@id/budgets_icon"
-                    android:text="Start with Budgets to have an efficient overview of your spending limits."
+                    android:text="@string/budget_desTV"
                     android:textSize="16sp" />
 
             </RelativeLayout>
@@ -61,7 +61,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="CREATE BUDGET"
+                android:text="@string/create_budgetTV"
                 android:textColor="@color/bluer"
                 android:textSize="20sp" />
 
@@ -102,7 +102,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toEndOf="@id/goals_icon"
-                    android:text="Goals"
+                    android:text="@string/goalsTV"
                     android:textColor="@color/black"
                     android:textSize="30sp" />
 
@@ -112,7 +112,7 @@
                     android:layout_below="@id/goals_text"
                     android:layout_marginTop="10dp"
                     android:layout_toEndOf="@id/goals_icon"
-                    android:text="Set your goal and have a quick overview of your progress."
+                    android:text="@string/goals_desTV"
                     android:textSize="16sp" />
 
             </RelativeLayout>
@@ -122,7 +122,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="CREATE GOAL"
+                android:text="@string/create_goalTV"
                 android:textColor="@color/bluer"
                 android:textSize="20sp" />
 

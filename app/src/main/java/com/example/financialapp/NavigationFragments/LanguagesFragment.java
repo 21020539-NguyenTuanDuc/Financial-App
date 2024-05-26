@@ -1,7 +1,14 @@
 package com.example.financialapp.NavigationFragments;
 
 import android.app.Activity;
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +26,7 @@ import com.zeugmasolutions.localehelper.LocaleAwareCompatActivity;
 import com.zeugmasolutions.localehelper.Locales;
 
 import java.util.Locale;
+import java.util.Objects;
 
 public class LanguagesFragment extends Fragment {
     FragmentLanguagesBinding binding;
@@ -27,6 +35,7 @@ public class LanguagesFragment extends Fragment {
     public static String vietnamese = "Vietnamese";
     public static String japanese = "Japanese";
     public static String chinese = "Chinese";
+    Locale locale;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -40,7 +49,20 @@ public class LanguagesFragment extends Fragment {
             }
         });
 
-        if(current_language.equals(vietnamese)) {
+        locale = getResources().getConfiguration().locale;
+
+        if (locale.getLanguage().equals(new Locale("en").getLanguage())) {
+            current_language = english;
+        } else if (locale.getLanguage().equals(new Locale("vi").getLanguage())) {
+            current_language = vietnamese;
+        } else if (locale.getLanguage().equals(new Locale("jp").getLanguage())) {
+            current_language = japanese;
+        } else if (locale.getLanguage().equals(new Locale("zh").getLanguage())) {
+            current_language = chinese;
+        }
+
+
+        if (current_language.equals(vietnamese)) {
             binding.VNRadio.setChecked(true);
         } else if (current_language.equals(english)) {
             binding.ENRadio.setChecked(true);
@@ -53,7 +75,7 @@ public class LanguagesFragment extends Fragment {
     }
 
     private void setLanguageApp() {
-        Locale locale = Locales.INSTANCE.getEnglish();
+        locale = Locales.INSTANCE.getEnglish();
         if (binding.VNRadio.isChecked()) {
             current_language = vietnamese;
             locale = Locales.INSTANCE.getVietnamese();
@@ -62,32 +84,16 @@ public class LanguagesFragment extends Fragment {
             locale = Locales.INSTANCE.getEnglish();
         } else if (binding.JPRadio.isChecked()) {
             current_language = japanese;
+            locale = Locales.INSTANCE.getJapanese();
         } else if (binding.CNRadio.isChecked()) {
             current_language = chinese;
+            locale = Locale.CHINA;
         } else {
             current_language = english;
             locale = Locales.INSTANCE.getEnglish();
         }
-        final Locale finalLocale = locale;
-
-        MainActivity.currentUser.setLanguage(current_language);
-        FirebaseFirestore.getInstance().collection("User").document(MainActivity.currentUser.getId()).set(MainActivity.currentUser)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void unused) {
-                        Log.d("Set language", "Set user language successfully");
-                        LocaleAwareCompatActivity activity = (LocaleAwareCompatActivity) getContext();
-                        assert activity != null;
-                        activity.updateLocale(finalLocale);
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.d("Set language", "Set user language failed");
-                        Activity activity = (Activity) getContext();
-                        assert activity != null;
-                        activity.recreate();
-                    }
-                });
+        LocaleAwareCompatActivity activity = (LocaleAwareCompatActivity) getContext();
+        assert activity != null;
+        activity.updateLocale(locale);
     }
 }

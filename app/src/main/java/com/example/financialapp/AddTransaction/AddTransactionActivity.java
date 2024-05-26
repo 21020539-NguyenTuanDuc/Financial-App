@@ -29,6 +29,7 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
 import com.example.financialapp.Adapter.CustomSpinnerAdapter;
+import com.example.financialapp.MainActivity;
 import com.example.financialapp.MainActivityFragments.MainAccountFragment;
 import com.example.financialapp.Model.TransactionModel;
 import com.example.financialapp.NumberTextWatcherForThousand;
@@ -37,6 +38,7 @@ import com.example.financialapp.databinding.ActivityAddTransactionBinding;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.zeugmasolutions.localehelper.LocaleAwareCompatActivity;
 
 import java.text.ParseException;
 import java.util.Calendar;
@@ -64,6 +66,7 @@ public class AddTransactionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityAddTransactionBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        setTitle(R.string.add_transactionTT);
 
         customSpinnerAdapter = new CustomSpinnerAdapter(this, categories, icons);
         binding.categorySpinner.setAdapter(customSpinnerAdapter);
@@ -174,6 +177,7 @@ public class AddTransactionActivity extends AppCompatActivity {
         if (transactionModel != null && android.R.id.home == id) {
             startActivity(new Intent(AddTransactionActivity.this, MainActivity.class));
             finish();
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -357,6 +361,7 @@ public class AddTransactionActivity extends AppCompatActivity {
             type = "Expense";
         }
         if (MainAccountFragment.currentAccId.equals("")) {
+            sweetAlertDialog.dismissWithAnimation();
             Toast.makeText(this, "Please choose or create an account for this transaction", Toast.LENGTH_SHORT).show();
         } else {
             TransactionModel transactionModel =
@@ -374,9 +379,9 @@ public class AddTransactionActivity extends AppCompatActivity {
                             Toast.makeText(AddTransactionActivity.this, "Transaction added", Toast.LENGTH_SHORT).show();
                             long newBalance = MainAccountFragment.currentAccount.getBalance();
                             if (type.equals("Income")) {
-                                newBalance += Integer.parseInt(transactionAmount);
+                                newBalance += Long.parseLong(transactionAmount);
                             } else {
-                                newBalance -= Integer.parseInt(transactionAmount);
+                                newBalance -= Long.parseLong(transactionAmount);
                             }
                             MainAccountFragment.currentAccount.setBalance(newBalance);
                             FirebaseFirestore.getInstance().collection("Account")
@@ -385,6 +390,7 @@ public class AddTransactionActivity extends AppCompatActivity {
                                         @Override
                                         public void onSuccess(Void unused) {
                                             if (type.equals("Expense")) {
+                                                System.out.println("Size of budgetModelList: " + budgetModelList.size());
                                                 for (int i = 0; i < budgetModelList.size(); i++) {
                                                     if (budgetModelList.get(i).isRiskOverspending()
                                                             && budgetModelList.get(i).getSpending() < budgetModelList.get(i).getBudget() * 4 / 5

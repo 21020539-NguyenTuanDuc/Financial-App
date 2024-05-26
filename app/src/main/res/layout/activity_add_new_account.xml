@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/browser_actions_bg_grey"
+    android:background="@color/bg_grey"
     android:orientation="vertical"
     android:padding="10dp"
     tools:context=".AddTransaction.AddTransactionActivity">
@@ -29,14 +29,14 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Account Name"
+                    android:text="@string/account_nameTV"
                     android:textColor="@color/grey" />
 
                 <EditText
                     android:id="@+id/accountNameET"
                     android:layout_width="match_parent"
                     android:layout_height="70dp"
-                    android:hint="Name" />
+                    android:hint="@string/name_accountTV" />
 
                 <RadioGroup
                     android:id="@+id/typeRadioGroup"
@@ -49,13 +49,13 @@
                         android:layout_width="150dp"
                         android:layout_height="wrap_content"
                         android:checked="true"
-                        android:text="Cash" />
+                        android:text="@string/cash_radio" />
 
                     <RadioButton
                         android:id="@+id/bankRadio"
                         android:layout_width="150dp"
                         android:layout_height="wrap_content"
-                        android:text="Bank" />
+                        android:text="@string/bank_radio" />
                 </RadioGroup>
             </LinearLayout>
 
@@ -67,13 +67,14 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Initial Value"
+                    android:text="@string/initial_value_account_TV"
                     android:textColor="@color/grey" />
 
                 <EditText
                     android:id="@+id/initValueET"
                     android:layout_width="match_parent"
                     android:layout_height="70dp"
+                    android:digits="0123456789"
                     android:hint="100,000"
                     android:inputType="numberSigned" />
             </LinearLayout>
@@ -88,6 +89,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="70dp"
-        android:text="Add Account" />
+        android:text="@string/add_accountBT" />
 
 </LinearLayout>

@@ -20,7 +20,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.bumptech.glide.Glide;
 import com.example.financialapp.MainActivityFragments.MainAccountFragment;
 import com.example.financialapp.Model.AccountModel;
-
 import com.example.financialapp.Model.UserModel;
 import com.example.financialapp.databinding.ActivityProfileBinding;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -64,6 +63,7 @@ public class ProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityProfileBinding.inflate(getLayoutInflater());
+        setTitle(R.string.profileTT);
 
         sweetAlertDialog = new SweetAlertDialog(ProfileActivity.this, SweetAlertDialog.PROGRESS_TYPE);
         sweetAlertDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
@@ -86,7 +86,7 @@ public class ProfileActivity extends AppCompatActivity {
         binding.imageProfile.setImageResource(R.drawable.default_profile_picture);
 
         if (MainActivity.profilePicture != null) {
-            Glide.with(ProfileActivity.this)
+            Glide.with(getApplicationContext())
                     .load(MainActivity.profilePicture)
                     .into(binding.imageProfile);
         }
@@ -99,9 +99,8 @@ public class ProfileActivity extends AppCompatActivity {
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void unused) {
-
-                                FirebaseAuth.getInstance().signOut();
                                 gsc.signOut();
+                                FirebaseAuth.getInstance().signOut();
                                 finishAffinity();
                                 finishAndRemoveTask();
                                 MainAccountFragment.currentAccId = "";
@@ -144,81 +143,82 @@ public class ProfileActivity extends AppCompatActivity {
     private void deleteUser() {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        boolean deleteTransaction = false;
-        boolean deleteBudget = false;
-        boolean deleteGoal = false;
         assert user != null;
-        db.collection("User").document(tempUser.getId()).delete()
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) {
-                            db.collection("Account").whereEqualTo("userId", tempUser.getId()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                                @Override
-                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                    if (task.isSuccessful()) {
-                                        for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
-                                            AccountModel tempAccountModel = documentSnapshot.toObject(AccountModel.class);
-                                            db.collection("Account").document(documentSnapshot.getId()).delete().addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                @Override
-                                                public void onComplete(@NonNull Task<Void> task) {
-                                                    if (task.isSuccessful()) {
-                                                        db.collection("Transaction").whereEqualTo("accountId", tempAccountModel.getId()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                                                            @Override
-                                                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                                                if (task.isSuccessful()) {
-                                                                    int cnt = 0;
-                                                                    for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
-                                                                        db.collection("Transaction").document(documentSnapshot.getId()).delete();
+        user.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                db.collection("User").document(tempUser.getId()).delete()
+                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful()) {
+                                    db.collection("Account").whereEqualTo("userId", tempUser.getId()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                            if (task.isSuccessful()) {
+                                                for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
+                                                    AccountModel tempAccountModel = documentSnapshot.toObject(AccountModel.class);
+                                                    db.collection("Account").document(documentSnapshot.getId()).delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                        @Override
+                                                        public void onComplete(@NonNull Task<Void> task) {
+                                                            if (task.isSuccessful()) {
+                                                                db.collection("Transaction").whereEqualTo("accountId", tempAccountModel.getId()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                                                    @Override
+                                                                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                                                        if (task.isSuccessful()) {
+                                                                            int cnt = 0;
+                                                                            for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
+                                                                                db.collection("Transaction").document(documentSnapshot.getId()).delete();
+                                                                            }
+                                                                        }
                                                                     }
-                                                                }
+                                                                });
                                                             }
-                                                        });
-                                                    }
+                                                        }
+                                                    });
                                                 }
-                                            });
+                                            }
                                         }
-                                    }
-                                }
-                            });
+                                    });
 
-                            db.collection("Goal").whereEqualTo("userId", tempUser.getId()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                                @Override
-                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                    if (task.isSuccessful()) {
-                                        for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
-                                            db.collection("Goal").document(documentSnapshot.getId()).delete();
+                                    db.collection("Goal").whereEqualTo("userId", tempUser.getId()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                            if (task.isSuccessful()) {
+                                                for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
+                                                    db.collection("Goal").document(documentSnapshot.getId()).delete();
+                                                }
+                                            }
                                         }
-                                    }
-                                }
-                            });
+                                    });
 
-                            db.collection("Budget").whereEqualTo("userId", tempUser.getId()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                                @Override
-                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                    if (task.isSuccessful()) {
-                                        for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
-                                            db.collection("Budget").document(documentSnapshot.getId()).delete();
+                                    db.collection("Budget").whereEqualTo("userId", tempUser.getId()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                            if (task.isSuccessful()) {
+                                                for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
+                                                    db.collection("Budget").document(documentSnapshot.getId()).delete();
+                                                }
+                                            }
                                         }
-                                    }
+                                    });
+
+                                    StorageReference reference = storage.getReference().child("images/" + tempUser.getId());
+                                    reference.delete();
+
+                                    gsc.signOut();
+                                    FirebaseAuth.getInstance().signOut();
+                                    finishAffinity();
+                                    finishAndRemoveTask();
+                                    MainAccountFragment.currentAccId = "";
+                                    sweetAlertDialog.dismissWithAnimation();
+                                    startActivity(new Intent(ProfileActivity.this, LoginActivity.class));
+                                    finish();
                                 }
-                            });
-
-                            StorageReference reference = storage.getReference().child("images/" + tempUser.getId());
-                            reference.delete();
-
-                            user.delete();
-                            gsc.signOut();
-                            FirebaseAuth.getInstance().signOut();
-                            finishAffinity();
-                            finishAndRemoveTask();
-                            MainAccountFragment.currentAccId = "";
-                            sweetAlertDialog.dismissWithAnimation();
-                            startActivity(new Intent(ProfileActivity.this, LoginActivity.class));
-                            finish();
-                        }
-                    }
-                });
+                            }
+                        });
+            }
+        });
     }
 
     private void updatePassword() {
@@ -262,29 +262,18 @@ public class ProfileActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
         if (R.id.saveChanges_button == id) {
+            sweetAlertDialog.show();
             String name = binding.userName.getText().toString();
             String number = binding.userNumber.getText().toString();
             if (name.length() == 0) {
                 binding.userName.setError("Empty");
+                sweetAlertDialog.dismissWithAnimation();
                 return false;
             }
             if (number.length() == 0) {
                 binding.userNumber.setError("Empty");
+                sweetAlertDialog.dismissWithAnimation();
                 return false;
-            }
-            if (tempImage != null) {
-                StorageReference reference = storage.getReference().child("images/" + tempUser.getId());
-                reference.putFile(tempImage).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        Log.d("FinancialApp", "Upload profile picture successfully!");
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.d("FinancialApp", "Upload profile picture failed!");
-                    }
-                });
             }
             tempUser.setName(name);
             tempUser.setNumber(number);
@@ -293,14 +282,39 @@ public class ProfileActivity extends AppCompatActivity {
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void unused) {
-                            Toast.makeText(ProfileActivity.this, "Update successfully!", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(ProfileActivity.this, MainActivity.class));
-                            finish();
+                            if (tempImage != null) {
+                                StorageReference reference = storage.getReference().child("images/" + tempUser.getId());
+                                reference.putFile(tempImage).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                    @Override
+                                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                        Log.d("FinancialApp", "Upload profile picture successfully!");
+                                        Toast.makeText(ProfileActivity.this, "Update successfully!", Toast.LENGTH_SHORT).show();
+                                        sweetAlertDialog.dismissWithAnimation();
+                                        startActivity(new Intent(ProfileActivity.this, MainActivity.class));
+                                        finish();
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Log.d("FinancialApp", "Upload profile picture failed!");
+                                        Toast.makeText(ProfileActivity.this, "Update successfully!", Toast.LENGTH_SHORT).show();
+                                        sweetAlertDialog.dismissWithAnimation();
+                                        startActivity(new Intent(ProfileActivity.this, MainActivity.class));
+                                        finish();
+                                    }
+                                });
+                            } else {
+                                sweetAlertDialog.dismissWithAnimation();
+                                Toast.makeText(ProfileActivity.this, "Update successfully!", Toast.LENGTH_SHORT).show();
+                                startActivity(new Intent(ProfileActivity.this, MainActivity.class));
+                                finish();
+                            }
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
+                            sweetAlertDialog.dismissWithAnimation();
                             Toast.makeText(ProfileActivity.this, "Update failed!", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(ProfileActivity.this, MainActivity.class));
                             finish();

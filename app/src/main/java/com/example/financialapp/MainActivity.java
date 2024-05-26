@@ -2,6 +2,7 @@ package com.example.financialapp;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.icu.util.Calendar;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,6 +14,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -23,6 +25,7 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.bumptech.glide.Glide;
 import com.example.financialapp.Adapter.BudgetAdapter;
 import com.example.financialapp.Adapter.MainViewPagerAdapter;
+import com.example.financialapp.Model.BudgetModel;
 import com.example.financialapp.Model.UserModel;
 import com.example.financialapp.NavigationFragments.AboutFragment;
 import com.example.financialapp.NavigationFragments.CurrencyFragment;
@@ -40,8 +43,11 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.zeugmasolutions.localehelper.LocaleAwareCompatActivity;
+
+import java.util.List;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
@@ -72,6 +78,7 @@ public class MainActivity extends LocaleAwareCompatActivity implements Navigatio
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        getUser();
 
         @SuppressLint({"MissingInflatedId", "LocalSuppress"}) Toolbar toolbar = findViewById(androidx.appcompat.R.id.action_bar);
 
@@ -111,10 +118,10 @@ public class MainActivity extends LocaleAwareCompatActivity implements Navigatio
                 (tab, position) -> {
                     switch (position) {
                         case 0:
-                            tab.setText("Accounts");
+                            tab.setText(R.string.tab0);
                             break;
                         case 1:
-                            tab.setText("Budgets & Goals");
+                            tab.setText(R.string.tab1);
                             break;
                     }
                 }
@@ -125,12 +132,10 @@ public class MainActivity extends LocaleAwareCompatActivity implements Navigatio
         navigationView.getMenu().findItem(R.id.nav_home).setChecked(true);
 
         budgetAdapter = new BudgetAdapter(this);
+        getBudgetModelData();
     }
 
-
-    @Override
-    protected void onStart() {
-        super.onStart();
+    protected void getUser() {
 //        sweetAlertDialog = new SweetAlertDialog(MainActivity.this, SweetAlertDialog.PROGRESS_TYPE);
 //        sweetAlertDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
 //        sweetAlertDialog.setCancelable(false);
@@ -162,7 +167,6 @@ public class MainActivity extends LocaleAwareCompatActivity implements Navigatio
                             currentUser.setId(Uid);
                             getProfilePicture();
                             if(currentUser.getCurrency_symbol() != null) CurrencyFragment.current_symbol = currentUser.getCurrency_symbol();
-                            if(currentUser.getLanguage() != null) LanguagesFragment.current_language = currentUser.getLanguage();
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
@@ -171,7 +175,6 @@ public class MainActivity extends LocaleAwareCompatActivity implements Navigatio
                             Toast.makeText(MainActivity.this, "User Failed!", Toast.LENGTH_SHORT).show();
 //                            sweetAlertDialog.dismissWithAnimation();
                             if(currentUser.getCurrency_symbol() != null) CurrencyFragment.current_symbol = currentUser.getCurrency_symbol();
-                            if(currentUser.getLanguage() != null) LanguagesFragment.current_language = currentUser.getLanguage();
                         }
                     });
         }
@@ -185,7 +188,7 @@ public class MainActivity extends LocaleAwareCompatActivity implements Navigatio
                         profilePicture = uri;
                         profileNameTV.setText(currentUser.getName());
                         if (profilePicture != null) {
-                            Glide.with(MainActivity.this)
+                            Glide.with(getApplicationContext())
                                     .load(profilePicture)
                                     .into(profilePictureIV);
                         }
@@ -289,5 +292,30 @@ public class MainActivity extends LocaleAwareCompatActivity implements Navigatio
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.content_frame, fragment);
         transaction.commit();
+    }
+
+    private void getBudgetModelData() {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("Budget").whereEqualTo("userId", MainActivity.currentUser.getId())
+                .whereEqualTo("ongoing", true)
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        budgetAdapter.clearData();
+                        List<DocumentSnapshot> dsList = queryDocumentSnapshots.getDocuments();
+                        for (DocumentSnapshot ds : dsList) {
+                            BudgetModel budgetModel = ds.toObject(BudgetModel.class);
+                            assert budgetModel != null;
+                            if (budgetModel.getTimeStampEnd() < Calendar.getInstance().getTimeInMillis() / 1000) {
+                                budgetModel.setOngoing(false);
+                                db.collection("Budget")
+                                        .document(budgetModel.getId()).set(budgetModel);
+                                continue;
+                            }
+                            budgetAdapter.addData(budgetModel);
+                        }
+                    }
+                });
     }
 }

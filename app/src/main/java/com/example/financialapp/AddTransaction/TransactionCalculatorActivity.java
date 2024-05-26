@@ -47,6 +47,7 @@ public class TransactionCalculatorActivity extends AppCompatActivity implements 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transaction_caculator);
+        setTitle(R.string.calculatorTT);
 
         resultTv = findViewById(R.id.result_tv);
         solutionTv = findViewById(R.id.solution_tv);

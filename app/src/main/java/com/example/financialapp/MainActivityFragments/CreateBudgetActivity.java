@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.financialapp.Adapter.PeriodSpinnerAdapter;
+import com.example.financialapp.MainActivity;
 import com.example.financialapp.Model.BudgetModel;
 import com.example.financialapp.NumberTextWatcherForThousand;
 import com.example.financialapp.R;
@@ -39,6 +40,7 @@ public class CreateBudgetActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityCreateBudgetBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        setTitle(R.string.create_budgetTT);
 
         binding.budgetET.addTextChangedListener(new NumberTextWatcherForThousand(binding.budgetET));
 
@@ -60,7 +62,7 @@ public class CreateBudgetActivity extends AppCompatActivity {
             binding.budgetOverspentNotify.setChecked(currentBudget.isBudgetOverspent());
             binding.riskOverspendingNotify.setChecked(currentBudget.isRiskOverspending());
 
-            binding.addBudgetButton.setText("Update budget");
+            binding.addBudgetButton.setText(R.string.update_budgetBT);
         }
         binding.addBudgetButton.setOnClickListener(new View.OnClickListener() {
             @Override

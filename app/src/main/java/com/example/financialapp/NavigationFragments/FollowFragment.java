@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
 
+import com.example.financialapp.R;
 import com.example.financialapp.databinding.FragmentFollowBinding;
 
 public class FollowFragment extends Fragment {

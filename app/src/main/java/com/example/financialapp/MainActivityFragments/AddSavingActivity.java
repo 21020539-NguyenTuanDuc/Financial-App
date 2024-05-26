@@ -21,6 +21,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
+import com.example.financialapp.MainActivity;
 import com.example.financialapp.Model.GoalModel;
 import com.example.financialapp.NumberTextWatcherForThousand;
 import com.example.financialapp.R;
@@ -42,6 +43,7 @@ public class AddSavingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityAddSavingBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        setTitle(R.string.add_savingTT);
 
         binding.savedET.addTextChangedListener(new NumberTextWatcherForThousand(binding.savedET));
 

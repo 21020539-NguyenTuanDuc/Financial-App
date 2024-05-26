@@ -11,10 +11,13 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.example.financialapp.MainActivity;
+import com.example.financialapp.R;
 import com.example.financialapp.databinding.FragmentCurrencyBinding;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+
+import org.mozilla.javascript.tools.jsc.Main;
 
 public class CurrencyFragment extends Fragment {
     FragmentCurrencyBinding binding;
