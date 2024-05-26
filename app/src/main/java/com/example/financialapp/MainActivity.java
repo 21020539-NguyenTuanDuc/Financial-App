@@ -32,6 +32,7 @@ import com.example.financialapp.NavigationFragments.CurrencyFragment;
 import com.example.financialapp.NavigationFragments.FollowFragment;
 import com.example.financialapp.NavigationFragments.HelpFragment;
 import com.example.financialapp.NavigationFragments.LanguagesFragment;
+import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.imageview.ShapeableImageView;
@@ -78,6 +79,10 @@ public class MainActivity extends LocaleAwareCompatActivity implements Navigatio
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        getUser();
+
+        MobileAds.initialize(this);
+
         getUser();
 
         @SuppressLint({"MissingInflatedId", "LocalSuppress"}) Toolbar toolbar = findViewById(androidx.appcompat.R.id.action_bar);

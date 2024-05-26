@@ -13,7 +13,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.financialapp.MainActivityFragments.CreateBudgetActivity;
+import com.example.financialapp.MainActivityPackage.CreateBudgetActivity;
 import com.example.financialapp.Model.BudgetModel;
 import com.example.financialapp.R;
 

@@ -15,7 +15,7 @@
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
         android:textAlignment="textEnd"
-        android:textColor="@color/black"
+        android:textColor="?android:textColorPrimary"
         android:textSize="32dp" />
 
     <TextView
@@ -26,7 +26,7 @@
         android:layout_margin="16dp"
         android:text="0"
         android:textAlignment="textEnd"
-        android:textColor="@color/black"
+        android:textColor="?android:textColorPrimary"
         android:textSize="64dp" />
 
 

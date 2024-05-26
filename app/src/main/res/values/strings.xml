@@ -79,7 +79,11 @@
     <string name="help">Help</string>
     <string name="about">About</string>
     <string name="full_nameTV">Full name</string>
+<<<<<<< HEAD
     <string name="numberTV">Number</string>
+=======
+    <string name="numberTV">Mobile Number</string>
+>>>>>>> advertisal-ad
     <string name="email">Email</string>
     <string name="log_out">Log out</string>
     <string name="password_changeTV">PASSWORD CHANGE</string>

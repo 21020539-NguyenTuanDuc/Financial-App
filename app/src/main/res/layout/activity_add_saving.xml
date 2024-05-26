@@ -7,7 +7,7 @@
     android:background="@color/bg_grey"
     android:orientation="vertical"
     android:padding="20dp"
-    tools:context=".MainActivityFragments.AddSavingActivity">
+    tools:context=".MainActivityPackage.AddSavingActivity">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -43,7 +43,7 @@
                     android:layout_gravity="center"
                     android:text="Percentage"
                     android:textColor="@color/main_green"
-                    android:textSize="28sp" />
+                    android:textSize="22sp" />
 
                 <TextView
                     android:id="@+id/fraction_TV"
@@ -52,7 +52,7 @@
                     android:layout_gravity="center"
                     android:text="Fraction"
                     android:textColor="@color/main_green"
-                    android:textSize="28sp" />
+                    android:textSize="22sp" />
 
             </LinearLayout>
         </FrameLayout>

@@ -1,4 +1,4 @@
-package com.example.financialapp.MainActivityFragments;
+package com.example.financialapp.MainActivityPackage;
 
 import android.Manifest;
 import android.app.NotificationChannel;

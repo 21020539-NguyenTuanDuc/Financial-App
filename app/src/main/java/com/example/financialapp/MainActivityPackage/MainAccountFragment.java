@@ -1,12 +1,16 @@
-package com.example.financialapp.MainActivityFragments;
+package com.example.financialapp.MainActivityPackage;
+
+import static android.content.ContentValues.TAG;
 
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -23,6 +27,12 @@ import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
+import com.google.android.gms.ads.AdError;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.FullScreenContentCallback;
+import com.google.android.gms.ads.LoadAdError;
+import com.google.android.gms.ads.interstitial.InterstitialAd;
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -43,12 +53,31 @@ public class MainAccountFragment extends Fragment {
     private long income = 0, expense = 0;
     private AccountAdapter accountAdapter;
     private TransactionAdapter transactionAdapter;
+    private AdRequest adRequest;
+    private InterstitialAd mInterstitialAd;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = FragmentMainAccountBinding.inflate(getLayoutInflater());
+
+        adRequest = new AdRequest.Builder().build();
+        binding.adView.loadAd(adRequest);
+
+        InterstitialAd.load(requireContext(), "ca-app-pub-3940256099942544/1033173712", adRequest, new InterstitialAdLoadCallback() {
+            @Override
+            public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
+                Log.d("InterAd", loadAdError.toString());
+                mInterstitialAd = null;
+            }
+
+            @Override
+            public void onAdLoaded(@NonNull InterstitialAd interstitialAd) {
+                mInterstitialAd = interstitialAd;
+                Log.i("InterAd", "onAdLoaded");
+            }
+        });
 
         binding.addTransactions.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,7 +101,25 @@ public class MainAccountFragment extends Fragment {
 
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getContext(), AddNewAccountActivity.class));
+                int randomAd = (int) (Math.random() * 10);
+                if (mInterstitialAd != null && randomAd <= 5) {
+                    mInterstitialAd.setFullScreenContentCallback(new FullScreenContentCallback() {
+                        @Override
+                        public void onAdDismissedFullScreenContent() {
+                            startActivity(new Intent(getContext(), AddNewAccountActivity.class));
+                        }
+
+                        @Override
+                        public void onAdFailedToShowFullScreenContent(@NonNull AdError adError) {
+                            Log.d(TAG, adError.getMessage());
+                            startActivity(new Intent(getContext(), AddNewAccountActivity.class));
+                        }
+                    });
+                    mInterstitialAd.show(requireActivity());
+                } else {
+                    Log.d(TAG, "The interstitial wasn't loaded yet.");
+                    startActivity(new Intent(getContext(), AddNewAccountActivity.class));
+                }
             }
         });
 

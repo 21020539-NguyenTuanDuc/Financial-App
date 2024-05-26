@@ -16,28 +16,32 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FinancialApp"
         tools:targetApi="31">
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-5318941992006268~7209613782" />
+
         <activity
             android:name=".ProfileActivity"
             android:exported="false"
             android:parentActivityName=".MainActivity" />
         <activity
-            android:name=".MainActivityFragments.AddSavingActivity"
+            android:name=".MainActivityPackage.AddSavingActivity"
             android:exported="false"
             android:parentActivityName=".MainActivity" />
         <activity
-            android:name=".MainActivityFragments.CreateGoalActivity"
+            android:name=".MainActivityPackage.CreateGoalActivity"
             android:exported="false"
             android:parentActivityName=".MainActivity" />
         <activity
-            android:name=".MainActivityFragments.CreateBudgetActivity"
+            android:name=".MainActivityPackage.CreateBudgetActivity"
             android:exported="false"
             android:parentActivityName=".MainActivity" />
         <activity
-            android:name=".MainActivityFragments.DeleteAccountActivity"
+            android:name=".MainActivityPackage.DeleteAccountActivity"
             android:exported="false"
             android:parentActivityName=".MainActivity" />
         <activity
-            android:name=".MainActivityFragments.AddNewAccountActivity"
+            android:name=".MainActivityPackage.AddNewAccountActivity"
             android:exported="false"
             android:parentActivityName=".MainActivity" />
         <activity
@@ -51,6 +55,7 @@
         <activity
             android:name=".LoginActivity"
             android:launchMode="singleTask"
+            android:theme="@style/splashscreenTheme"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

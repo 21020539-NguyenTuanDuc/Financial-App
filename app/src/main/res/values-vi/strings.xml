@@ -80,7 +80,11 @@
     <string name="help">Câu hỏi</string>
     <string name="about">Về ứng dụng</string>
     <string name="full_nameTV">Tên người dùng</string>
+<<<<<<< HEAD
     <string name="numberTV">Number</string>
+=======
+    <string name="numberTV">Số điện thoại</string>
+>>>>>>> advertisal-ad
     <string name="email">Email</string>
     <string name="log_out">Đăng xuất</string>
     <string name="password_changeTV">ĐỔI MẬT KHẨU</string>
@@ -93,7 +97,11 @@
     <string name="add_savingTT">Thêm tiết kiệm</string>
     <string name="create_budgetTT">Tạo ngân sách</string>
     <string name="create_goalTT">Tạo mục tiêu</string>
+<<<<<<< HEAD
     <string name="delete_accountTT">Xóa mục tiêu</string>
+=======
+    <string name="delete_accountTT">Xóa nguồn tiền</string>
+>>>>>>> advertisal-ad
     <string name="profileTT">Hồ sơ</string>
     <string name="confirm_deleteTT">Xóa tất cả dữ liệu người dùng?</string>
     <string name="confirm_deleteContent">Tất cả dữ liệu của bạn sẽ bị mất.</string>

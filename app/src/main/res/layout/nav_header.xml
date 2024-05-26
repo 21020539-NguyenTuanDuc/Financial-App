@@ -14,7 +14,7 @@
         android:layout_gravity="center_vertical"
         android:layout_marginStart="20dp"
         android:scaleType="centerCrop"
-        android:src="@drawable/doge_avatar"
+        android:src="@drawable/default_profile_picture"
         app:shapeAppearanceOverlay="@style/circle" />
 
     <LinearLayout

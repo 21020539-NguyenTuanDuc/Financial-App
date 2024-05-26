@@ -18,7 +18,11 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
+<<<<<<< HEAD
 import com.example.financialapp.MainActivityFragments.MainAccountFragment;
+=======
+import com.example.financialapp.MainActivityPackage.MainAccountFragment;
+>>>>>>> advertisal-ad
 import com.example.financialapp.Model.AccountModel;
 import com.example.financialapp.Model.UserModel;
 import com.example.financialapp.databinding.ActivityProfileBinding;

@@ -21,7 +21,7 @@
             android:layout_gravity="center_vertical"
             android:layout_marginTop="20dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/doge_avatar"
+            android:src="@drawable/default_profile_picture"
             app:shapeAppearanceOverlay="@style/circle" />
 
         <LinearLayout
@@ -67,6 +67,7 @@
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:enabled="false"
+        android:textColor="@android:color/tab_indicator_text"
         android:inputType="none" />
 
     <Button
@@ -83,7 +84,11 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:text="@string/password_changeTV"
+<<<<<<< HEAD
         android:textColor="@color/black"
+=======
+        android:textColor="?android:textColorPrimary"
+>>>>>>> advertisal-ad
         android:textSize="20sp" />
 
     <TextView

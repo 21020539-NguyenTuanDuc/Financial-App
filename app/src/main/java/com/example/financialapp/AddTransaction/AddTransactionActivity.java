@@ -30,7 +30,7 @@ import androidx.core.app.NotificationManagerCompat;
 
 import com.example.financialapp.Adapter.CustomSpinnerAdapter;
 import com.example.financialapp.MainActivity;
-import com.example.financialapp.MainActivityFragments.MainAccountFragment;
+import com.example.financialapp.MainActivityPackage.MainAccountFragment;
 import com.example.financialapp.Model.TransactionModel;
 import com.example.financialapp.NumberTextWatcherForThousand;
 import com.example.financialapp.R;

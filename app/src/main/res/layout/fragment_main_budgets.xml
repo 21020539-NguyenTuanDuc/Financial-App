@@ -8,7 +8,7 @@
     android:paddingLeft="10dp"
     android:paddingTop="20dp"
     android:paddingRight="10dp"
-    tools:context=".MainActivityFragments.MainBudgetsFragment">
+    tools:context=".MainActivityPackage.MainBudgetsFragment">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"

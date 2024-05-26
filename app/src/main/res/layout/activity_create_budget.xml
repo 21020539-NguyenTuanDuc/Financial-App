@@ -7,7 +7,7 @@
     android:background="@color/bg_grey"
     android:orientation="vertical"
     android:padding="10dp"
-    tools:context=".MainActivityFragments.CreateBudgetActivity">
+    tools:context=".MainActivityPackage.CreateBudgetActivity">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"

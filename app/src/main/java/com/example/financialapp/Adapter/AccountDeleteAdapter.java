@@ -15,11 +15,10 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.financialapp.MainActivityFragments.AddNewAccountActivity;
+import com.example.financialapp.MainActivityPackage.AddNewAccountActivity;
 import com.example.financialapp.Model.AccountModel;
 import com.example.financialapp.NavigationFragments.CurrencyFragment;
 import com.example.financialapp.R;
-import com.example.financialapp.databinding.ActivityAddNewAccountBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;

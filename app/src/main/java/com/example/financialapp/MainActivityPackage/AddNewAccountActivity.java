@@ -1,4 +1,4 @@
-package com.example.financialapp.MainActivityFragments;
+package com.example.financialapp.MainActivityPackage;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -32,6 +32,10 @@ public class AddNewAccountActivity extends AppCompatActivity {
         setTitle(R.string.add_accountTT);
 
         binding.initValueET.addTextChangedListener(new NumberTextWatcherForThousand(binding.initValueET));
+<<<<<<< HEAD:app/src/main/java/com/example/financialapp/MainActivityFragments/AddNewAccountActivity.java
+=======
+        binding.initValueET.setTextColor(getResources().getColor(android.R.color.black));
+>>>>>>> advertisal-ad:app/src/main/java/com/example/financialapp/MainActivityPackage/AddNewAccountActivity.java
 
         tempAccount = (AccountModel) getIntent().getSerializableExtra("account");
         if (tempAccount != null) {
@@ -41,6 +45,7 @@ public class AddNewAccountActivity extends AppCompatActivity {
             } else {
                 binding.cashRadio.setChecked(true);
             }
+            binding.initValueET.setTextColor(getResources().getColor(android.R.color.tab_indicator_text));
             binding.initValueET.setText(String.valueOf(tempAccount.getInitialBalance()));
             binding.initValueET.setEnabled(false);
             binding.initValueET.setInputType(InputType.TYPE_NULL);

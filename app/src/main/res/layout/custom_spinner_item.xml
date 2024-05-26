@@ -17,6 +17,6 @@
         android:layout_gravity="center"
         android:padding="10dp"
         android:text="Demo"
-        android:textColor="@color/black"
+        android:textColor="?android:textColorPrimary"
         android:textSize="25sp" />
 </LinearLayout>
