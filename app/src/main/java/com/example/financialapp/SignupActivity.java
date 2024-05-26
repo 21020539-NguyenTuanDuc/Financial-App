@@ -2,6 +2,7 @@ package com.example.financialapp;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
@@ -16,6 +17,8 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.Objects;
 
@@ -26,6 +29,7 @@ public class SignupActivity extends AppCompatActivity {
     ActivitySignupBinding binding;
     FirebaseAuth firebaseAuth;
     FirebaseFirestore firebaseFirestore;
+    FirebaseStorage storage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +38,7 @@ public class SignupActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseFirestore = FirebaseFirestore.getInstance();
+        storage = FirebaseStorage.getInstance();
 
         sweetAlertDialog = new SweetAlertDialog(this, SweetAlertDialog.PROGRESS_TYPE);
         sweetAlertDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
@@ -67,6 +72,9 @@ public class SignupActivity extends AppCompatActivity {
                                         firebaseFirestore.collection("User")
                                                 .document(Objects.requireNonNull(FirebaseAuth.getInstance().getUid()))
                                                 .set(new UserModel(Objects.requireNonNull(FirebaseAuth.getInstance().getUid()), fullName, number, email));
+                                        Uri defaultImage = Uri.parse("android.resource://com.example.financialapp/" + R.drawable.default_profile_picture);
+                                        StorageReference reference = storage.getReference().child("images/" + Objects.requireNonNull(FirebaseAuth.getInstance().getUid()));
+                                        reference.putFile(defaultImage);
                                     }
                                 })
                                 .addOnFailureListener(new OnFailureListener() {

@@ -18,8 +18,12 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
+import com.example.financialapp.MainActivityFragments.MainAccountFragment;
 import com.example.financialapp.Model.UserModel;
 import com.example.financialapp.databinding.ActivityProfileBinding;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -34,7 +38,8 @@ public class ProfileActivity extends AppCompatActivity {
     ActivityProfileBinding binding;
     UserModel tempUser;
     FirebaseStorage storage;
-
+    GoogleSignInOptions gso;
+    GoogleSignInClient gsc;
     SweetAlertDialog sweetAlertDialog;
     Uri tempImage;
     ActivityResultLauncher<String> getImage = registerForActivityResult(new ActivityResultContracts.GetContent(),
@@ -52,6 +57,13 @@ public class ProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityProfileBinding.inflate(getLayoutInflater());
+
+        gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(com.firebase.ui.auth.R.string.default_web_client_id))
+                .requestEmail()
+                .requestProfile()
+                .build();
+        gsc = GoogleSignIn.getClient(this, gso);
 
         storage = FirebaseStorage.getInstance();
 
@@ -77,7 +89,10 @@ public class ProfileActivity extends AppCompatActivity {
                             @Override
                             public void onSuccess(Void unused) {
                                 FirebaseAuth.getInstance().signOut();
+                                gsc.signOut();
                                 finishAffinity();
+                                finishAndRemoveTask();
+                                MainAccountFragment.currentAccId = "";
                                 startActivity(new Intent(ProfileActivity.this, LoginActivity.class));
                                 finish();
                             }
