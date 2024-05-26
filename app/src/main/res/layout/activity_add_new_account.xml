@@ -74,7 +74,7 @@
                     android:id="@+id/initValueET"
                     android:layout_width="match_parent"
                     android:layout_height="70dp"
-                    android:hint="100000"
+                    android:hint="100,000"
                     android:inputType="numberSigned" />
             </LinearLayout>
 

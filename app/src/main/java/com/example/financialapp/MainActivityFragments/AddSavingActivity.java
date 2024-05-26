@@ -23,6 +23,7 @@ import androidx.core.app.NotificationManagerCompat;
 
 import com.example.financialapp.MainActivity;
 import com.example.financialapp.Model.GoalModel;
+import com.example.financialapp.NumberTextWatcherForThousand;
 import com.example.financialapp.R;
 import com.example.financialapp.databinding.ActivityAddSavingBinding;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -42,6 +43,8 @@ public class AddSavingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityAddSavingBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        binding.savedET.addTextChangedListener(new NumberTextWatcherForThousand(binding.savedET));
 
         currentGoal = (GoalModel) getIntent().getSerializableExtra("goal");
 
@@ -64,7 +67,7 @@ public class AddSavingActivity extends AppCompatActivity {
                 sweetAlertDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
                 sweetAlertDialog.setCancelable(false);
                 sweetAlertDialog.show();
-                String savedValue = binding.savedET.getText().toString();
+                String savedValue = NumberTextWatcherForThousand.trimCommaOfString(binding.savedET.getText().toString());
                 if (savedValue.length() == 0) {
                     binding.savedET.setError("Empty");
                     return;
@@ -79,8 +82,8 @@ public class AddSavingActivity extends AppCompatActivity {
                                 if (currentGoal.getSaved() >= currentGoal.getTarget() && currentGoal.isGoalAchievedNoti()) {
                                     notifyUser(currentGoal.getName(), "You have successfully achieved your goal!");
                                 }
-                                sweetAlertDialog.dismissWithAnimation();
                                 AddSavingActivity.this.recreate();
+                                sweetAlertDialog.dismissWithAnimation();
                             }
                         });
             }

@@ -8,6 +8,11 @@
     android:paddingTop="20dp"
     tools:context=".SignupActivity">
 
+    <ImageView
+        android:layout_width="80dp"
+        android:src="@drawable/wallet_icon"
+        android:layout_height="80dp" />
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="80dp"

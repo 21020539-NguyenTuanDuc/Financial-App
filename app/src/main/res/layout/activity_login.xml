@@ -9,8 +9,8 @@
     tools:context=".LoginActivity">
 
     <ImageView
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:src="@drawable/wallet_icon" />
 
     <TextView
@@ -69,5 +69,17 @@
         android:text="Signup"
         android:textColor="@color/main_green"
         android:textSize="15sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_marginTop="50dp"
+        android:text="or try"
+        android:layout_height="wrap_content" />
+
+    <ImageView
+        android:id="@+id/ggButton"
+        android:layout_width="250dp"
+        android:src="@drawable/gg_signin_button"
+        android:layout_height="70dp" />
 
 </LinearLayout>
