@@ -1,6 +1,11 @@
 package com.example.financialapp.Model;
 
-public class AccountModel {
+
+import com.example.financialapp.MainActivity;
+
+import java.io.Serializable;
+
+public class AccountModel implements Serializable {
     private String id;
     private String name;
     private long balance;

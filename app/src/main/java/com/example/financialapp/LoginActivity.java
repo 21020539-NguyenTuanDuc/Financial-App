@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.financialapp.Model.GoalModel;
 import com.example.financialapp.Model.UserModel;
 import com.example.financialapp.databinding.ActivityLoginBinding;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -68,6 +69,30 @@ public class LoginActivity extends AppCompatActivity {
         binding.ggButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                ggSignin();
+            }
+        });
+
+        firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = firebaseAuth.getCurrentUser();
+        if (user != null) {
+            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+        }
+
+        storage = FirebaseStorage.getInstance();
+
+        gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(com.firebase.ui.auth.R.string.default_web_client_id))
+                .requestEmail()
+                .requestProfile()
+                .build();
+        gsc = GoogleSignIn.getClient(this, gso);
+        binding.ggButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sweetAlertDialog.show();
                 ggSignin();
             }
         });
@@ -189,6 +214,7 @@ public class LoginActivity extends AppCompatActivity {
                                 assert user != null;
                                 UserModel ggUser = new UserModel(user.getUid(), user.getDisplayName(), user.getPhoneNumber(), user.getEmail());
                                 ggUser.setSignIn(true);
+
                                 FirebaseFirestore.getInstance().collection("User").document(ggUser.getId()).set(ggUser)
                                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override
@@ -198,6 +224,7 @@ public class LoginActivity extends AppCompatActivity {
                                                 reference.putFile(defaultImage).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
                                                     @Override
                                                     public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+                                                    sweetAlertDialog.dismissWithAnimation();
                                                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                                                         startActivity(intent);
                                                         finish();
@@ -207,6 +234,8 @@ public class LoginActivity extends AppCompatActivity {
                                         }).addOnFailureListener(new OnFailureListener() {
                                             @Override
                                             public void onFailure(@NonNull Exception e) {
+
+                                                sweetAlertDialog.dismissWithAnimation();
                                                 Log.w(TAG, "signInWithCredential:failure", task.getException());
                                                 Toast.makeText(LoginActivity.this, "Login failed", Toast.LENGTH_SHORT).show();
                                             }
@@ -237,6 +266,7 @@ public class LoginActivity extends AppCompatActivity {
                                 });
                             }
                         } else {
+
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
                             Toast.makeText(LoginActivity.this, "Login failed", Toast.LENGTH_SHORT).show();
                         }

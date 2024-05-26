@@ -20,6 +20,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.bumptech.glide.Glide;
 import com.example.financialapp.MainActivityFragments.MainAccountFragment;
 import com.example.financialapp.Model.AccountModel;
+
 import com.example.financialapp.Model.UserModel;
 import com.example.financialapp.databinding.ActivityProfileBinding;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -98,8 +99,9 @@ public class ProfileActivity extends AppCompatActivity {
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void unused) {
-                                gsc.signOut();
+
                                 FirebaseAuth.getInstance().signOut();
+                                gsc.signOut();
                                 finishAffinity();
                                 finishAndRemoveTask();
                                 MainAccountFragment.currentAccId = "";

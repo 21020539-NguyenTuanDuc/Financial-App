@@ -72,6 +72,7 @@ public class AddNewAccountActivity extends AppCompatActivity {
             return;
         }
         long initialValue = Long.parseLong(NumberTextWatcherForThousand.trimCommaOfString(binding.initValueET.getText().toString()));
+
         if (cashChecked) type = "Cash";
         else type = "Bank";
 

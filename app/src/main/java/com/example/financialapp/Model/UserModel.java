@@ -8,6 +8,8 @@ public class UserModel {
     private String currency_symbol = null;
     private String language = null;
 
+    private boolean signIn = false;
+
     public UserModel() {
 
     }
@@ -71,5 +73,13 @@ public class UserModel {
 
     public void setLanguage(String language) {
         this.language = language;
+    }
+
+    public boolean isSignIn() {
+        return signIn;
+    }
+
+    public void setSignIn(boolean signIn) {
+        this.signIn = signIn;
     }
 }
