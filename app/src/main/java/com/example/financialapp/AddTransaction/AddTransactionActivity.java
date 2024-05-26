@@ -30,8 +30,9 @@ import androidx.core.app.NotificationManagerCompat;
 
 import com.example.financialapp.Adapter.CustomSpinnerAdapter;
 import com.example.financialapp.MainActivity;
-import com.example.financialapp.MainActivityFragments.MainAccountFragment;
+import com.example.financialapp.MainActivityPackage.MainAccountFragment;
 import com.example.financialapp.Model.TransactionModel;
+import com.example.financialapp.NumberTextWatcherForThousand;
 import com.example.financialapp.R;
 import com.example.financialapp.databinding.ActivityAddTransactionBinding;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -64,12 +65,15 @@ public class AddTransactionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityAddTransactionBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        setTitle(R.string.add_transactionTT);
 
         customSpinnerAdapter = new CustomSpinnerAdapter(this, categories, icons);
         binding.categorySpinner.setAdapter(customSpinnerAdapter);
 
+        binding.amountET.addTextChangedListener(new NumberTextWatcherForThousand(binding.amountET));
+
         String transactionAmount = getIntent().getStringExtra("transactionAmount");
-        if(transactionAmount.matches("^[0-9]*$")){
+        if (transactionAmount != null && transactionAmount.matches("^[0-9]*$")) {
             binding.amountET.setText(transactionAmount);
         }
 
@@ -172,6 +176,7 @@ public class AddTransactionActivity extends AppCompatActivity {
         if (transactionModel != null && android.R.id.home == id) {
             startActivity(new Intent(AddTransactionActivity.this, MainActivity.class));
             finish();
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -214,7 +219,7 @@ public class AddTransactionActivity extends AppCompatActivity {
 
     private void updateTransaction() {
         String id = transactionModel.getId();
-        String transactionAmount = binding.amountET.getText().toString();
+        String transactionAmount = NumberTextWatcherForThousand.trimCommaOfString(binding.amountET.getText().toString());
         boolean incomeChecked = binding.incomeRadio.isChecked();
         String type;
         String transactionNote = binding.noteET.getText().toString();
@@ -280,18 +285,18 @@ public class AddTransactionActivity extends AppCompatActivity {
                             } else {
                                 newBalance -= Integer.parseInt(transactionAmount);
                                 for (int i = 0; i < budgetModelList.size(); i++) {
+                                    if (finalTimestamp >= budgetModelList.get(i).getTimeStampStart() && finalTimestamp <= budgetModelList.get(i).getTimeStampEnd()) {
+                                        budgetModelList.get(i).setSpending(budgetModelList.get(i).getSpending() + Long.parseLong(transactionAmount));
+                                    }
                                     if (budgetModelList.get(i).isRiskOverspending()
-                                            && budgetModelList.get(i).getSpending() < budgetModelList.get(i).getBudget() * 4 / 5
-                                            && budgetModelList.get(i).getSpending() + Integer.parseInt(transactionAmount) >= budgetModelList.get(i).getBudget() * 4 / 5
-                                            && budgetModelList.get(i).getSpending() + Integer.parseInt(transactionAmount) < budgetModelList.get(i).getBudget()) {
+                                            && budgetModelList.get(i).getSpending() - Long.parseLong(transactionAmount) < budgetModelList.get(i).getBudget() * 4 / 5
+                                            && budgetModelList.get(i).getSpending() >= budgetModelList.get(i).getBudget() * 4 / 5
+                                            && budgetModelList.get(i).getSpending() < budgetModelList.get(i).getBudget()) {
                                         notifyUser(budgetModelList.get(i).getName(), "You might overspent your budget!");
                                     }
                                     if (budgetModelList.get(i).isBudgetOverspent()
-                                            && budgetModelList.get(i).getSpending() + Integer.parseInt(transactionAmount) >= budgetModelList.get(i).getBudget()) {
+                                            && budgetModelList.get(i).getSpending() >= budgetModelList.get(i).getBudget()) {
                                         notifyUser(budgetModelList.get(i).getName(), "You have spent more than your budget!");
-                                    }
-                                    if (oldTimestamp >= budgetModelList.get(i).getTimeStampStart() && oldTimestamp <= budgetModelList.get(i).getTimeStampEnd()) {
-                                        budgetModelList.get(i).setSpending(budgetModelList.get(i).getSpending() + Integer.parseInt(transactionAmount));
                                     }
                                 }
                             }
@@ -320,7 +325,7 @@ public class AddTransactionActivity extends AppCompatActivity {
 
     private void createTransaction() {
         String id = FirebaseFirestore.getInstance().collection("Transaction").document().getId();
-        String transactionAmount = binding.amountET.getText().toString();
+        String transactionAmount = NumberTextWatcherForThousand.trimCommaOfString(binding.amountET.getText().toString());
         boolean incomeChecked = binding.incomeRadio.isChecked();
         String type;
         String transactionNote = binding.noteET.getText().toString();
@@ -355,6 +360,7 @@ public class AddTransactionActivity extends AppCompatActivity {
             type = "Expense";
         }
         if (MainAccountFragment.currentAccId.equals("")) {
+            sweetAlertDialog.dismissWithAnimation();
             Toast.makeText(this, "Please choose or create an account for this transaction", Toast.LENGTH_SHORT).show();
         } else {
             TransactionModel transactionModel =
@@ -372,9 +378,9 @@ public class AddTransactionActivity extends AppCompatActivity {
                             Toast.makeText(AddTransactionActivity.this, "Transaction added", Toast.LENGTH_SHORT).show();
                             long newBalance = MainAccountFragment.currentAccount.getBalance();
                             if (type.equals("Income")) {
-                                newBalance += Integer.parseInt(transactionAmount);
+                                newBalance += Long.parseLong(transactionAmount);
                             } else {
-                                newBalance -= Integer.parseInt(transactionAmount);
+                                newBalance -= Long.parseLong(transactionAmount);
                             }
                             MainAccountFragment.currentAccount.setBalance(newBalance);
                             FirebaseFirestore.getInstance().collection("Account")
@@ -383,6 +389,7 @@ public class AddTransactionActivity extends AppCompatActivity {
                                         @Override
                                         public void onSuccess(Void unused) {
                                             if (type.equals("Expense")) {
+                                                System.out.println("Size of budgetModelList: " + budgetModelList.size());
                                                 for (int i = 0; i < budgetModelList.size(); i++) {
                                                     if (budgetModelList.get(i).isRiskOverspending()
                                                             && budgetModelList.get(i).getSpending() < budgetModelList.get(i).getBudget() * 4 / 5

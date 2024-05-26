@@ -24,7 +24,7 @@
 
             <TextView
                 android:layout_width="match_parent"
-                android:text="Choose your language"
+                android:text="@string/choose_your_language"
                 android:textSize="30sp"
                 android:layout_height="wrap_content" />
 
@@ -39,26 +39,26 @@
                     android:id="@+id/VNRadio"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Vietnamese" />
+                    android:text="@string/vietnamese" />
 
                 <RadioButton
                     android:id="@+id/ENRadio"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:checked="true"
-                    android:text="English" />
+                    android:text="@string/english" />
 
                 <RadioButton
                     android:id="@+id/JPRadio"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Japanese" />
+                    android:text="@string/japanese" />
 
                 <RadioButton
                     android:id="@+id/CNRadio"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Chinese" />
+                    android:text="@string/chinese" />
 
             </RadioGroup>
 
@@ -70,7 +70,7 @@
         android:layout_width="wrap_content"
         android:id="@+id/set_language_button"
         android:layout_marginTop="100dp"
-        android:text="Set your language"
+        android:text="@string/set_your_languageBT"
         android:layout_gravity="center_horizontal"
         android:layout_height="wrap_content"/>
 

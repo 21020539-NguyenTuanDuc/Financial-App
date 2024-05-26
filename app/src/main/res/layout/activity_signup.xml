@@ -19,7 +19,7 @@
         android:fontFamily="@font/roboto_black_font"
         android:gravity="center"
         android:text="Sign up"
-        android:textColor="@color/black"
+        android:textColor="?android:textColorPrimary"
         android:textSize="40dp" />
 
     <EditText
@@ -38,6 +38,7 @@
         android:layout_marginTop="20dp"
         android:background="@drawable/edit_text_background"
         android:gravity="center"
+        android:inputType="phone"
         android:hint="Mobile number" />
 
     <EditText

@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/browser_actions_bg_grey"
+    android:background="@color/bg_grey"
     android:orientation="vertical"
     android:padding="10dp"
-    tools:context=".MainActivityFragments.CreateGoalActivity">
+    tools:context=".MainActivityPackage.CreateGoalActivity">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -29,14 +29,14 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Name"
+                    android:text="@string/name_goalTV"
                     android:textColor="@color/grey" />
 
                 <EditText
                     android:id="@+id/nameET"
                     android:layout_width="match_parent"
                     android:layout_height="70dp"
-                    android:hint="Goal Name"
+                    android:hint="@string/goal_name_ET"
                     android:inputType="text" />
 
             </LinearLayout>
@@ -49,14 +49,15 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Target Amount"
+                    android:text="@string/target_amount_TV"
                     android:textColor="@color/grey" />
 
                 <EditText
                     android:id="@+id/targetET"
                     android:layout_width="match_parent"
                     android:layout_height="70dp"
-                    android:hint="Target Amount"
+                    android:digits="0123456789"
+                    android:hint="@string/target_amountET"
                     android:inputType="numberSigned" />
             </LinearLayout>
 
@@ -68,13 +69,14 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Saved already"
+                    android:text="@string/saved_alreadyET"
                     android:textColor="@color/grey" />
 
                 <EditText
                     android:id="@+id/savedET"
                     android:layout_width="match_parent"
                     android:layout_height="70dp"
+                    android:digits="0123456789"
                     android:hint="0"
                     android:inputType="numberSigned" />
             </LinearLayout>
@@ -98,7 +100,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Notification" />
+                android:text="@string/notification_goal" />
 
             <RelativeLayout
                 android:layout_width="wrap_content"
@@ -109,7 +111,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:text="Goal Achieved"
+                    android:text="@string/goal_achievedTV"
                     android:textColor="@color/black"
                     android:textSize="20sp" />
 
@@ -117,7 +119,7 @@
                     android:id="@+id/goal_achieved_notify"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true" />
+                    android:layout_alignParentEnd="true" />
             </RelativeLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
@@ -128,6 +130,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="70dp"
-        android:text="Add Goal" />
+        android:text="@string/add_goalBT" />
 
 </LinearLayout>

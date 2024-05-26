@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/browser_actions_bg_grey">
+    android:background="@color/bg_grey">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -40,8 +40,7 @@
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_weight="2">
+                            android:layout_height="40dp">
 
                             <Button
                                 android:id="@+id/newAccount"
@@ -49,7 +48,8 @@
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
                                 android:background="@color/main_green"
-                                android:text="Add new account"
+                                android:text="@string/add_new_accountBT"
+                                android:textSize="11sp"
                                 tools:ignore="NestedWeights" />
 
                             <View
@@ -62,8 +62,9 @@
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
+                                android:textSize="11sp"
                                 android:background="@color/main_green"
-                                android:text="Delete account" />
+                                android:text="@string/delete_accountBT" />
                         </LinearLayout>
 
                         <androidx.recyclerview.widget.RecyclerView
@@ -110,6 +111,15 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="10dp" />
                 </androidx.cardview.widget.CardView>
+
+                <com.google.android.gms.ads.AdView
+                    android:layout_marginTop="10dp"
+                    android:id="@+id/adView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    app:adSize="BANNER"
+                    app:adUnitId="ca-app-pub-3940256099942544/6300978111"></com.google.android.gms.ads.AdView>
             </LinearLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>

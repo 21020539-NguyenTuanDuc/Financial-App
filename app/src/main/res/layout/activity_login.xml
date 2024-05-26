@@ -19,7 +19,7 @@
         android:fontFamily="@font/roboto_black_font"
         android:gravity="center"
         android:text="Login"
-        android:textColor="@color/black"
+        android:textColor="?android:textColorPrimary"
         android:textSize="40dp" />
 
     <EditText
@@ -77,9 +77,10 @@
         android:layout_height="wrap_content" />
 
     <ImageView
+        android:layout_marginTop="10dp"
         android:id="@+id/ggButton"
-        android:layout_width="250dp"
-        android:src="@drawable/gg_signin_button"
-        android:layout_height="70dp" />
+        android:layout_width="40dp"
+        android:src="@drawable/gg_signin"
+        android:layout_height="40dp" />
 
 </LinearLayout>

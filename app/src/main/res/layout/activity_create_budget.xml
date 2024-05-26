@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/browser_actions_bg_grey"
+    android:background="@color/bg_grey"
     android:orientation="vertical"
     android:padding="10dp"
-    tools:context=".MainActivityFragments.CreateBudgetActivity">
+    tools:context=".MainActivityPackage.CreateBudgetActivity">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -29,14 +29,14 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Name"
+                    android:text="@string/name_budgetTV"
                     android:textColor="@color/grey" />
 
                 <EditText
                     android:id="@+id/nameET"
                     android:layout_width="match_parent"
                     android:layout_height="70dp"
-                    android:hint="Budget Name"
+                    android:hint="@string/budget_nameET"
                     android:inputType="text" />
 
             </LinearLayout>
@@ -49,14 +49,15 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Amount"
+                    android:text="@string/amount_budgetTV"
                     android:textColor="@color/grey" />
 
                 <EditText
                     android:id="@+id/budgetET"
                     android:layout_width="match_parent"
                     android:layout_height="70dp"
-                    android:hint="Budget Amount"
+                    android:hint="@string/budget_amountET"
+                    android:digits="0123456789"
                     android:inputType="numberSigned" />
             </LinearLayout>
 
@@ -68,7 +69,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Period"
+                    android:text="@string/periodTV"
                     android:textColor="@color/grey" />
 
                 <Spinner
@@ -96,7 +97,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Notification" />
+                android:text="@string/notificationTV" />
 
             <RelativeLayout
                 android:layout_width="wrap_content"
@@ -107,7 +108,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:text="Budget Overspent"
+                    android:text="@string/budget_overspentSW"
                     android:textColor="@color/black"
                     android:textSize="20sp" />
 
@@ -115,7 +116,7 @@
                     android:id="@+id/budget_overspent_notify"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true" />
+                    android:layout_alignParentEnd="true" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -127,7 +128,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:text="Risk of overspending"
+                    android:text="@string/risk_of_overspendingSW"
                     android:textColor="@color/black"
                     android:textSize="20sp" />
 
@@ -135,7 +136,7 @@
                     android:id="@+id/risk_overspending_notify"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true" />
+                    android:layout_alignParentEnd="true" />
             </RelativeLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
@@ -146,6 +147,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="70dp"
-        android:text="Add Budget" />
+        android:text="@string/add_budgetBT" />
 
 </LinearLayout>

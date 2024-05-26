@@ -12,7 +12,7 @@ import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.financialapp.MainActivityFragments.MainAccountFragment;
+import com.example.financialapp.MainActivityPackage.MainAccountFragment;
 import com.example.financialapp.Model.AccountModel;
 import com.example.financialapp.NavigationFragments.CurrencyFragment;
 import com.example.financialapp.R;

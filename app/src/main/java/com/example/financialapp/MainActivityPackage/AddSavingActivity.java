@@ -1,4 +1,4 @@
-package com.example.financialapp.MainActivityFragments;
+package com.example.financialapp.MainActivityPackage;
 
 import android.Manifest;
 import android.app.NotificationChannel;
@@ -23,6 +23,7 @@ import androidx.core.app.NotificationManagerCompat;
 
 import com.example.financialapp.MainActivity;
 import com.example.financialapp.Model.GoalModel;
+import com.example.financialapp.NumberTextWatcherForThousand;
 import com.example.financialapp.R;
 import com.example.financialapp.databinding.ActivityAddSavingBinding;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -42,6 +43,9 @@ public class AddSavingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityAddSavingBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        setTitle(R.string.add_savingTT);
+
+        binding.savedET.addTextChangedListener(new NumberTextWatcherForThousand(binding.savedET));
 
         currentGoal = (GoalModel) getIntent().getSerializableExtra("goal");
 
@@ -64,7 +68,7 @@ public class AddSavingActivity extends AppCompatActivity {
                 sweetAlertDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
                 sweetAlertDialog.setCancelable(false);
                 sweetAlertDialog.show();
-                String savedValue = binding.savedET.getText().toString();
+                String savedValue = NumberTextWatcherForThousand.trimCommaOfString(binding.savedET.getText().toString());
                 if (savedValue.length() == 0) {
                     binding.savedET.setError("Empty");
                     return;
@@ -79,8 +83,18 @@ public class AddSavingActivity extends AppCompatActivity {
                                 if (currentGoal.getSaved() >= currentGoal.getTarget() && currentGoal.isGoalAchievedNoti()) {
                                     notifyUser(currentGoal.getName(), "You have successfully achieved your goal!");
                                 }
+                                binding.progressCircular.setProgressMax(currentGoal.getTarget());
+                                if (currentGoal.getSaved() < currentGoal.getTarget()) {
+                                    binding.progressCircular.setProgress(currentGoal.getSaved());
+                                } else {
+                                    binding.progressCircular.setProgress(currentGoal.getTarget());
+                                }
+                                String displayPercentage = String.format("%.2f", 1.00 * currentGoal.getSaved() / currentGoal.getTarget() * 100) + "%";
+                                NumberFormat nf = NumberFormat.getInstance();
+                                String displayFraction = nf.format(currentGoal.getSaved()) + "/" + nf.format(currentGoal.getTarget());
+                                binding.percentageTV.setText(displayPercentage);
+                                binding.fractionTV.setText(displayFraction);
                                 sweetAlertDialog.dismissWithAnimation();
-                                AddSavingActivity.this.recreate();
                             }
                         });
             }

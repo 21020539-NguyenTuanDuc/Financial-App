@@ -1,4 +1,4 @@
-package com.example.financialapp.MainActivityFragments;
+package com.example.financialapp.MainActivityPackage;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.example.financialapp.Adapter.AccountDeleteAdapter;
 import com.example.financialapp.MainActivity;
 import com.example.financialapp.Model.AccountModel;
+import com.example.financialapp.R;
 import com.example.financialapp.databinding.ActivityDeleteAccountBinding;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -31,6 +32,7 @@ public class DeleteAccountActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityDeleteAccountBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        setTitle(R.string.delete_accountTT);
 
         // Account RecyclerView
         accountDeleteAdapter = new AccountDeleteAdapter(this);

@@ -1,4 +1,4 @@
-package com.example.financialapp.MainActivityFragments;
+package com.example.financialapp.MainActivityPackage;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.financialapp.Adapter.PeriodSpinnerAdapter;
 import com.example.financialapp.MainActivity;
 import com.example.financialapp.Model.BudgetModel;
+import com.example.financialapp.NumberTextWatcherForThousand;
 import com.example.financialapp.R;
 import com.example.financialapp.databinding.ActivityCreateBudgetBinding;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -39,6 +40,9 @@ public class CreateBudgetActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityCreateBudgetBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        setTitle(R.string.create_budgetTT);
+
+        binding.budgetET.addTextChangedListener(new NumberTextWatcherForThousand(binding.budgetET));
 
         periodSpinnerAdapter = new PeriodSpinnerAdapter(this, periods);
         binding.periodSpinner.setAdapter(periodSpinnerAdapter);
@@ -58,7 +62,7 @@ public class CreateBudgetActivity extends AppCompatActivity {
             binding.budgetOverspentNotify.setChecked(currentBudget.isBudgetOverspent());
             binding.riskOverspendingNotify.setChecked(currentBudget.isRiskOverspending());
 
-            binding.addBudgetButton.setText("Update budget");
+            binding.addBudgetButton.setText(R.string.update_budgetBT);
         }
         binding.addBudgetButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -125,7 +129,7 @@ public class CreateBudgetActivity extends AppCompatActivity {
     private void updateBudget() {
         String id = currentBudget.getId();
         String name = binding.nameET.getText().toString();
-        String budget = binding.budgetET.getText().toString();
+        String budget = NumberTextWatcherForThousand.trimCommaOfString(binding.budgetET.getText().toString());
         long timestampStart = currentBudget.getTimeStampStart();
         long budgetPeriod = periodDay[binding.periodSpinner.getSelectedItemPosition()];
         long spending = currentBudget.getSpending();
@@ -174,7 +178,7 @@ public class CreateBudgetActivity extends AppCompatActivity {
     private void createBudget() {
         String id = FirebaseFirestore.getInstance().collection("Budget").document().getId();
         String name = binding.nameET.getText().toString();
-        String budget = binding.budgetET.getText().toString();
+        String budget = NumberTextWatcherForThousand.trimCommaOfString(binding.budgetET.getText().toString());
         long timestampStart = Calendar.getInstance().getTimeInMillis() / 1000;
         long budgetPeriod = periodDay[binding.periodSpinner.getSelectedItemPosition()];
         long spending = 0;

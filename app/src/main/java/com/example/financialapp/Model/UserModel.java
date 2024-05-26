@@ -5,8 +5,7 @@ public class UserModel {
     private String name;
     private String number;
     private String email;
-    private String currency_symbol = null;
-    private String language = null;
+    private String currency_symbol = "đ";
 
     private boolean signIn = false;
 
@@ -65,14 +64,6 @@ public class UserModel {
 
     public void setCurrency_symbol(String currency_symbol) {
         this.currency_symbol = currency_symbol;
-    }
-
-    public String getLanguage() {
-        return language;
-    }
-
-    public void setLanguage(String language) {
-        this.language = language;
     }
 
     public boolean isSignIn() {

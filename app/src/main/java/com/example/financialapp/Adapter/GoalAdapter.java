@@ -11,7 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.financialapp.MainActivityFragments.AddSavingActivity;
+import com.example.financialapp.MainActivityPackage.AddSavingActivity;
 import com.example.financialapp.Model.GoalModel;
 import com.example.financialapp.R;
 

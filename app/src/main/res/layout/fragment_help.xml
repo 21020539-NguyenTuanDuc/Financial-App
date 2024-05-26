@@ -26,7 +26,7 @@
                 android:layout_marginStart="10dp"
                 android:layout_width="match_parent"
                 android:textColor="@color/main_green"
-                android:text="What is Wallet app?"
+                android:text="@string/Q1"
                 android:textSize="20sp"
                 android:layout_height="wrap_content" />
 
@@ -36,7 +36,7 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="10dp"
                 android:textColor="@color/black"
-                android:text="  Our app is a major project for our Software Engineering course. It is a personal finance management app that helps users control their spending and make more informed financial decisions. With our app, users can track their expenses and make better choices with their money."
+                android:text="@string/A1"
                 android:layout_height="wrap_content" />
 
         </LinearLayout>
@@ -61,7 +61,7 @@
                 android:layout_marginStart="10dp"
                 android:layout_width="match_parent"
                 android:textColor="@color/main_green"
-                android:text="Budgets and Goals"
+                android:text="@string/Q2"
                 android:textSize="20sp"
                 android:layout_height="wrap_content" />
 
@@ -71,7 +71,7 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="10dp"
                 android:textColor="@color/black"
-                android:text="  Budget is a way for users to control their spending more efficiently and limit their spending during a specific period. Goal will help users to set target and save to achieve that target more effective."
+                android:text="@string/A2"
                 android:layout_height="wrap_content" />
 
         </LinearLayout>
@@ -96,7 +96,7 @@
                 android:layout_marginStart="10dp"
                 android:layout_width="match_parent"
                 android:textColor="@color/main_green"
-                android:text="Data Security"
+                android:text="@string/Q3"
                 android:textSize="20sp"
                 android:layout_height="wrap_content" />
 
@@ -106,7 +106,7 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="10dp"
                 android:textColor="@color/black"
-                android:text="  All the data, user information and authentication are stored in Firestore database, Firebase cloud storage and Firebase authentication so it will get Google security level. No data from users will be used for personal purpose."
+                android:text="@string/A3"
                 android:layout_height="wrap_content" />
 
         </LinearLayout>

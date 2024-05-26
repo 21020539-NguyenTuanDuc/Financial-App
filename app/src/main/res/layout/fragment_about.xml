@@ -29,7 +29,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginStart="20dp"
                 android:text="Wallet App"
-                android:textColor="@color/black"
+                android:textColor="?android:textColorPrimary"
                 android:textSize="18sp"
                 android:layout_height="wrap_content" />
 
@@ -50,9 +50,9 @@
         android:layout_marginTop="30dp"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
-        android:text="Personal Finance Manager"
+        android:text="@string/personal_finance_managerTV"
         android:textSize="18sp"
-        android:textColor="@color/black"
+        android:textColor="?android:textColorPrimary"
         android:layout_height="wrap_content" />
 
     <TextView
@@ -60,7 +60,7 @@
         android:layout_marginTop="5dp"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
-        android:text="  Wallet is a personal finance management tool that helps you track your spending, so you stay in control and acheive your goals."
+        android:text="@string/wallet_desTV"
         android:textSize="15sp"
         android:layout_height="wrap_content" />
 

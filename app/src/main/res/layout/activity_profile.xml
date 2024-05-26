@@ -21,7 +21,7 @@
             android:layout_gravity="center_vertical"
             android:layout_marginTop="20dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/doge_avatar"
+            android:src="@drawable/default_profile_picture"
             app:shapeAppearanceOverlay="@style/circle" />
 
         <LinearLayout
@@ -34,7 +34,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Full name" />
+                android:text="@string/full_nameTV" />
 
             <EditText
                 android:id="@+id/user_name"
@@ -44,7 +44,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Number" />
+                android:text="@string/numberTV" />
 
             <EditText
                 android:id="@+id/user_number"
@@ -59,7 +59,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="Email"
+        android:text="@string/email"
         android:textSize="20sp" />
 
     <EditText
@@ -67,6 +67,7 @@
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:enabled="false"
+        android:textColor="@android:color/tab_indicator_text"
         android:inputType="none" />
 
     <Button
@@ -75,21 +76,21 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:backgroundTint="@color/red"
-        android:text="Log out"
+        android:text="@string/log_out"
         android:textSize="18sp" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="PASSWORD CHANGE"
-        android:textColor="@color/black"
+        android:text="@string/password_changeTV"
+        android:textColor="?android:textColorPrimary"
         android:textSize="20sp" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Leave passwords empty, when you don't want to change it."
+        android:text="@string/password_desTV"
         android:textSize="14sp"
         android:textStyle="italic" />
 
@@ -114,7 +115,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="Change password" />
+        android:text="@string/change_passwordBT" />
 
     <TextView
         android:id="@+id/delete_userTV"
@@ -122,7 +123,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"
-        android:text="DELETE ALL USER DATA"
+        android:text="@string/delete_all_user_data"
         android:textColor="@color/red"
         android:textSize="18sp" />
 

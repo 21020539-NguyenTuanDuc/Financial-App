@@ -5,7 +5,7 @@
             <item
                 android:id="@+id/nav_home"
                 android:icon="@drawable/home_icon"
-                android:title="Home" />
+                android:title="@string/nav_home" />
         </menu>
     </item>
 
@@ -14,24 +14,24 @@
             <item
                 android:id="@+id/nav_currency"
                 android:icon="@drawable/currency_icon"
-                android:title="Currency" />
+                android:title="@string/nav_currency" />
 
             <item
                 android:id="@+id/nav_languages"
                 android:icon="@drawable/languages_icon"
-                android:title="Languages" />
+                android:title="@string/nav_languages" />
             <item
                 android:id="@+id/nav_follow_us"
                 android:icon="@drawable/follow_icon"
-                android:title="Follow us" />
+                android:title="@string/follow_us" />
             <item
                 android:id="@+id/nav_help"
                 android:icon="@drawable/help_icon"
-                android:title="Help" />
+                android:title="@string/help" />
             <item
                 android:id="@+id/nav_about"
                 android:icon="@drawable/about_icon"
-                android:title="About" />
+                android:title="@string/about" />
         </menu>
     </item>
 </menu>

@@ -52,12 +52,15 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTheme(R.style.Theme_FinancialApp);
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+//        firebaseAuth = FirebaseAuth.getInstance();
+//        firebaseAuth.signOut();
+
         sweetAlertDialog = new SweetAlertDialog(this, SweetAlertDialog.PROGRESS_TYPE);
         sweetAlertDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
-        sweetAlertDialog.setCancelable(false);
 
         storage = FirebaseStorage.getInstance();
 
@@ -70,7 +73,6 @@ public class LoginActivity extends AppCompatActivity {
         binding.ggButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                sweetAlertDialog.show();
                 ggSignin();
             }
         });
@@ -191,6 +193,7 @@ public class LoginActivity extends AppCompatActivity {
                             if (newUser) {
                                 assert user != null;
                                 UserModel ggUser = new UserModel(user.getUid(), user.getDisplayName(), user.getPhoneNumber(), user.getEmail());
+                                ggUser.setSignIn(true);
                                 FirebaseFirestore.getInstance().collection("User").document(ggUser.getId()).set(ggUser)
                                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override
@@ -200,7 +203,6 @@ public class LoginActivity extends AppCompatActivity {
                                                 reference.putFile(defaultImage).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
                                                     @Override
                                                     public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-                                                        sweetAlertDialog.dismissWithAnimation();
                                                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                                                         startActivity(intent);
                                                         finish();
@@ -210,21 +212,34 @@ public class LoginActivity extends AppCompatActivity {
                                         }).addOnFailureListener(new OnFailureListener() {
                                             @Override
                                             public void onFailure(@NonNull Exception e) {
-                                                sweetAlertDialog.dismissWithAnimation();
                                                 Log.w(TAG, "signInWithCredential:failure", task.getException());
                                                 Toast.makeText(LoginActivity.this, "Login failed", Toast.LENGTH_SHORT).show();
                                             }
-
-                                            ;
                                         });
                             } else {
-                                sweetAlertDialog.dismissWithAnimation();
-                                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                                startActivity(intent);
-                                finish();
+                                FirebaseFirestore.getInstance().collection("User").document(user.getUid()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                    @Override
+                                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                        UserModel tempGGUser = documentSnapshot.toObject(UserModel.class);
+                                        if (tempGGUser.isSignIn()) {
+                                            Toast.makeText(LoginActivity.this, "This account already been signed in!", Toast.LENGTH_SHORT).show();
+                                            FirebaseAuth.getInstance().signOut();
+                                            LoginActivity.this.recreate();
+                                        } else {
+                                            tempGGUser.setSignIn(true);
+                                            FirebaseFirestore.getInstance().collection("User").document(tempGGUser.getId()).set(tempGGUser).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<Void> task) {
+                                                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                                    startActivity(intent);
+                                                    finish();
+                                                }
+                                            });
+                                        }
+                                    }
+                                });
                             }
                         } else {
-                            sweetAlertDialog.dismissWithAnimation();
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
                             Toast.makeText(LoginActivity.this, "Login failed", Toast.LENGTH_SHORT).show();
                         }
@@ -244,7 +259,6 @@ public class LoginActivity extends AppCompatActivity {
                             Toast.makeText(LoginActivity.this, "This account already been signed in!", Toast.LENGTH_SHORT).show();
                             FirebaseAuth.getInstance().signOut();
                             sweetAlertDialog.dismissWithAnimation();
-                            LoginActivity.this.recreate();
                         } else {
                             user.setSignIn(true);
                             FirebaseFirestore.getInstance().collection("User").document(user.getId()).set(user)

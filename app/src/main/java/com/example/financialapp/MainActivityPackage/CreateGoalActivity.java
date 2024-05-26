@@ -1,4 +1,4 @@
-package com.example.financialapp.MainActivityFragments;
+package com.example.financialapp.MainActivityPackage;
 
 import android.Manifest;
 import android.app.NotificationChannel;
@@ -23,6 +23,7 @@ import androidx.core.app.NotificationManagerCompat;
 
 import com.example.financialapp.MainActivity;
 import com.example.financialapp.Model.GoalModel;
+import com.example.financialapp.NumberTextWatcherForThousand;
 import com.example.financialapp.R;
 import com.example.financialapp.databinding.ActivityCreateGoalBinding;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -41,6 +42,10 @@ public class CreateGoalActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityCreateGoalBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        setTitle(R.string.create_goalTT);
+
+        binding.targetET.addTextChangedListener(new NumberTextWatcherForThousand(binding.targetET));
+        binding.savedET.addTextChangedListener(new NumberTextWatcherForThousand(binding.savedET));
 
         currentGoal = (GoalModel) getIntent().getSerializableExtra("goal");
         if (currentGoal != null) {
@@ -49,7 +54,7 @@ public class CreateGoalActivity extends AppCompatActivity {
             binding.savedET.setText(String.valueOf(currentGoal.getSaved()));
             binding.goalAchievedNotify.setChecked(currentGoal.isGoalAchievedNoti());
 
-            binding.addGoalButton.setText("Update Goal");
+            binding.addGoalButton.setText(R.string.update_goalBT);
         }
 
         binding.addGoalButton.setOnClickListener(new View.OnClickListener() {
@@ -158,8 +163,8 @@ public class CreateGoalActivity extends AppCompatActivity {
             id = FirebaseFirestore.getInstance().collection("Goal").document().getId();
         }
         String name = binding.nameET.getText().toString();
-        String target = binding.targetET.getText().toString();
-        String saved = binding.savedET.getText().toString();
+        String target = NumberTextWatcherForThousand.trimCommaOfString(binding.targetET.getText().toString());
+        String saved = NumberTextWatcherForThousand.trimCommaOfString(binding.savedET.getText().toString());
         boolean goalAchievedNoti = binding.goalAchievedNotify.isChecked();
         boolean reached = false;
         String userId = MainActivity.currentUser.getId();

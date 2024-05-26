@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/browser_actions_bg_grey"
+    android:background="@color/bg_grey"
     android:orientation="vertical"
     android:padding="10dp"
     tools:context=".AddTransaction.AddTransactionActivity">
@@ -29,14 +29,15 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Amount"
+                    android:text="@string/transaction_amountTV"
                     android:textColor="@color/grey" />
 
                 <EditText
                     android:id="@+id/amountET"
                     android:layout_width="match_parent"
                     android:layout_height="70dp"
-                    android:hint="Transaction amount"
+                    android:hint="@string/transaction_amount_hint"
+                    android:digits="0123456789"
                     android:inputType="numberSigned" />
 
                 <RadioGroup
@@ -50,13 +51,13 @@
                         android:layout_width="150dp"
                         android:layout_height="wrap_content"
                         android:checked="true"
-                        android:text="Expense" />
+                        android:text="@string/expense_radio" />
 
                     <RadioButton
                         android:id="@+id/incomeRadio"
                         android:layout_width="150dp"
                         android:layout_height="wrap_content"
-                        android:text="Income" />
+                        android:text="@string/income_radio" />
                 </RadioGroup>
             </LinearLayout>
 
@@ -68,21 +69,20 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Note"
+                    android:text="@string/note_transactionTV"
                     android:textColor="@color/grey" />
 
                 <EditText
                     android:id="@+id/noteET"
                     android:layout_width="match_parent"
                     android:layout_height="70dp"
-                    android:hint="Transaction description"
+                    android:hint="@string/note_transaction_hint"
                     android:inputType="text" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="2"
                 android:orientation="horizontal">
 
                 <LinearLayout
@@ -94,7 +94,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Date"
+                        android:text="@string/dateTV"
                         android:textColor="@color/grey" />
 
                     <EditText
@@ -116,7 +116,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Time"
+                        android:text="@string/timeTV"
                         android:textColor="@color/grey" />
 
                     <EditText
@@ -139,7 +139,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Category"
+                    android:text="@string/categoryTV"
                     android:textColor="@color/grey" />
 
                 <Spinner
@@ -158,6 +158,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="70dp"
-        android:text="Add Transaction" />
+        android:text="@string/add_transactionBT" />
 
 </LinearLayout>
