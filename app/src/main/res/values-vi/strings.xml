@@ -95,4 +95,7 @@
     <string name="create_goalTT">Tạo mục tiêu</string>
     <string name="delete_accountTT">Xóa mục tiêu</string>
     <string name="profileTT">Hồ sơ</string>
+    <string name="confirm_deleteTT">Xóa tất cả dữ liệu người dùng?</string>
+    <string name="confirm_deleteContent">Tất cả dữ liệu của bạn sẽ bị mất.</string>
+    <string name="confirm_deleteText">Xóa!</string>
 </resources>

@@ -94,4 +94,7 @@
     <string name="create_goalTT">创建目标</string>
     <string name="delete_accountTT">删除帐户</string>
     <string name="profileTT">轮廓</string>
+    <string name="confirm_deleteTT">删除所有的用户数据？</string>
+    <string name="confirm_deleteContent">您的所有数据都将丢失。</string>
+    <string name="confirm_deleteText">删除！</string>
 </resources>

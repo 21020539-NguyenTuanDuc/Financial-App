@@ -38,6 +38,7 @@
         android:layout_marginTop="20dp"
         android:background="@drawable/edit_text_background"
         android:gravity="center"
+        android:inputType="phone"
         android:hint="Mobile number" />
 
     <EditText

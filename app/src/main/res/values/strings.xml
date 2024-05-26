@@ -94,4 +94,7 @@
     <string name="create_goalTT">Create Goal</string>
     <string name="delete_accountTT">Delete Account</string>
     <string name="profileTT">Profile</string>
+    <string name="confirm_deleteTT">Delete all user data?</string>
+    <string name="confirm_deleteContent">All your data will be lost.</string>
+    <string name="confirm_deleteText">Delete!</string>
 </resources>

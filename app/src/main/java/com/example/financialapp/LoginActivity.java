@@ -258,7 +258,6 @@ public class LoginActivity extends AppCompatActivity {
                             Toast.makeText(LoginActivity.this, "This account already been signed in!", Toast.LENGTH_SHORT).show();
                             FirebaseAuth.getInstance().signOut();
                             sweetAlertDialog.dismissWithAnimation();
-                            LoginActivity.this.recreate();
                         } else {
                             user.setSignIn(true);
                             FirebaseFirestore.getInstance().collection("User").document(user.getId()).set(user)
