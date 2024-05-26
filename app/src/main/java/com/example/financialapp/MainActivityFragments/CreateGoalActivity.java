@@ -21,7 +21,6 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
-import com.example.financialapp.MainActivity;
 import com.example.financialapp.Model.GoalModel;
 import com.example.financialapp.NumberTextWatcherForThousand;
 import com.example.financialapp.R;

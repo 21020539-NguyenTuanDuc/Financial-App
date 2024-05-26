@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.example.financialapp.Adapter.AccountAdapter;
 import com.example.financialapp.Adapter.TransactionAdapter;
 import com.example.financialapp.AddTransaction.TransactionCalculatorActivity;
-import com.example.financialapp.MainActivity;
 import com.example.financialapp.Model.AccountModel;
 import com.example.financialapp.Model.TransactionModel;
 import com.example.financialapp.R;

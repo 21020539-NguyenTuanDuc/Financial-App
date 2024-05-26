@@ -7,7 +7,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.financialapp.Adapter.AccountDeleteAdapter;
-import com.example.financialapp.MainActivity;
 import com.example.financialapp.Model.AccountModel;
 import com.example.financialapp.databinding.ActivityDeleteAccountBinding;
 import com.google.android.gms.tasks.OnSuccessListener;

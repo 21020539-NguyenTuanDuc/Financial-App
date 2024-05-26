@@ -1,6 +1,16 @@
 <resources>
-    <string name="app_name">FinancialApp</string>
+    <string name="app_name">Wallet</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="open">open</string>
     <string name="close">close</string>
+    <string name="transaction_amountTV">Amount</string>
+    <string name="transaction_amount_hint">Transaction amount</string>
+    <string name="expense_radio">Expense</string>
+    <string name="income_radio">Income</string>
+    <string name="note_transactionTV">Note</string>
+    <string name="note_transaction_hint">Transaction description</string>
+    <string name="dateTV">Date</string>
+    <string name="timeTV">Time</string>
+    <string name="categoryTV">Category</string>
+    <string name="add_transactionBT">Add Transaction</string>
 </resources>

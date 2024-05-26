@@ -1,7 +1,5 @@
 package com.example.financialapp.Model;
 
-import com.example.financialapp.MainActivity;
-
 public class AccountModel {
     private String id;
     private String name;

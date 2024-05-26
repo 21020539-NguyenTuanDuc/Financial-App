@@ -9,7 +9,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.financialapp.MainActivity;
 import com.example.financialapp.Model.AccountModel;
 import com.example.financialapp.NumberTextWatcherForThousand;
 import com.example.financialapp.databinding.ActivityAddNewAccountBinding;

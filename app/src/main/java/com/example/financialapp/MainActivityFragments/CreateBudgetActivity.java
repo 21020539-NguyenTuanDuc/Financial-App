@@ -13,7 +13,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.financialapp.Adapter.PeriodSpinnerAdapter;
-import com.example.financialapp.MainActivity;
 import com.example.financialapp.Model.BudgetModel;
 import com.example.financialapp.NumberTextWatcherForThousand;
 import com.example.financialapp.R;
