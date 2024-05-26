@@ -30,7 +30,7 @@
     <string name="periodTV">Period</string>
     <string name="notificationTV">Notification</string>
     <string name="budget_overspentSW">Budget Overspent</string>
-    <string name="risk_of_overspendingSW">Risk of overspending</string>
+    <string name="risk_of_overspendingSW">Risk of Overspending</string>
     <string name="add_budgetBT">Add Budget</string>
     <string name="update_budgetBT">Update budget</string>
     <string name="name_goalTV">Name</string>
@@ -79,11 +79,7 @@
     <string name="help">Help</string>
     <string name="about">About</string>
     <string name="full_nameTV">Full name</string>
-<<<<<<< HEAD
-    <string name="numberTV">Number</string>
-=======
     <string name="numberTV">Mobile Number</string>
->>>>>>> advertisal-ad
     <string name="email">Email</string>
     <string name="log_out">Log out</string>
     <string name="password_changeTV">PASSWORD CHANGE</string>

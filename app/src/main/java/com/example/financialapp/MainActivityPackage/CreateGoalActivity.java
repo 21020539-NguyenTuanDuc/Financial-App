@@ -174,13 +174,13 @@ public class CreateGoalActivity extends AppCompatActivity {
             sweetAlertDialog.dismissWithAnimation();
             return;
         }
-        if (target.length() == 0) {
-            binding.targetET.setError("Empty");
+        if (target.length() == 0 || target.length() >= 10) {
+            binding.targetET.setError("Error");
             sweetAlertDialog.dismissWithAnimation();
             return;
         }
-        if (saved.length() == 0) {
-            binding.savedET.setError("Empty");
+        if (saved.length() == 0 || saved.length() >= 10) {
+            binding.savedET.setError("Error");
             sweetAlertDialog.dismissWithAnimation();
             return;
         }

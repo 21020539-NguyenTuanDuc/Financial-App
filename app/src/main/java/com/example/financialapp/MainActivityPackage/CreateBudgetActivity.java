@@ -143,8 +143,8 @@ public class CreateBudgetActivity extends AppCompatActivity {
             sweetAlertDialog.dismissWithAnimation();
             return;
         }
-        if (budget.length() == 0) {
-            binding.budgetET.setError("Empty");
+        if (budget.length() == 0 || budget.length() >= 10) {
+            binding.budgetET.setError("Error");
             sweetAlertDialog.dismissWithAnimation();
             return;
         }
@@ -192,8 +192,8 @@ public class CreateBudgetActivity extends AppCompatActivity {
             sweetAlertDialog.dismissWithAnimation();
             return;
         }
-        if (budget.length() == 0) {
-            binding.budgetET.setError("Empty");
+        if (budget.length() == 0 || budget.length() >= 10) {
+            binding.budgetET.setError("Error");
             sweetAlertDialog.dismissWithAnimation();
             return;
         }

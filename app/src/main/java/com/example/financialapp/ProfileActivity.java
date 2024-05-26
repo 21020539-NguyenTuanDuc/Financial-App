@@ -18,11 +18,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
-<<<<<<< HEAD
-import com.example.financialapp.MainActivityFragments.MainAccountFragment;
-=======
 import com.example.financialapp.MainActivityPackage.MainAccountFragment;
->>>>>>> advertisal-ad
 import com.example.financialapp.Model.AccountModel;
 import com.example.financialapp.Model.UserModel;
 import com.example.financialapp.databinding.ActivityProfileBinding;
@@ -42,7 +38,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-import java.util.Collections;
+import org.mozilla.javascript.tools.jsc.Main;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
@@ -108,6 +104,7 @@ public class ProfileActivity extends AppCompatActivity {
                             public void onSuccess(Void unused) {
                                 gsc.signOut();
                                 FirebaseAuth.getInstance().signOut();
+                                MainActivity.profilePicture = null;
                                 finishAffinity();
                                 finishAndRemoveTask();
                                 MainAccountFragment.currentAccId = "";
@@ -173,6 +170,7 @@ public class ProfileActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<Void> task) {
                 gsc.signOut();
                 FirebaseAuth.getInstance().signOut();
+                MainActivity.profilePicture = null;
                 finishAffinity();
                 finishAndRemoveTask();
                 MainAccountFragment.currentAccId = "";

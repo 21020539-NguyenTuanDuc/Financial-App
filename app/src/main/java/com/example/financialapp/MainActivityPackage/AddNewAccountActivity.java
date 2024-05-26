@@ -32,10 +32,7 @@ public class AddNewAccountActivity extends AppCompatActivity {
         setTitle(R.string.add_accountTT);
 
         binding.initValueET.addTextChangedListener(new NumberTextWatcherForThousand(binding.initValueET));
-<<<<<<< HEAD:app/src/main/java/com/example/financialapp/MainActivityFragments/AddNewAccountActivity.java
-=======
         binding.initValueET.setTextColor(getResources().getColor(android.R.color.black));
->>>>>>> advertisal-ad:app/src/main/java/com/example/financialapp/MainActivityPackage/AddNewAccountActivity.java
 
         tempAccount = (AccountModel) getIntent().getSerializableExtra("account");
         if (tempAccount != null) {
@@ -75,8 +72,8 @@ public class AddNewAccountActivity extends AppCompatActivity {
         }
         boolean cashChecked = binding.cashRadio.isChecked();
         String type;
-        if (binding.initValueET.getText().toString().trim().length() == 0) {
-            binding.initValueET.setError("Empty");
+        if (binding.initValueET.getText().toString().trim().length() == 0 || binding.initValueET.getText().toString().trim().length() >= 10) {
+            binding.initValueET.setError("Error");
             return;
         }
         long initialValue = Long.parseLong(NumberTextWatcherForThousand.trimCommaOfString(binding.initValueET.getText().toString()));
@@ -84,7 +81,7 @@ public class AddNewAccountActivity extends AppCompatActivity {
         else type = "Bank";
 
 
-        AccountModel accountModel = new AccountModel(id, name, type, initialValue);
+        AccountModel accountModel = new AccountModel(id, name, type, initialValue, tempAccount.getBalance());
 
         FirebaseFirestore
                 .getInstance()
@@ -116,8 +113,8 @@ public class AddNewAccountActivity extends AppCompatActivity {
         }
         boolean cashChecked = binding.cashRadio.isChecked();
         String type;
-        if (binding.initValueET.getText().toString().trim().length() == 0) {
-            binding.initValueET.setError("Empty");
+        if (binding.initValueET.getText().toString().trim().length() == 0 || binding.initValueET.getText().toString().trim().length() >= 10) {
+            binding.initValueET.setError("Error");
             return;
         }
         long initialValue = Long.parseLong(NumberTextWatcherForThousand.trimCommaOfString(binding.initValueET.getText().toString().trim()));

@@ -69,8 +69,9 @@ public class AddSavingActivity extends AppCompatActivity {
                 sweetAlertDialog.setCancelable(false);
                 sweetAlertDialog.show();
                 String savedValue = NumberTextWatcherForThousand.trimCommaOfString(binding.savedET.getText().toString());
-                if (savedValue.length() == 0) {
-                    binding.savedET.setError("Empty");
+                if (savedValue.length() == 0 || savedValue.length() >= 10) {
+                    binding.savedET.setError("Error");
+                    sweetAlertDialog.dismissWithAnimation();
                     return;
                 }
                 currentGoal.setSaved(currentGoal.getSaved() + Long.parseLong(savedValue));

@@ -31,6 +31,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.auth.UserInfo;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
@@ -61,6 +62,7 @@ public class LoginActivity extends AppCompatActivity {
 
         sweetAlertDialog = new SweetAlertDialog(this, SweetAlertDialog.PROGRESS_TYPE);
         sweetAlertDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
+        sweetAlertDialog.setCancelable(false);
 
         storage = FirebaseStorage.getInstance();
 
@@ -192,13 +194,23 @@ public class LoginActivity extends AppCompatActivity {
                             boolean newUser = Objects.requireNonNull(task.getResult().getAdditionalUserInfo()).isNewUser();
                             if (newUser) {
                                 assert user != null;
-                                UserModel ggUser = new UserModel(user.getUid(), user.getDisplayName(), user.getPhoneNumber(), user.getEmail());
+                                String name = null, phoneNumber = null, email = null;
+                                Uri profileImage = Uri.parse("android.resource://com.example.financialapp/" + R.drawable.default_profile_picture);
+                                for (UserInfo profile : user.getProviderData()) {
+                                    name = profile.getDisplayName();
+                                    phoneNumber = profile.getPhoneNumber();
+                                    email = profile.getEmail();
+                                    if (profile.getPhotoUrl() != null)
+                                        profileImage = profile.getPhotoUrl();
+                                }
+                                final Uri defaultImage = profileImage;
+                                UserModel ggUser = new UserModel(user.getUid(), name, phoneNumber, email);
                                 ggUser.setSignIn(true);
                                 FirebaseFirestore.getInstance().collection("User").document(ggUser.getId()).set(ggUser)
                                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override
                                             public void onSuccess(Void unused) {
-                                                Uri defaultImage = Uri.parse("android.resource://com.example.financialapp/" + R.drawable.default_profile_picture);
+//                                                Uri defaultImage = Uri.parse("android.resource://com.example.financialapp/" + R.drawable.default_profile_picture);
                                                 StorageReference reference = storage.getReference().child("images/" + ggUser.getId());
                                                 reference.putFile(defaultImage).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
                                                     @Override
@@ -224,6 +236,7 @@ public class LoginActivity extends AppCompatActivity {
                                         if (tempGGUser.isSignIn()) {
                                             Toast.makeText(LoginActivity.this, "This account already been signed in!", Toast.LENGTH_SHORT).show();
                                             FirebaseAuth.getInstance().signOut();
+                                            gsc.signOut();
                                             LoginActivity.this.recreate();
                                         } else {
                                             tempGGUser.setSignIn(true);

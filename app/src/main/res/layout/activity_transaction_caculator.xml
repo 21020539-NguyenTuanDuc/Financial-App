@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".AddTransaction.TransactionCalculatorActivity">
 
     <TextView
@@ -51,7 +52,8 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:backgroundTint="#F44336"
+                android:backgroundTint="#07142B"
+                app:cornerRadius="15dp"
                 android:text="C"
                 android:textColor="@color/white"
                 android:textSize="32dp" />
@@ -62,7 +64,8 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:backgroundTint="#A1A1A1"
+                android:backgroundTint="#BDD1BD"
+                app:cornerRadius="15dp"
                 android:text="("
                 android:textColor="@color/white"
                 android:textSize="32dp" />
@@ -73,7 +76,8 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:backgroundTint="#A1A1A1"
+                android:backgroundTint="#BDD1BD"
+                app:cornerRadius="15dp"
                 android:text=")"
                 android:textColor="@color/white"
                 android:textSize="32dp" />
@@ -84,7 +88,8 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:backgroundTint="#FF9800"
+                android:backgroundTint="#326D6C"
+                app:cornerRadius="15dp"
                 android:text="/"
                 android:textColor="@color/white"
                 android:textSize="32dp" />
@@ -105,6 +110,8 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:text="7"
+                android:backgroundTint="#568F7C"
+                app:cornerRadius="15dp"
                 android:textColor="@color/white"
                 android:textSize="32dp" />
 
@@ -114,6 +121,8 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:backgroundTint="#568F7C"
+                app:cornerRadius="15dp"
                 android:text="8"
                 android:textColor="@color/white"
                 android:textSize="32dp" />
@@ -123,6 +132,8 @@
                 style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:backgroundTint="#568F7C"
+                app:cornerRadius="15dp"
                 android:layout_weight="1"
                 android:text="9"
                 android:textColor="@color/white"
@@ -134,7 +145,8 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:backgroundTint="#FF9800"
+                android:backgroundTint="#326D6C"
+                app:cornerRadius="15dp"
                 android:text="*"
                 android:textColor="@color/white"
                 android:textSize="32dp" />
@@ -155,6 +167,8 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:text="4"
+                android:backgroundTint="#568F7C"
+                app:cornerRadius="15dp"
                 android:textColor="@color/white"
                 android:textSize="32dp" />
 
@@ -163,6 +177,8 @@
                 style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:backgroundTint="#568F7C"
+                app:cornerRadius="15dp"
                 android:layout_weight="1"
                 android:text="5"
                 android:textColor="@color/white"
@@ -174,6 +190,8 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:backgroundTint="#568F7C"
+                app:cornerRadius="15dp"
                 android:text="6"
                 android:textColor="@color/white"
                 android:textSize="32dp" />
@@ -184,7 +202,8 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:backgroundTint="#FF9800"
+                android:backgroundTint="#326D6C"
+                app:cornerRadius="15dp"
                 android:text="+"
                 android:textColor="@color/white"
                 android:textSize="32dp" />
@@ -203,6 +222,8 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:backgroundTint="#568F7C"
+                app:cornerRadius="15dp"
                 android:text="1"
                 android:textColor="@color/white"
                 android:textSize="32dp" />
@@ -212,6 +233,8 @@
                 style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:backgroundTint="#568F7C"
+                app:cornerRadius="15dp"
                 android:layout_weight="1"
                 android:text="2"
                 android:textColor="@color/white"
@@ -222,6 +245,8 @@
                 style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:backgroundTint="#568F7C"
+                app:cornerRadius="15dp"
                 android:layout_weight="1"
                 android:text="3"
                 android:textColor="@color/white"
@@ -233,7 +258,8 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:backgroundTint="#FF9800"
+                android:backgroundTint="#326D6C"
+                app:cornerRadius="15dp"
                 android:text="-"
                 android:textColor="@color/white"
                 android:textSize="32dp" />
@@ -253,7 +279,8 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:backgroundTint="#F44336"
+                android:backgroundTint="#07142B"
+                app:cornerRadius="15dp"
                 android:text="AC"
                 android:textColor="@color/white"
                 android:textSize="20dp" />
@@ -264,6 +291,8 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:backgroundTint="#568F7C"
+                app:cornerRadius="15dp"
                 android:text="0"
                 android:textColor="@color/white"
                 android:textSize="32dp" />
@@ -273,6 +302,8 @@
                 style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:backgroundTint="#568F7C"
+                app:cornerRadius="15dp"
                 android:layout_weight="1"
                 android:text="."
                 android:textColor="@color/white"
@@ -284,7 +315,8 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:backgroundTint="#FF9800"
+                android:backgroundTint="#326D6C"
+                app:cornerRadius="15dp"
                 android:text="="
                 android:textColor="@color/white"
                 android:textSize="32dp" />

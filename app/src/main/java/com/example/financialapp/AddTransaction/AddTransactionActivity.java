@@ -38,7 +38,6 @@ import com.example.financialapp.databinding.ActivityAddTransactionBinding;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.zeugmasolutions.localehelper.LocaleAwareCompatActivity;
 
 import java.text.ParseException;
 import java.util.Calendar;
@@ -246,8 +245,8 @@ public class AddTransactionActivity extends AppCompatActivity {
         }
         long finalTimestamp = timestamp;
 
-        if (transactionAmount.length() == 0) {
-            binding.amountET.setError("Empty");
+        if (transactionAmount.length() == 0 || transactionAmount.length() >= 10) {
+            binding.amountET.setError("Error");
         }
         if (incomeChecked) {
             type = "Income";
@@ -350,8 +349,8 @@ public class AddTransactionActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         long finalTimestamp = timestamp;
-        if (transactionAmount.length() == 0) {
-            binding.amountET.setError("Empty");
+        if (transactionAmount.length() == 0 || transactionAmount.length() >= 10) {
+            binding.amountET.setError("Error");
             sweetAlertDialog.dismissWithAnimation();
             return;
         }
@@ -392,19 +391,18 @@ public class AddTransactionActivity extends AppCompatActivity {
                                             if (type.equals("Expense")) {
                                                 System.out.println("Size of budgetModelList: " + budgetModelList.size());
                                                 for (int i = 0; i < budgetModelList.size(); i++) {
+                                                    if (finalTimestamp >= budgetModelList.get(i).getTimeStampStart() && finalTimestamp <= budgetModelList.get(i).getTimeStampEnd()) {
+                                                        budgetModelList.get(i).setSpending(budgetModelList.get(i).getSpending() + Long.parseLong(transactionAmount));
+                                                    }
                                                     if (budgetModelList.get(i).isRiskOverspending()
-                                                            && budgetModelList.get(i).getSpending() < budgetModelList.get(i).getBudget() * 4 / 5
-                                                            && budgetModelList.get(i).getSpending() + Integer.parseInt(transactionAmount) >= budgetModelList.get(i).getBudget() * 4 / 5
-                                                            && budgetModelList.get(i).getSpending() + Integer.parseInt(transactionAmount) < budgetModelList.get(i).getBudget()) {
+                                                            && budgetModelList.get(i).getSpending() - Long.parseLong(transactionAmount) < budgetModelList.get(i).getBudget() * 4 / 5
+                                                            && budgetModelList.get(i).getSpending() >= budgetModelList.get(i).getBudget() * 4 / 5
+                                                            && budgetModelList.get(i).getSpending() < budgetModelList.get(i).getBudget()) {
                                                         notifyUser(budgetModelList.get(i).getName(), "You might overspent your budget!");
                                                     }
                                                     if (budgetModelList.get(i).isBudgetOverspent()
-                                                            && budgetModelList.get(i).getSpending() + Integer.parseInt(transactionAmount) >= budgetModelList.get(i).getBudget()) {
+                                                            && budgetModelList.get(i).getSpending() >= budgetModelList.get(i).getBudget()) {
                                                         notifyUser(budgetModelList.get(i).getName(), "You have spent more than your budget!");
-                                                    }
-                                                    if (finalTimestamp >= budgetModelList.get(i).getTimeStampStart() && finalTimestamp <= budgetModelList.get(i).getTimeStampEnd()) {
-                                                        budgetModelList.get(i)
-                                                                .setSpending(budgetModelList.get(i).getSpending() + Integer.parseInt(transactionAmount));
                                                     }
                                                 }
                                                 pushBudgetData();

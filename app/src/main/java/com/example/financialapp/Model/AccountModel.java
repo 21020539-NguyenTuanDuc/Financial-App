@@ -25,6 +25,15 @@ public class AccountModel implements Serializable {
         this.userId = MainActivity.currentUser.getId();
     }
 
+    public AccountModel(String id, String name, String type, long initialBalance, long balance) {
+        this.id = id;
+        this.name = name;
+        this.initialBalance = initialBalance;
+        this.type = type;
+        this.balance = balance;
+        this.userId = MainActivity.currentUser.getId();
+    }
+
     public String getId() {
         return id;
     }
