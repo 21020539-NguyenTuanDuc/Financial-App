@@ -3,17 +3,27 @@ package com.example.financialapp;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.financialapp.Model.GoalModel;
+import com.example.financialapp.Model.UserModel;
 import com.example.financialapp.databinding.ActivityLoginBinding;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+
+import java.util.List;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
@@ -29,6 +39,12 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = firebaseAuth.getCurrentUser();
+        if (user != null) {
+            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+        }
         sweetAlertDialog = new SweetAlertDialog(this, SweetAlertDialog.PROGRESS_TYPE);
         sweetAlertDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
         sweetAlertDialog.setCancelable(false);
@@ -48,9 +64,7 @@ public class LoginActivity extends AppCompatActivity {
                             .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                                 @Override
                                 public void onSuccess(AuthResult authResult) {
-                                    sweetAlertDialog.dismissWithAnimation();
-                                    Toast.makeText(LoginActivity.this, "Login Successfully!", Toast.LENGTH_SHORT).show();
-                                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                                    checkUserSignIn();
                                 }
                             })
                             .addOnFailureListener(new OnFailureListener() {
@@ -108,5 +122,34 @@ public class LoginActivity extends AppCompatActivity {
                 finishAffinity();
             }
         });
+    }
+
+    private void checkUserSignIn() {
+        FirebaseFirestore.getInstance().collection("User").document(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        UserModel user = documentSnapshot.toObject(UserModel.class);
+                        assert user != null;
+                        if (user.isSignIn()) {
+                            Toast.makeText(LoginActivity.this, "This account already been signed in!", Toast.LENGTH_SHORT).show();
+                            FirebaseAuth.getInstance().signOut();
+                            sweetAlertDialog.dismissWithAnimation();
+                            LoginActivity.this.recreate();
+                        } else {
+                            user.setSignIn(true);
+                            FirebaseFirestore.getInstance().collection("User").document(user.getId()).set(user)
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void unused) {
+                                            sweetAlertDialog.dismissWithAnimation();
+                                            Toast.makeText(LoginActivity.this, "Login Successfully!", Toast.LENGTH_SHORT).show();
+                                            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                                        }
+                                    });
+                        }
+                    }
+                });
     }
 }

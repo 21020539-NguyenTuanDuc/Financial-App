@@ -71,10 +71,17 @@ public class ProfileActivity extends AppCompatActivity {
         binding.logoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FirebaseAuth.getInstance().signOut();
-                finishAffinity();
-                startActivity(new Intent(ProfileActivity.this, LoginActivity.class));
-                finish();
+                FirebaseFirestore.getInstance().collection("User").document(MainActivity.currentUser.getId())
+                        .update("signIn", false)
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void unused) {
+                                FirebaseAuth.getInstance().signOut();
+                                finishAffinity();
+                                startActivity(new Intent(ProfileActivity.this, LoginActivity.class));
+                                finish();
+                            }
+                        });
             }
         });
 

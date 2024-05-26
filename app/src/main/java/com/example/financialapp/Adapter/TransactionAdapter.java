@@ -2,6 +2,7 @@ package com.example.financialapp.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -63,7 +64,16 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
         holder.transaction_type.setText(transactionModel.getType());
         NumberFormat nf = NumberFormat.getInstance();
         String transactionAmount = nf.format(transactionModel.getAmount()) + CurrencyFragment.current_symbol;
+        boolean income = false;
+        if (transactionModel.getType().equals("Income")) {
+            transactionAmount = "+" + transactionAmount;
+            income = true;
+        } else {
+            transactionAmount = "-" + transactionAmount;
+        }
         holder.transaction_amount.setText(transactionAmount);
+        if (income) holder.transaction_amount.setTextColor(Color.GREEN);
+        else holder.transaction_amount.setTextColor(Color.RED);
         holder.transaction_date.setText(transactionModel.getDate());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -108,7 +108,6 @@ public class MainBudgetsFragment extends Fragment {
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                         goalAdapter.clearData();
                         List<DocumentSnapshot> dsList = queryDocumentSnapshots.getDocuments();
-                        System.out.println(dsList.size());
                         for (DocumentSnapshot ds : dsList) {
                             GoalModel goalModel = ds.toObject(GoalModel.class);
                             goalAdapter.addData(goalModel);

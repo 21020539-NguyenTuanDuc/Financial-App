@@ -2,20 +2,24 @@ package com.example.financialapp.Adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.financialapp.MainActivityFragments.AddNewAccountActivity;
 import com.example.financialapp.Model.AccountModel;
 import com.example.financialapp.NavigationFragments.CurrencyFragment;
 import com.example.financialapp.R;
+import com.example.financialapp.databinding.ActivityAddNewAccountBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -120,6 +124,16 @@ public class AccountDeleteAdapter extends RecyclerView.Adapter<AccountDeleteAdap
                 }, 1);
             }
         });
+
+        holder.update_space.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, AddNewAccountActivity.class);
+                intent.putExtra("account", accountModel);
+                context.startActivity(intent);
+            }
+        });
+
     }
 
     @Override
@@ -132,6 +146,7 @@ public class AccountDeleteAdapter extends RecyclerView.Adapter<AccountDeleteAdap
 
         private TextView account_name, account_balance, account_type;
         private ImageView delete_button;
+        private LinearLayout update_space;
 
         public AccountDeleteViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -140,6 +155,7 @@ public class AccountDeleteAdapter extends RecyclerView.Adapter<AccountDeleteAdap
             account_type = itemView.findViewById(R.id.account_type);
             account_balance = itemView.findViewById(R.id.account_balance);
             delete_button = itemView.findViewById(R.id.delete_button);
+            update_space = itemView.findViewById(R.id.update_space);
         }
     }
 }

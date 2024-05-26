@@ -9,8 +9,8 @@
     tools:context=".LoginActivity">
 
     <ImageView
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:src="@drawable/wallet_icon" />
 
     <TextView

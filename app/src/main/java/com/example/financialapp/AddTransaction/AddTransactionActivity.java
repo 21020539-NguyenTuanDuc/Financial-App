@@ -47,7 +47,7 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class AddTransactionActivity extends AppCompatActivity {
     public static String[] categories = {"Food", "Shopping", "Housing", "Transportation", "Entertainment", "Investment", "Income", "Others"};
-    public static int icons[] = {R.drawable.food_icon, R.drawable.shopping_icon, R.drawable.housing_icon, R.drawable.transportation_icon
+    public static int[] icons = {R.drawable.food_icon, R.drawable.shopping_icon, R.drawable.housing_icon, R.drawable.transportation_icon
             , R.drawable.entertainment_icon, R.drawable.investment_icon, R.drawable.income_icon, R.drawable.others_icon};
 
     ActivityAddTransactionBinding binding;
