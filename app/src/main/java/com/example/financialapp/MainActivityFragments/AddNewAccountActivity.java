@@ -9,8 +9,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.financialapp.MainActivity;
 import com.example.financialapp.Model.AccountModel;
+import com.example.financialapp.NumberTextWatcherForThousand;
 import com.example.financialapp.databinding.ActivityAddNewAccountBinding;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -27,6 +27,8 @@ public class AddNewAccountActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityAddNewAccountBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        binding.initValueET.addTextChangedListener(new NumberTextWatcherForThousand(binding.initValueET));
 
         tempAccount = (AccountModel) getIntent().getSerializableExtra("account");
         if (tempAccount != null) {
@@ -47,7 +49,7 @@ public class AddNewAccountActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View view) {
-                if (tempAccount != null) {
+                if (tempAccount == null) {
                     createAccount();
                 } else {
                     updateAccount();
@@ -69,7 +71,8 @@ public class AddNewAccountActivity extends AppCompatActivity {
             binding.initValueET.setError("Empty");
             return;
         }
-        long initialValue = Integer.parseInt(binding.initValueET.getText().toString().trim());
+        long initialValue = Long.parseLong(NumberTextWatcherForThousand.trimCommaOfString(binding.initValueET.getText().toString()));
+
         if (cashChecked) type = "Cash";
         else type = "Bank";
 
@@ -110,7 +113,7 @@ public class AddNewAccountActivity extends AppCompatActivity {
             binding.initValueET.setError("Empty");
             return;
         }
-        long initialValue = Integer.parseInt(binding.initValueET.getText().toString().trim());
+        long initialValue = Long.parseLong(NumberTextWatcherForThousand.trimCommaOfString(binding.initValueET.getText().toString().trim()));
         if (cashChecked) type = "Cash";
         else type = "Bank";
 

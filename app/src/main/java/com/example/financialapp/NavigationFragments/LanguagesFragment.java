@@ -15,6 +15,10 @@ import com.example.financialapp.databinding.FragmentLanguagesBinding;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.zeugmasolutions.localehelper.LocaleAwareCompatActivity;
+import com.zeugmasolutions.localehelper.Locales;
+
+import java.util.Locale;
 
 public class LanguagesFragment extends Fragment {
     FragmentLanguagesBinding binding;
@@ -32,7 +36,7 @@ public class LanguagesFragment extends Fragment {
         binding.setLanguageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                setLanguage();
+                setLanguageApp();
             }
         });
 
@@ -48,18 +52,23 @@ public class LanguagesFragment extends Fragment {
         return binding.getRoot();
     }
 
-    private void setLanguage() {
-        if(binding.VNRadio.isChecked()) {
+    private void setLanguageApp() {
+        Locale locale = Locales.INSTANCE.getEnglish();
+        if (binding.VNRadio.isChecked()) {
             current_language = vietnamese;
+            locale = Locales.INSTANCE.getVietnamese();
         } else if (binding.ENRadio.isChecked()) {
             current_language = english;
+            locale = Locales.INSTANCE.getEnglish();
         } else if (binding.JPRadio.isChecked()) {
             current_language = japanese;
         } else if (binding.CNRadio.isChecked()) {
             current_language = chinese;
         } else {
             current_language = english;
+            locale = Locales.INSTANCE.getEnglish();
         }
+        final Locale finalLocale = locale;
 
         MainActivity.currentUser.setLanguage(current_language);
         FirebaseFirestore.getInstance().collection("User").document(MainActivity.currentUser.getId()).set(MainActivity.currentUser)
@@ -67,9 +76,9 @@ public class LanguagesFragment extends Fragment {
                     @Override
                     public void onSuccess(Void unused) {
                         Log.d("Set language", "Set user language successfully");
-                        Activity activity = (Activity) getContext();
+                        LocaleAwareCompatActivity activity = (LocaleAwareCompatActivity) getContext();
                         assert activity != null;
-                        activity.recreate();
+                        activity.updateLocale(finalLocale);
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override

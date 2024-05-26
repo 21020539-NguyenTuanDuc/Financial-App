@@ -29,9 +29,9 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
 import com.example.financialapp.Adapter.CustomSpinnerAdapter;
-import com.example.financialapp.MainActivity;
 import com.example.financialapp.MainActivityFragments.MainAccountFragment;
 import com.example.financialapp.Model.TransactionModel;
+import com.example.financialapp.NumberTextWatcherForThousand;
 import com.example.financialapp.R;
 import com.example.financialapp.databinding.ActivityAddTransactionBinding;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -68,8 +68,10 @@ public class AddTransactionActivity extends AppCompatActivity {
         customSpinnerAdapter = new CustomSpinnerAdapter(this, categories, icons);
         binding.categorySpinner.setAdapter(customSpinnerAdapter);
 
+        binding.amountET.addTextChangedListener(new NumberTextWatcherForThousand(binding.amountET));
+
         String transactionAmount = getIntent().getStringExtra("transactionAmount");
-        if(transactionAmount.matches("^[0-9]*$")){
+        if (transactionAmount != null && transactionAmount.matches("^[0-9]*$")) {
             binding.amountET.setText(transactionAmount);
         }
 
@@ -214,7 +216,7 @@ public class AddTransactionActivity extends AppCompatActivity {
 
     private void updateTransaction() {
         String id = transactionModel.getId();
-        String transactionAmount = binding.amountET.getText().toString();
+        String transactionAmount = NumberTextWatcherForThousand.trimCommaOfString(binding.amountET.getText().toString());
         boolean incomeChecked = binding.incomeRadio.isChecked();
         String type;
         String transactionNote = binding.noteET.getText().toString();
@@ -320,7 +322,7 @@ public class AddTransactionActivity extends AppCompatActivity {
 
     private void createTransaction() {
         String id = FirebaseFirestore.getInstance().collection("Transaction").document().getId();
-        String transactionAmount = binding.amountET.getText().toString();
+        String transactionAmount = NumberTextWatcherForThousand.trimCommaOfString(binding.amountET.getText().toString());
         boolean incomeChecked = binding.incomeRadio.isChecked();
         String type;
         String transactionNote = binding.noteET.getText().toString();

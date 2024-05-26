@@ -102,7 +102,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toEndOf="@id/goals_icon"
-                    android:text="Budgets"
+                    android:text="Goals"
                     android:textColor="@color/black"
                     android:textSize="30sp" />
 
