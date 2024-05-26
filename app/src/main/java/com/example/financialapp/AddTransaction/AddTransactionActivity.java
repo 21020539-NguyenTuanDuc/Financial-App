@@ -286,18 +286,18 @@ public class AddTransactionActivity extends AppCompatActivity {
                             } else {
                                 newBalance -= Integer.parseInt(transactionAmount);
                                 for (int i = 0; i < budgetModelList.size(); i++) {
+                                    if (finalTimestamp >= budgetModelList.get(i).getTimeStampStart() && finalTimestamp <= budgetModelList.get(i).getTimeStampEnd()) {
+                                        budgetModelList.get(i).setSpending(budgetModelList.get(i).getSpending() + Long.parseLong(transactionAmount));
+                                    }
                                     if (budgetModelList.get(i).isRiskOverspending()
-                                            && budgetModelList.get(i).getSpending() < budgetModelList.get(i).getBudget() * 4 / 5
-                                            && budgetModelList.get(i).getSpending() + Integer.parseInt(transactionAmount) >= budgetModelList.get(i).getBudget() * 4 / 5
-                                            && budgetModelList.get(i).getSpending() + Integer.parseInt(transactionAmount) < budgetModelList.get(i).getBudget()) {
+                                            && budgetModelList.get(i).getSpending() - Long.parseLong(transactionAmount) < budgetModelList.get(i).getBudget() * 4 / 5
+                                            && budgetModelList.get(i).getSpending() >= budgetModelList.get(i).getBudget() * 4 / 5
+                                            && budgetModelList.get(i).getSpending() < budgetModelList.get(i).getBudget()) {
                                         notifyUser(budgetModelList.get(i).getName(), "You might overspent your budget!");
                                     }
                                     if (budgetModelList.get(i).isBudgetOverspent()
-                                            && budgetModelList.get(i).getSpending() + Integer.parseInt(transactionAmount) >= budgetModelList.get(i).getBudget()) {
+                                            && budgetModelList.get(i).getSpending() >= budgetModelList.get(i).getBudget()) {
                                         notifyUser(budgetModelList.get(i).getName(), "You have spent more than your budget!");
-                                    }
-                                    if (oldTimestamp >= budgetModelList.get(i).getTimeStampStart() && oldTimestamp <= budgetModelList.get(i).getTimeStampEnd()) {
-                                        budgetModelList.get(i).setSpending(budgetModelList.get(i).getSpending() + Integer.parseInt(transactionAmount));
                                     }
                                 }
                             }

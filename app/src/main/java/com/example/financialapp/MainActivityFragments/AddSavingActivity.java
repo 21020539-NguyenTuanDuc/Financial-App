@@ -83,7 +83,17 @@ public class AddSavingActivity extends AppCompatActivity {
                                 if (currentGoal.getSaved() >= currentGoal.getTarget() && currentGoal.isGoalAchievedNoti()) {
                                     notifyUser(currentGoal.getName(), "You have successfully achieved your goal!");
                                 }
-                                AddSavingActivity.this.recreate();
+                                binding.progressCircular.setProgressMax(currentGoal.getTarget());
+                                if (currentGoal.getSaved() < currentGoal.getTarget()) {
+                                    binding.progressCircular.setProgress(currentGoal.getSaved());
+                                } else {
+                                    binding.progressCircular.setProgress(currentGoal.getTarget());
+                                }
+                                String displayPercentage = String.format("%.2f", 1.00 * currentGoal.getSaved() / currentGoal.getTarget() * 100) + "%";
+                                NumberFormat nf = NumberFormat.getInstance();
+                                String displayFraction = nf.format(currentGoal.getSaved()) + "/" + nf.format(currentGoal.getTarget());
+                                binding.percentageTV.setText(displayPercentage);
+                                binding.fractionTV.setText(displayFraction);
                                 sweetAlertDialog.dismissWithAnimation();
                             }
                         });

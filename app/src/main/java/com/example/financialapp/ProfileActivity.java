@@ -38,9 +38,12 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.util.Collections;
+
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class ProfileActivity extends AppCompatActivity {
+    String allCountryRegex = "^(\\+\\d{1,3}( )?)?((\\(\\d{1,3}\\))|\\d{1,3})[- .]?\\d{3,4}[- .]?\\d{4}$";
     ActivityProfileBinding binding;
     UserModel tempUser;
     FirebaseStorage storage;
@@ -132,8 +135,21 @@ public class ProfileActivity extends AppCompatActivity {
         binding.deleteUserTV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                sweetAlertDialog = new SweetAlertDialog(ProfileActivity.this, SweetAlertDialog.WARNING_TYPE);
+                String confirmDelete = getResources().getString(R.string.confirm_deleteTT);
+                String confirmDeleteContent = getResources().getString(R.string.confirm_deleteContent);
+                String confirmDeleteText = getResources().getString(R.string.confirm_deleteText);
+                sweetAlertDialog.setTitleText(confirmDelete);
+                sweetAlertDialog.setContentText(confirmDeleteContent);
+                sweetAlertDialog.setConfirmText(confirmDeleteText);
+                sweetAlertDialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sweetAlertDialog) {
+                        sweetAlertDialog.dismissWithAnimation();
+                        deleteUser();
+                    }
+                });
                 sweetAlertDialog.show();
-                deleteUser();
             }
         });
 
@@ -141,98 +157,108 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private void deleteUser() {
+        sweetAlertDialog = new SweetAlertDialog(ProfileActivity.this, SweetAlertDialog.PROGRESS_TYPE);
+        sweetAlertDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
+        sweetAlertDialog.setCancelable(false);
+        sweetAlertDialog.show();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        deleteAllUserData();
         assert user != null;
         user.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
-                db.collection("User").document(tempUser.getId()).delete()
-                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                if (task.isSuccessful()) {
-                                    db.collection("Account").whereEqualTo("userId", tempUser.getId()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                            if (task.isSuccessful()) {
-                                                for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
-                                                    AccountModel tempAccountModel = documentSnapshot.toObject(AccountModel.class);
-                                                    db.collection("Account").document(documentSnapshot.getId()).delete().addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                        @Override
-                                                        public void onComplete(@NonNull Task<Void> task) {
-                                                            if (task.isSuccessful()) {
-                                                                db.collection("Transaction").whereEqualTo("accountId", tempAccountModel.getId()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                                                                    @Override
-                                                                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                                                        if (task.isSuccessful()) {
-                                                                            int cnt = 0;
-                                                                            for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
-                                                                                db.collection("Transaction").document(documentSnapshot.getId()).delete();
-                                                                            }
-                                                                        }
-                                                                    }
-                                                                });
-                                                            }
-                                                        }
-                                                    });
-                                                }
-                                            }
-                                        }
-                                    });
-
-                                    db.collection("Goal").whereEqualTo("userId", tempUser.getId()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                            if (task.isSuccessful()) {
-                                                for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
-                                                    db.collection("Goal").document(documentSnapshot.getId()).delete();
-                                                }
-                                            }
-                                        }
-                                    });
-
-                                    db.collection("Budget").whereEqualTo("userId", tempUser.getId()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                            if (task.isSuccessful()) {
-                                                for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
-                                                    db.collection("Budget").document(documentSnapshot.getId()).delete();
-                                                }
-                                            }
-                                        }
-                                    });
-
-                                    StorageReference reference = storage.getReference().child("images/" + tempUser.getId());
-                                    reference.delete();
-
-                                    gsc.signOut();
-                                    FirebaseAuth.getInstance().signOut();
-                                    finishAffinity();
-                                    finishAndRemoveTask();
-                                    MainAccountFragment.currentAccId = "";
-                                    sweetAlertDialog.dismissWithAnimation();
-                                    startActivity(new Intent(ProfileActivity.this, LoginActivity.class));
-                                    finish();
-                                }
-                            }
-                        });
+                gsc.signOut();
+                FirebaseAuth.getInstance().signOut();
+                finishAffinity();
+                finishAndRemoveTask();
+                MainAccountFragment.currentAccId = "";
+                sweetAlertDialog.dismissWithAnimation();
+                startActivity(new Intent(ProfileActivity.this, LoginActivity.class));
+                finish();
             }
         });
+    }
+
+    private void deleteAllUserData() {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("User").document(tempUser.getId()).delete()
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            db.collection("Account").whereEqualTo("userId", tempUser.getId()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                    if (task.isSuccessful()) {
+                                        for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
+                                            AccountModel tempAccountModel = documentSnapshot.toObject(AccountModel.class);
+                                            db.collection("Account").document(documentSnapshot.getId()).delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<Void> task) {
+                                                    if (task.isSuccessful()) {
+                                                        db.collection("Transaction").whereEqualTo("accountId", tempAccountModel.getId()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                                            @Override
+                                                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                                                if (task.isSuccessful()) {
+                                                                    int cnt = 0;
+                                                                    for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
+                                                                        db.collection("Transaction").document(documentSnapshot.getId()).delete();
+                                                                    }
+                                                                }
+                                                            }
+                                                        });
+                                                    }
+                                                }
+                                            });
+                                        }
+                                    }
+                                }
+                            });
+
+                            db.collection("Goal").whereEqualTo("userId", tempUser.getId()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                    if (task.isSuccessful()) {
+                                        for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
+                                            db.collection("Goal").document(documentSnapshot.getId()).delete();
+                                        }
+                                    }
+                                }
+                            });
+
+                            db.collection("Budget").whereEqualTo("userId", tempUser.getId()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                    if (task.isSuccessful()) {
+                                        for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
+                                            db.collection("Budget").document(documentSnapshot.getId()).delete();
+                                        }
+                                    }
+                                }
+                            });
+
+                            StorageReference reference = storage.getReference().child("images/" + tempUser.getId());
+                            reference.delete();
+                        }
+                    }
+                });
     }
 
     private void updatePassword() {
         String password = binding.changedPassword.getText().toString();
         String cf_password = binding.changedPasswordCf.getText().toString();
         if (password.length() == 0) {
+            sweetAlertDialog.dismissWithAnimation();
             binding.changedPassword.setError("Empty");
             return;
         }
         if (cf_password.length() == 0) {
+            sweetAlertDialog.dismissWithAnimation();
             binding.changedPasswordCf.setError("Empty");
             return;
         }
         if (!password.equals(cf_password)) {
+            sweetAlertDialog.dismissWithAnimation();
             binding.changedPasswordCf.setError("Password does not match!");
             return;
         }
@@ -262,16 +288,19 @@ public class ProfileActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
         if (R.id.saveChanges_button == id) {
+            sweetAlertDialog = new SweetAlertDialog(ProfileActivity.this, SweetAlertDialog.PROGRESS_TYPE);
+            sweetAlertDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
+            sweetAlertDialog.setCancelable(false);
             sweetAlertDialog.show();
             String name = binding.userName.getText().toString();
             String number = binding.userNumber.getText().toString();
             if (name.length() == 0) {
-                binding.userName.setError("Empty");
+                binding.userName.setError("Empty!");
                 sweetAlertDialog.dismissWithAnimation();
                 return false;
             }
-            if (number.length() == 0) {
-                binding.userNumber.setError("Empty");
+            if (!number.matches(allCountryRegex)) {
+                binding.userNumber.setError("Badly formatted!");
                 sweetAlertDialog.dismissWithAnimation();
                 return false;
             }
